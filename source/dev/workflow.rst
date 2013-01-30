@@ -100,7 +100,8 @@ Partner user created
     workbench: Create user account
     local: generate ssh key
     local: upload ssh key to workbench
-    workbench: add key to gitolite 
+    workbench: add key to gitolite
+        ACTUALLY, the pubkey will belong to the VM, not to indiv user
 
 Partner creates entity
     # NO
@@ -224,7 +225,8 @@ VirtualBox/VMware USB peripherals visible in menubar
 would be nice to not use the VM HD at all, just use shared folder
 except git-annex relies on symlinks -- crap
 2nd HD in machine, formatted ext4; entire HD is the shared folder
-
+or 2 USB drives?
+** code access methods into configs for each partner setup
 
 Partner sends USB HD to 
 
