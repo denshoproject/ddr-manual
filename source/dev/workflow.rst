@@ -66,26 +66,31 @@ collection create
 collection edit
 collection remove
 
+collection entity add
+collection entity remove
+
+collection sync
+
+
 Entity-level operations
 ----------
 
-entity create
-    NOTE: this should also add the entity to a collection
 entity edit
-entity remove
-    NOTE: this should also remove the entity to a collection
 
 entity file add
+entity file batch add
+    starts celery proc which calls entity cmd
 entity file edit
 entity file remove
 
 entity file mezzanine copy generate
 entity file mezzanine copy remove
+    same as entity file add/rm but with special metadata
 
 entity file access copy generate
 entity file access copy remove
 
-entity push
+entity sync
 entity annex sync
 
 
@@ -213,4 +218,16 @@ Partner syncs with sandbox
         Everything up-to-date
 
 
+VirtualBox/VMware shared folder
+VirtualBox/VMware USB peripherals visible in menubar
+
+would be nice to not use the VM HD at all, just use shared folder
+except git-annex relies on symlinks -- crap
+2nd HD in machine, formatted ext4; entire HD is the shared folder
+
+
 Partner sends USB HD to 
+
+We need to assume that Git sync ops will be interrupted
+we need to figure out how to recover from interruptions
+they will happen
