@@ -70,8 +70,10 @@ Entity-level operations
 ----------
 
 entity create
+    NOTE: this should also add the entity to a collection
 entity edit
 entity remove
+    NOTE: this should also remove the entity to a collection
 
 entity file add
 entity file edit
@@ -96,13 +98,17 @@ Partner user created
     workbench: add key to gitolite 
 
 Partner creates entity
-    local requests UID from workbench API
-    background:entity init: $ [entity -eENTITYUID -oinit]
-    background:entity init: # create entity dir, METS.xml, changelog, etc
-    background:entity init: $ git init
-    background:entity init: $ git annex init
-    background:entity init: $ git commit
+    # NO
+    # local requests UID from workbench API
+    # background:entity init: $ [entity -eENTITYUID -oinit]
+    # background:entity init: # create entity dir, METS.xml, changelog, etc
+    # background:entity init: $ git init
+    # background:entity init: $ git annex init
+    # background:entity init: $ git commit
     --- OR ---
+    # YES.
+    # Easier to have Gitolite create repo then clone (http://sitaramc.github.com/gitolite/repos.html)
+    # than to add existing to Gitolite (http://sitaramc.github.com/gitolite/rare.html#existing).
     local requests UID from workbench API
     background:entity init: $ entity -eENTITYUID -oinit]
     background:entity init: $ git clone git@mits:ddr-ORG-C-E
@@ -113,6 +119,21 @@ Partner creates entity
     background:entity init: $ git annex init
     background:entity init: $ git add changelog control mets.xml
     background:entity init: $ git commit
+
+    # 2013-01-29
+    # For some reason when I git clone git@mets:...
+    # there is no master branch, so I have to do this:
+    background:entity init: $ git clone git@mits:ddr-ORG-C-E
+        $ git clone git@mits:ddr-densho-1-1
+        Cloning into 'ddr-densho-1-1'...
+        Initialized empty Git repository in /home/git/repositories/ddr-densho-1-1.git/
+        warning: You appear to have cloned an empty repository.
+    background:entity init: $ git add changelog control mets.xml
+    background:entity init: $ git commit
+    # the master branch appears at this point
+    background:entity init: $ git annex init
+
+
 
 Partner edits metadata
 
