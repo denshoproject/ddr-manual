@@ -29,12 +29,35 @@ Organization-level operations
 ----------
 
 organization create
+    add organization to workbench server
+    add organization to gitolite-admin (and commit,push)
 organization edit
 organization remove
+    disable organization inactive on workbench server
+    disable organization in gitolite-admin (and commit,push)
 organization user add
-    add user key to gitolite
+    add user to workbench server
+    add user to local django
+    generate public/private keys
+        # if user DOES NOT HAVE id_rsa.pub:
+        # run the following as the user
+        $ ssh-keygen
+        filename: default (~/.ssh/id_rsa)
+    send public key to admins
+    add user key to gitolite-admin (and commit,push)
+        NOTE: use old style multi-keys (http://sitaramc.github.com/gitolite/users.html#multi-key)
+        $ cd $GITOLITEADMIN
+        $ mv /tmp/id_rsa.pub keydir/$USER@$HOSTNAME.pub
+        # mod conf/gitolite.conf
+        $ git add keydir/$USER@$HOSTNAME.pub
+        $ git add conf/gitolite.conf
+        $ git commit
+        $ git push origin master
 organization user edit
 organization user remove
+    remove user from workbench server
+    remove user from local django
+    remove user key from gitolite-admin (and commit,push)
 
 Collection-level operations
 ----------
