@@ -8,6 +8,15 @@ Intellectual Entities
 File structure
 --------------
 
+::
+
+    ddr-densho-1-1/
+    ├── changelog
+    ├── control
+    ├── files
+    │   └── image.jpg
+    └── mets.xml
+
 
 Metadata
 --------
