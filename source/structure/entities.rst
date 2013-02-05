@@ -10,11 +10,18 @@ File structure
 
 ::
 
-    ddr-densho-1-1/
+    ddr-densho-1-1
     ├── changelog
     ├── control
     ├── files
-    │   └── image.jpg
+    │   └── image1.jpg
+    │   └── image2.jpg
+    ├── .git
+    │   ├── annex
+    │   ├── ...
+    │   ├── config
+    │   ├── ...
+    ├── .gitignore
     └── mets.xml
 
 
