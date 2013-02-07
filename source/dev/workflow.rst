@@ -62,15 +62,23 @@ organization user remove
 Collection-level operations
 ----------
 
-collection create
-collection edit
-collection remove
+collection.create
+collection.destroy
+collection.update
+collection.sync
+    includes annex sync
+collection entity_create
+collection entity_destroy
 
-collection entity add
-collection entity remove
-
-collection sync
-
+collection annex sync
+collection annex push/pull
+    push/pull the specified annex files to specified remote
+    filter1:
+    - entire collection
+    - entity, range of entities
+    filter2:
+    - all files
+    - only files that it makes sense to send over net (how to decide this?)
 
 Entity-level operations
 ----------
@@ -102,6 +110,35 @@ Partner user created
     local: upload ssh key to workbench
     workbench: add key to gitolite
         ACTUALLY, the pubkey will belong to the VM, not to indiv user
+
+
+Partner creates collection
+    # Easier to have Gitolite create repo then clone (http://sitaramc.github.com/gitolite/repos.html)
+    # than to add existing to Gitolite (http://sitaramc.github.com/gitolite/rare.html#existing).
+    local requests CID from workbench API
+    background:collection init: $ collection -cCID -oinit]
+    background:collection init: $ git clone git@mits:ddr-ORG-C
+        $ git clone git@mits:ddr-densho-1
+        Cloning into 'ddr-densho-1'...
+        Initialized empty Git repository in /home/git/repositories/ddr-densho-1.git/
+        warning: You appear to have cloned an empty repository.
+    background:entity init: $ git annex init
+    background:entity init: $ git add changelog control ead.xml .gitignore
+    background:entity init: $ git commit
+
+
+Partner adds entity to collection
+    background:collection add: $ collection --collection CID --operation add --entity
+    background:collection add: create collection/files if necessary
+    background:collection add: create entity dir
+    background:collection add: create entity changelog
+    background:collection add: create entity control
+    background:collection add: create entity mets.xml
+    background:collection add: $ git add files/$ENTITY/changelog
+    background:collection add: $ git add files/$ENTITY/control
+    background:collection add: $ git add files/$ENTITY/mets.xml
+    background:collection add: $ git commit
+
 
 Partner creates entity
     # NO
