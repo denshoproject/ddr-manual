@@ -62,7 +62,23 @@ Existing architecture.
 Git
 ----------
 
-version control is not just for software developers.
-Distributed is good for historical archives.
-Git is in heavy use by lots of smart people who depend on it for their important projects.
-git-annex made it possible to use Git with large digital media files.
+- version control is not just for software developers.
+- Distributed is good for historical archives.
+- Git is in heavy use by lots of smart people who depend on it for their important projects.
+- git-annex made it possible to use Git with large digital media files.
+
+
+
+Static generators
+----------
+
+In the last couple years I've started to see a trend away from dynamicly-generated everything and back to pre-rendering or static generation.  One advantage that these projects sometimes tout is that blog posts or whatever pages can be edited offline and updated to the server using a process that involves Git rather than a database.  Resulting web sites are faster (only static files) and more secure (less of a stack to hack).
+
+- Frozen Flask (http://pythonhosted.org/Frozen-Flask/)
+- Hyde (http://ringce.com/hyde)
+- Jekyll (http://jekyllrb.com/)
+- Nanoc (http://nanoc.ws/)
+- Octopress (http://octopress.org/)
+- Pelican
+- Sphinx (http://sphinx-doc.org/)
+- staticgenerator (Django) (https://pypi.python.org/pypi/staticgenerator/1.3)
