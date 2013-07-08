@@ -1,8 +1,10 @@
-=============
+==========
 ddr-manual
-=============
+==========
 
-Manual for users, administrators, and developers of the Densho Digital Repository.
+DDR is a set of tools for constructing a distributed repository suitable for the archival preservation of media files and metadata.  It is built from standard open-source components, uses archival standard metadata formats, and provides for replication of collections under low- or no-bandwidth conditions.
+
+**ddr-manual** describes the policy and technical requirements for the Densho Digital Repository.
 
 
 .. REQUIREMENTS
