@@ -5,6 +5,13 @@ Setting Up a Workstation
 This page documents the process of preparing a Linux virtual machine for use on a local partner workstation.
 
 
+NOTE: Most of the commands you will type in the Linux virtual machine will be typed as `root`.  To become `root`, type the following at a command prompt::
+
+    $ su - root
+    [enter root password]
+
+
+
 
 
 Prepare For The Install
@@ -217,11 +224,6 @@ Reboot the VM and log in.
 Network interfaces
 -------------------------
 
-Log in and become root::
-
-    $ su - root
-    [enter root password]
-
 Edit the networking config file::
 
     # nano /etc/network/interfaces
@@ -242,7 +244,7 @@ so that it looks like the following::
     # host-only interface
     auto eth1
     iface eth1 inet static
-    address 192.168.56.115
+    address 192.168.56.101
     netmask 255.255.255.0
     network 192.168.56.0
     broadcast 192.168.56.255
@@ -251,12 +253,7 @@ Reboot the machine::
 
     # reboot
 
-Log in again and become root::
-
-    $ su - root
-    [enter root password]
-
-Confirm that you have IP addresses for both network interfaces (`eth0` and `eth1`)::
+Log in and confirm that you have IP addresses for both network interfaces (`eth0` and `eth1`)::
 
     # ifconfig
     eth0      Link encap:Ethernet  HWaddr 08:00:27:40:b8:f8  
@@ -269,7 +266,7 @@ Confirm that you have IP addresses for both network interfaces (`eth0` and `eth1
               RX bytes:6956862 (6.6 MiB)  TX bytes:302963 (295.8 KiB)
      
     eth1      Link encap:Ethernet  HWaddr 08:00:27:e8:cc:63  
-              inet addr:192.168.56.114  Bcast:192.168.56.255  Mask:255.255.255.0
+              inet addr:192.168.56.101  Bcast:192.168.56.255  Mask:255.255.255.0
               inet6 addr: fe80::a00:27ff:fee8:cc63/64 Scope:Link
               UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
               RX packets:16121 errors:0 dropped:0 overruns:0 frame:0
@@ -296,7 +293,7 @@ Ping a common domain name and confirm that you get a response::
 
 
 
-Software Firewall
+Security Hardening
 -----------------
 
 `ufw` (Uncomplicated Firewall) is a simple interface for the built-in `iptables` software firewall.  The following steps will set the firewall to block all traffic except secure shell (ssh) and HTTP.::
@@ -315,14 +312,9 @@ Software Firewall
     80/tcp                     ALLOW       Anywhere
     80/tcp                     ALLOW       Anywhere (v6)
 
+Install the SSH server and `fail2ban`, a daemon that shuts down some types of automated SSH hacking::
 
-
-Secure Shell
-------------
-
-Install the SSH server::
-
-    # apt-get install openssh-server
+    # apt-get install openssh-server fail2ban
 
 Disable login for `root`.  Find the line containing `PermitRootLogin` and change the setting from `yes` to `no`.::
 
@@ -331,6 +323,15 @@ Disable login for `root`.  Find the line containing `PermitRootLogin` and change
 Restart SSH::
 
     # /etc/init.d/ssh restart
+
+
+
+Install Miscellaneous Useful Tools
+----------------------------------
+
+::
+
+    # apt-get install ack-grep byobu bzip2 curl elinks htop logrotate mg multitail p7zip-full wget
 
 
 
@@ -354,24 +355,153 @@ In the VM window, click on "Devices > Install Guest Additions". ::
 
 
 
-USB Hard Drive
---------------
+www-server
+----------
 
-The DDR application is designed to store collection repositories on an attached USB hard drive.
-This step configures VirtualBox to automatically attach the USB device to this VM whenever it (the VM) is running.
+::
 
-- Attach the USB hard drive that you plan to use.
-- Wait for the device to attach itself to your computer.
-- In the VM window, click on "Devices > USB Devices" and select the device from the pop-up menu.
-- In the VM window, click on "Machine > Settings" and select "USB" from the left-hand side menu.
-- Click the "Add Filter From Device" icon and select the device from the pop-up menu.
+    # apt-get install nginx
 
-If you need to remove the device, follow the opposite procedure:
+Test that the web browser works by visiting the following URL in a web browser on your host computer.  You should see a welcome message from the web server.::
 
-- In the VM window, click on "Machine > Settings" and select "USB" from the left-hand side menu.
-- Select the device from the "USB Device Filters" box.
-- Click the "Remove USB filter" icon.
+    http://192.168.56.101/
+    [Welcome to nginx!]
 
+
+
+cache server
+------------
+
+::
+
+    # apt-get install redis-server
+
+
+
+Create a `ddr` user
+-------------------
+
+Create a `ddr` user; the various DDR applications will run as this user.::
+
+    # adduser ddr
+    [enter info]
+
+
+
+ddr-cmdln
+---------
+
+Install the `ddr-cmdln` app.::
+
+    # apt-get install git-core git-annex libxml2-dev pmount udisks python-dev python-pip
+    # cd /usr/local/src
+    # git clone https://github.com/densho/ddr-cmdln.git
+    # cd /usr/local/src/ddr-cmdln/ddr
+    # python setup.py install
+    # pip install -r /usr/local/src/ddr-cmdln/ddr/requirements/production.txt
+
+Add the `ddr` user to the `plugdev` group so it can mount USB devices::
+
+    # adduser ddr plugdev
+
+
+
+ddr-lint
+--------
+
+Install the `ddr-lint` app.::
+
+    # apt-get install libxml2 libxml2-dev libxslt-dev
+    # cd /usr/local/src
+    # git clone https://github.com/densho/ddr-lint.git
+    # cd /usr/local/src/ddr-lint/ddrlint
+    # python setup.py install
+    # pip install -r /usr/local/src/ddr-cmdln/ddr/requirements/production.txt
+
+
+
+ddr-local
+---------
+
+Install the `ddr-local` web app.::
+
+    # apt-get install libssl-dev python-dev libxml2 libxml2-dev libxslt-dev supervisor
+    # cd /usr/local/src
+    # git clone https://github.com/densho/ddr-local.git
+    # cd /usr/local/src/ddr-local/ddrlocal
+    # pip install -r /usr/local/src/ddr-local/ddrlocal/requirements/production.txt
+
+
+
+Bootstrap, jQuery, Modernizr
+----------------------------
+
+::
+
+    # mkdir /var/log/ddr
+    # chown -R ddr.ddr /var/log/ddr/
+    # chmod -R 775 /var/log/ddr
+    
+    # mkdir /var/www
+    # mkdir /var/www/ddr
+    # chown -R ddr /var/www/ddr
+    # mkdir /var/www/ddrlocal
+    # mkdir /var/www/ddrlocal/static
+    # mkdir /var/www/ddrlocal/static/js
+    
+    # cd /var/www/ddrlocal/static
+    # wget http://twitter.github.io/bootstrap/assets/bootstrap.zip
+    # 7z x bootstrap.zip
+    
+    # cd /var/www/ddrlocal/static/js
+    # wget http://code.jquery.com/jquery-1.10.2.min.js
+    # ln -s jquery-1.10.2.min.js jquery.js
+    # wget http://modernizr.com/downloads/modernizr-latest.js
+
+
+
+Configuration
+-------------
+
+::
+
+    # mkdir /etc/ddr
+    
+    # cp /usr/local/src/ddr-local/debian/conf/ddr.cfg /etc/ddr/
+    # chown root.root /etc/ddr/ddr.cfg
+    # chmod 644 /etc/ddr/ddr.cfg
+    
+    # cp /usr/local/src/ddr-local/debian/conf/settings.py /usr/local/src/ddr-local/ddrlocal/ddrlocal/
+    # chown root.root /usr/local/src/ddr-local/ddrlocal/ddrlocal/settings.py
+    # chmod 644 /usr/local/src/ddr-local/ddrlocal/ddrlocal/settings.py
+    
+    # cp /usr/local/src/ddr-local/debian/conf/gunicorn_ddrlocal.conf /etc/supervisor/conf.d/
+    # chown root.root /etc/supervisor/conf.d/gunicorn_ddrlocal.conf
+    # chmod 644 /etc/supervisor/conf.d/gunicorn_ddrlocal.conf
+    # supervisorctl reload
+    # supervisorctl restart ddrlocal
+    
+    # cp /usr/local/src/ddr-local/debian/conf/ddrlocal.conf /etc/nginx/sites-available
+    # ln -s /etc/nginx/sites-available/ddrlocal.conf /etc/nginx/sites-enabled
+    # /etc/init.d/nginx restart
+
+
+
+Test Drive!
+-----------
+
+At this point, you should be able to interact with the DDR-Local web application using a web browser on your host computer.::
+
+    http://192.168.56.101/
+
+
+
+
+Installation-Specific Steps
+===========================
+
+Nearly everything we have done up to this point will be the same from one VM to the next.
+The following steps will "personalize" this VM as belonging to a particular user/organization.
 
 
 
@@ -383,12 +513,10 @@ Gitolite allows or refuses access based on SSH public keys.
 Normally users use their own personal keys.
 In our case, each DDR VM has its own unique key.
 
-Create a `ddr` user; the various DDR applications will run as this user.
+SSH keys include a username and domain name at the end.  Usually this matches the name of the user to which the key belongs.  In our case, the web applications forevery DDR VM will be running as the user `ddr`, but we want the SSH key to be unique to the VM.
+
 Create a second user with a username matching the organization (`$ORGANIZATION`)::
 
-    $ sudo - root
-    # adduser ddr
-    [enter info]
     # adduser $ORGANIZATION
     [enter info]
 
@@ -455,60 +583,25 @@ On the VM, log in as the `ddr` user and confirm that the user now has access.::
 
 
 
-Install Dependencies
---------------------
+USB Hard Drive
+==============
 
-::
+The DDR application is designed to store collection repositories on an attached USB hard drive.
+This step configures VirtualBox to automatically attach the USB device to this VM whenever it (the VM) is running.
 
-    # apt-get install fail2ban logrotate
-    
-    # apt-get install git-core git-annex
+.. important::
+    Once you set up a filter, your VM will expect the USB device to remain attached!
+    If you unplug the device and try to use the VM you will see anomalous behavior!
 
+- Attach the USB hard drive that you plan to use to your computer.
+- Wait for the device to appear in your computer's list of drives before proceeding.
+- In the VM window, click on "Devices > USB Devices" and select the device in the pop-up menu.  If you have your computer's list of drives visible, you should see the USB device disappear from the list.
+- In the VM window, click on "Machine > Settings" and select "USB" from the left-hand side menu.
+- Click the "Add Filter From Device" icon and select the device from the pop-up menu.
 
+If you need to remove the device, follow the opposite procedure:
 
-
-
-ddr-cmdln
-=========
-
-Install the `ddr-cmdln` app.::
-
-    # apt-get install libxml2-dev pmount udisks
-    # cd /usr/local/src
-    # git clone https://github.com/densho/ddr-cmdln.git
-    # cd /usr/local/src/ddr-cmdln/ddr
-    # python setup.py install
-    # pip install -r /usr/local/src/ddr-cmdln/ddr/requirements/production.txt
-
-
-
-
-
-ddr-local
-=========
-
-Install the `ddr-local` web app.::
-
-    # apt-get install libssl-dev python-dev libxml2 libxml2-dev libxslt-dev redis-server supervisor
-    # cd /usr/local/src
-    # git clone https://github.com/densho/ddr-local.git
-    # cd /usr/local/src/ddr-local/ddrlocal
-    # pip install -r /usr/local/src/ddr-local/ddrlocal/requirements/production.txt
-
-
-
-
-
-Configuration
-=============
-
-::
-
-    mkdir /etc/ddr
-    mkdir /var/lib/ddr
-    mkdir /var/log/ddr
-    mkdir /var/www/ddr
-    mkdir /var/www/ddrlocal
-    /etc/ddr/ddr.cfg
-    /etc/supervisor/conf.d/gunicorn_ddrlocal.conf
-    /etc/nginx/sites-available/ddrlocal.conf
+- In the VM window, click on "Machine > Settings" and select "USB" from the left-hand side menu.
+- Select the device from the "USB Device Filters" box.
+- Click the "Remove USB filter" icon.
+- In the VM window, click on "Devices > USB Devices" and un-check the device in the pop-up menu.  If you have your computer's list of drives visible, you should see the USB device reappear in the list.
