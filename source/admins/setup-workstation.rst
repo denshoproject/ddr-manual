@@ -605,3 +605,13 @@ If you need to remove the device, follow the opposite procedure:
 - Select the device from the "USB Device Filters" box.
 - Click the "Remove USB filter" icon.
 - In the VM window, click on "Devices > USB Devices" and un-check the device in the pop-up menu.  If you have your computer's list of drives visible, you should see the USB device reappear in the list.
+
+
+
+Preparing a USB Drive
+---------------------
+
+To prepare a USB drive for the DDR, ensure that:
+
+- the drive is formatted as NTFS,
+- the drive's root directory contains a `ddr/` directory.
