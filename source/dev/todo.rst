@@ -15,27 +15,10 @@ DDR is under active development, and contributions are more than welcome!
 Development Dependencies
 ------------------------
 
-You'll need to install DEPENDENCIES in order to run the DDR's test suite::
-
-    $ make test-deps
-    $ make test
-    py.test
-    platform darwin -- Python 2.7.3 -- pytest-2.3.4
-    collected 25 items
-
-    test_requests.py .........................
-    25 passed in 3.50 seconds
 
 Runtime Environments
 --------------------
 
-Requests currently supports the following versions of Python:
+DDR is known to work in the following versions of Python:
 
-- Python 2.6
 - Python 2.7
-- Python 3.1
-- Python 3.2
-- Python 3.3
-- PyPy 1.9
-
-Support for Python 3.1 and 3.2 may be dropped at any time.
