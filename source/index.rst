@@ -49,8 +49,9 @@ Info for
 .. toctree::
    :maxdepth: 1
 
-   admins/setup-workstation
    admins/setup-servers
+   admins/create-workstation-vm
+   admins/setup-workstation
    admins/workflow
    admins/faq
 
