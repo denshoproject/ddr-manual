@@ -2,10 +2,25 @@ Development Philosophy
 ======================
 
 
+
+
+Good Ideas
+~~~~~~~~~~
+
+Things we thought were good ideas:
+
+* The Debian Archive
+* Debian Policy Manual
+* lintian
+* git, git-annex
+* web front-end with separate backend
+* Archivematica as an application running VM and accessed through a browser
+* Crunchbang's cb-welcome script
+
+
+
 Values
 ~~~~~~
-
-
 
 
 We looked at a number of existing systems.
@@ -31,16 +46,10 @@ Not monolithic.
 
 Small pieces loosely joined.
 
-
 Use existing tools, standards, and architecture wherever possible. Don't reinvent the wheel.
 
-
-
-UNIX and TCP/IP style
-----------
-
-Small pieces, loosely joined.
-Pieces communicate with each other using pipes or RESTful HTTP APIs.
+    Never underestimate the bandwidth of a station wagon full of tapes hurtling down the highway.
+    -- Andrew S. Tanenbaum. *Computer Networks, 4th ed.*, p. 91
 
 
 
@@ -59,8 +68,10 @@ The package format was very similar to BagIt.
 Existing architecture.
 
 
-Git
+Git, git-annex
 ----------
+
+Apenwarr: Git is much more than just a version control system (see http://www.advogato.org/person/apenwarr/diary/371.html).
 
 - version control is not just for software developers.
 - Distributed is good for historical archives.
