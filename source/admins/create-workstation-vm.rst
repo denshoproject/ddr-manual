@@ -457,39 +457,29 @@ Install the `ddr-local` web app.::
 
 
 
-Bootstrap, jQuery, Modernizr
-----------------------------
+Create Directories
+------------------
 
-::
+Create and set permissions for various directories used by the applications::
 
+    # mkdir /etc/ddr
     # mkdir /var/log/ddr
-    # chown -R ddr.ddr /var/log/ddr/
-    # chmod -R 775 /var/log/ddr
-    
+    # mkdir /var/lib/ddr
     # mkdir /var/www
     # mkdir /var/www/media
     # mkdir /var/www/media/cache
-    # chown -R ddr /var/www/media
     # mkdir /var/www/static
     # mkdir /var/www/static/js
-    
-    # cd /var/www/static
-    # wget http://twitter.github.io/bootstrap/assets/bootstrap.zip
-    # 7z x bootstrap.zip
-    
-    # cd /var/www/static/js
-    # wget http://code.jquery.com/jquery-1.10.2.min.js
-    # ln -s jquery-1.10.2.min.js jquery.js
-    # wget http://modernizr.com/downloads/modernizr-latest.js
+    # chown -R ddr /var/log/ddr/
+    # chown -R ddr /var/lib/ddr/
+    # chown -R ddr /var/www/media
 
 
 
-Configuration
--------------
+Configuration Files
+-------------------
 
-::
-
-    # mkdir /etc/ddr
+Copy the various configuration files to their proper locations.  The only file you should ever have to edit is `/etc/ddr/ddr.cfg`.::
     
     # cp /usr/local/src/ddr-local/debian/conf/ddr.cfg /etc/ddr/
     # chown root.root /etc/ddr/ddr.cfg
@@ -508,6 +498,21 @@ Configuration
     # cp /usr/local/src/ddr-local/debian/conf/ddrlocal.conf /etc/nginx/sites-available
     # ln -s /etc/nginx/sites-available/ddrlocal.conf /etc/nginx/sites-enabled
     # /etc/init.d/nginx restart
+
+
+
+Bootstrap, jQuery, Modernizr
+----------------------------
+
+`ddr-local` uses Bootstrap, jQuery, and Modernizr for its user interface.  These are installed in a directory visible to `nginx` and writable by `ddr-local`.::
+
+    # cd /var/www/static
+    # wget http://twitter.github.io/bootstrap/assets/bootstrap.zip
+    # 7z x bootstrap.zip
+    # cd /var/www/static/js
+    # wget http://modernizr.com/downloads/modernizr-latest.js
+    # wget http://code.jquery.com/jquery-1.10.2.min.js
+    # ln -s jquery-1.10.2.min.js jquery.js
 
 
 
@@ -642,7 +647,7 @@ If you need to remove the device, follow the opposite procedure:
 Preparing a USB Drive
 ---------------------
 
-To prepare a USB drive for the DDR, ensure that:
+To prepare a USB drive for the DDR,:
 
-- the drive is formatted as NTFS,
-- the drive's root directory contains a `ddr/` directory.
+- format the drive as NTFS,
+- create a `ddr/` directory in the drive's root directory.
