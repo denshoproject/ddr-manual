@@ -429,17 +429,17 @@ Bootstrap, jQuery, Modernizr
     # chmod -R 775 /var/log/ddr
     
     # mkdir /var/www
-    # mkdir /var/www/ddr
-    # chown -R ddr /var/www/ddr
-    # mkdir /var/www/ddrlocal
-    # mkdir /var/www/ddrlocal/static
-    # mkdir /var/www/ddrlocal/static/js
+    # mkdir /var/www/media
+    # mkdir /var/www/media/cache
+    # chown -R ddr /var/www/media
+    # mkdir /var/www/static
+    # mkdir /var/www/static/js
     
-    # cd /var/www/ddrlocal/static
+    # cd /var/www/static
     # wget http://twitter.github.io/bootstrap/assets/bootstrap.zip
     # 7z x bootstrap.zip
     
-    # cd /var/www/ddrlocal/static/js
+    # cd /var/www/static/js
     # wget http://code.jquery.com/jquery-1.10.2.min.js
     # ln -s jquery-1.10.2.min.js jquery.js
     # wget http://modernizr.com/downloads/modernizr-latest.js
