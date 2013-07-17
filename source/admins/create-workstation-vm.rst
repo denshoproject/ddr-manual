@@ -379,6 +379,20 @@ You will now begin installing the DDR code and its supporting applications.
 
 
 
+Create a `ddr` user
+-------------------
+
+Create a `ddr` user; the various DDR applications will run as this user.::
+
+    # adduser ddr
+    [enter info]
+
+Add the `ddr` user to the `vboxsf` group so it can access shared folder(s) on the host OS::
+
+    # adduser ddr vboxsf
+
+
+
 www-server
 ----------
 
@@ -399,16 +413,6 @@ cache server
 ::
 
     # apt-get install redis-server
-
-
-
-Create a `ddr` user
--------------------
-
-Create a `ddr` user; the various DDR applications will run as this user.::
-
-    # adduser ddr
-    [enter info]
 
 
 
