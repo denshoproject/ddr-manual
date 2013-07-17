@@ -406,20 +406,6 @@ Add the `ddr` user to the `plugdev` group so it can mount USB devices::
 
 
 
-ddr-lint
---------
-
-Install the `ddr-lint` app.::
-
-    # apt-get install libxml2 libxml2-dev libxslt-dev
-    # cd /usr/local/src
-    # git clone https://github.com/densho/ddr-lint.git
-    # cd /usr/local/src/ddr-lint/ddrlint
-    # python setup.py install
-    # pip install -r /usr/local/src/ddr-cmdln/ddr/requirements/production.txt
-
-
-
 ddr-local
 ---------
 
