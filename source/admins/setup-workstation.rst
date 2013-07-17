@@ -411,7 +411,7 @@ ddr-local
 
 Install the `ddr-local` web app.::
 
-    # apt-get install libssl-dev python-dev libxml2 libxml2-dev libxslt-dev supervisor
+    # apt-get install libssl-dev python-dev libxml2 libxml2-dev libxslt-dev imagemagick supervisor
     # cd /usr/local/src
     # git clone https://github.com/densho/ddr-local.git
     # cd /usr/local/src/ddr-local/ddrlocal
