@@ -29,6 +29,14 @@ Download VirtualBox from the official web site and install it.
 - Also download the "VirtualBox $VERSION_NUMBER Oracle VM VirtualBox Extension Pack".
 - When all files are downloaded, launch the installer and install on your host machine.
 
+Install the VirtualBox Extension Pack.
+
+- Run VirtualBox.
+- In the "VirtualBox Manager" window, click "File > Preferences" and select the "Extensions" tab.
+- Click the "Add package" icon on the right side of the window.
+- Locate the "VirtualBox $VERSION_NUMBER Oracle VM VirtualBox Extension Pack" that we downloaded earlier, then click "OK".
+
+
 
 
 Host-only Network
@@ -343,9 +351,7 @@ Install VirtualBox Guest Additions
 
 source: http://virtualboxes.org/doc/installing-guest-additions-on-debian/
 
-Locate the "VirtualBox $VERSION_NUMBER Oracle VM VirtualBox Extension Pack" that we downloaded earlier.
-
-Install required packages, then configure system for building kernel modules::
+Install required packages in the VM, then configure system for building kernel modules::
 
     # apt-get install build-essential module-assistant
     # m-a prepare
