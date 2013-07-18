@@ -532,7 +532,7 @@ Bootstrap, jQuery, Modernizr
 Test Drive!
 -----------
 
-At this point, you should be able to interact with the DDR-Local web application using a web browser on your host computer.::
+At this point, you should be able to interact with the DDR-Local web application using a web browser on your host computer. (Restarting nginx or a reboot may be necessary)::
 
     http://192.168.56.101/
 
