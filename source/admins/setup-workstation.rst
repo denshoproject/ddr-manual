@@ -2,7 +2,7 @@
 Setting Up a Workstation
 ========================
 
-This page documents the process of installing a Linux VM on a local partner machine.
+This page documents the process of installing a Linux VM on a local partner machine. These instructions presume that a base DDR VM image has already been created per the process contained in: https://github.com/densho/ddr-manual/blob/master/source/admins/create-workstation-vm.rst.
 
 
 NOTE: Most of the commands you will type in the Linux virtual machine will be typed as `root`.  To become `root`, type the following at a command prompt::
@@ -10,7 +10,7 @@ NOTE: Most of the commands you will type in the Linux virtual machine will be ty
     $ su - root
     [enter root password]
 
-
+As per convention, variables in this documentation are written in upper case with underscores, starting with a "$" sign.  
 
 
 
@@ -38,18 +38,17 @@ By default, VMs can only connect to the outside Internet.  VirtualBox's host-onl
 
 - In the "VirtualBox Manager" window, click "File > Preferences", then select the "Network" tab.
 - There should be a host-only network already created. Select it and click the screwdriver icon.
-- Note details of Host-Only Network for later::
+- The details for the Host-Only Network should be (If they do not match, please note for later or, if possible, adjust to these settings.) ::
 
     Adapter
-    - Network name: $HOST_ONLY_NETWORK_NAME
-    - IPv4 Address: $HOST_ONLY_NETWORK_IPV4_ADDRESS (ex: 192.168.56.1)
+    - IPv4 Address: 192.168.56.1
     
     DHCP Server
     - Enable server: YES
-    - Server Address: $HOST_ONLY_DHCP_SERVER_ADDRESS (ex: 192.168.56.100)
-    - Server Mask: $HOST_ONLY_NETWORK_DHCP_SERVER_MASK (ex: 255.255.255.0)
-    - Lower Address Bound: $HOST_ONLY_NETWORK_DHCP_LOWER_BOUND (ex: 192.168.56.101)
-    - Upper Address Bound: $HOST_ONLY_NETWORK_DHCP_UPPER_BOUND (ex: 192.168.56.254)
+    - Server Address: 192.168.56.100
+    - Server Mask: 255.255.255.0
+    - Lower Address Bound: 192.168.56.101
+    - Upper Address Bound: 192.168.56.254
 
 
 
@@ -62,7 +61,7 @@ Install Virtual Machine
 Copy VM to partner machine
 --------------------------
 
-
+For instructions on creating the base VM, see: https://github.com/densho/ddr-manual/blob/master/source/admins/create-workstation-vm.rst
 
 Networking
 ----------
@@ -100,6 +99,7 @@ At this point, you should be able to interact with the DDR-Local web application
 
     http://192.168.56.101/
 
+(This web server IP address assumes that the information in the host-only network settings for VirtualBox matched those above. If they did not, the web server IP may be different.)
 
 
 USB Hard Drive

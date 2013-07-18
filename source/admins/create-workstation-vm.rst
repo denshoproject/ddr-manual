@@ -5,11 +5,12 @@ Creating a Workstation VM
 This page documents the process of creating a Linux virtual machine that can be installed on a user's workstation.
 
 
-NOTE: Most of the commands you will type in the Linux virtual machine will be typed as `root`.  To become `root`, type the following at a command prompt::
+Most of the commands you will type in the Linux virtual machine will be typed as `root`.  To become `root`, type the following at a command prompt::
 
     $ su - root
     [enter root password]
 
+As per convention, variables in this documentation are written in upper case with underscores, starting with a "$" sign.
 
 
 
@@ -29,13 +30,15 @@ Download VirtualBox from the official web site and install it.
 - Also download the "VirtualBox $VERSION_NUMBER Oracle VM VirtualBox Extension Pack".
 - When all files are downloaded, launch the installer and install on your host machine.
 
+.. note::
+    During the installation process on Windows, you may encounter warning messages from Windows Firewall and/or AV security software. You should choose "Allow" or "OK" for all of these dialogs. 
+
 Install the VirtualBox Extension Pack.
 
 - Run VirtualBox.
 - In the "VirtualBox Manager" window, click "File > Preferences" and select the "Extensions" tab.
 - Click the "Add package" icon on the right side of the window.
 - Locate the "VirtualBox $VERSION_NUMBER Oracle VM VirtualBox Extension Pack" that we downloaded earlier, then click "OK".
-
 
 
 
@@ -635,7 +638,7 @@ USB Hard Drive
 The DDR application is designed to store collection repositories on an attached USB hard drive.
 This step configures VirtualBox to automatically attach the USB device to this VM whenever it (the VM) is running.
 
-.. important::
+.. note::
     Once you set up a filter, your VM will expect the USB device to remain attached!
     If you unplug the device and try to use the VM you will see anomalous behavior!
 
