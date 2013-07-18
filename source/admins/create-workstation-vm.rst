@@ -29,6 +29,8 @@ Download VirtualBox from the official web site and install it.
 - Also download the "VirtualBox $VERSION_NUMBER Oracle VM VirtualBox Extension Pack".
 - When all files are downloaded, launch the installer and install on your host machine.
 
+* NOTE: During the installation process on Windows, you may encounter warning messages from Windows Firewall and/or AV security software. You should choose "Allow" or "OK" for all of these dialogs. 
+
 
 
 Host-only Network
