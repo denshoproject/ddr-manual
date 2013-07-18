@@ -38,7 +38,7 @@ By default, VMs can only connect to the outside Internet.  VirtualBox's host-onl
 
 - In the "VirtualBox Manager" window, click "File > Preferences", then select the "Network" tab.
 - There should be a host-only network already created. Select it and click the screwdriver icon.
-- Note details of Host-Only Network for later::
+- The details for the Host-Only Network should be (If they do not match, please note for later or, if possible, adjust to these settings.) ::
 
     Adapter
     - Network name: $HOST_ONLY_NETWORK_NAME
@@ -100,6 +100,7 @@ At this point, you should be able to interact with the DDR-Local web application
 
     http://192.168.56.101/
 
+(This web server IP address assumes that the information in the host-only network settings for VirtualBox matched those above. If they did not, the web server IP may be different.)
 
 
 USB Hard Drive
