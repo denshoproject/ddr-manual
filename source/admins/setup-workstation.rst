@@ -41,15 +41,14 @@ By default, VMs can only connect to the outside Internet.  VirtualBox's host-onl
 - The details for the Host-Only Network should be (If they do not match, please note for later or, if possible, adjust to these settings.) ::
 
     Adapter
-    - Network name: $HOST_ONLY_NETWORK_NAME
-    - IPv4 Address: $HOST_ONLY_NETWORK_IPV4_ADDRESS (ex: 192.168.56.1)
+    - IPv4 Address: 192.168.56.1
     
     DHCP Server
     - Enable server: YES
-    - Server Address: $HOST_ONLY_DHCP_SERVER_ADDRESS (ex: 192.168.56.100)
-    - Server Mask: $HOST_ONLY_NETWORK_DHCP_SERVER_MASK (ex: 255.255.255.0)
-    - Lower Address Bound: $HOST_ONLY_NETWORK_DHCP_LOWER_BOUND (ex: 192.168.56.101)
-    - Upper Address Bound: $HOST_ONLY_NETWORK_DHCP_UPPER_BOUND (ex: 192.168.56.254)
+    - Server Address: 192.168.56.100
+    - Server Mask: 255.255.255.0
+    - Lower Address Bound: 192.168.56.101
+    - Upper Address Bound: 192.168.56.254
 
 
 
