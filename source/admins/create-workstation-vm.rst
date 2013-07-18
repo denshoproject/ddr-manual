@@ -569,7 +569,7 @@ Create a second user with a username matching the organization (`$ORGANIZATION`)
     # adduser $ORGANIZATION
     [enter info]
 
-Become the `$ORGANIZATION` user and generate a passwordless SSH key.::
+Become the `$ORGANIZATION` user and generate a passwordless SSH key. Be sure to note the name of the key.::
 
     # su - $ORGANIZATION
     $ ssh-keygen -t rsa
