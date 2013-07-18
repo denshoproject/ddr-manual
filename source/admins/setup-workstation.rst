@@ -2,7 +2,7 @@
 Setting Up a Workstation
 ========================
 
-This page documents the process of installing a Linux VM on a local partner machine.
+This page documents the process of installing a Linux VM on a local partner machine. These instructions presume that a base DDR VM image has already been created per the process contained in: https://github.com/densho/ddr-manual/blob/master/source/admins/create-workstation-vm.rst.
 
 
 NOTE: Most of the commands you will type in the Linux virtual machine will be typed as `root`.  To become `root`, type the following at a command prompt::
