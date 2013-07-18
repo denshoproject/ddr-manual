@@ -430,7 +430,7 @@ ddr-cmdln
 
 Install the `ddr-cmdln` app.::
 
-    # apt-get install git-core git-annex libxml2-dev pmount udisks python-dev python-pip
+    # apt-get install git-core git-annex libxml2-dev libxslt1-dev pmount udisks python-dev python-pip
     # cd /usr/local/src
     # git clone https://github.com/densho/ddr-cmdln.git
     # cd /usr/local/src/ddr-cmdln/ddr
