@@ -62,7 +62,7 @@ Install Virtual Machine
 Copy VM to partner machine
 --------------------------
 
-
+For instructions on creating the base VM, see: https://github.com/densho/ddr-manual/blob/master/source/admins/create-workstation-vm.rst
 
 Networking
 ----------
