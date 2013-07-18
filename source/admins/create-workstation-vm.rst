@@ -550,7 +550,9 @@ Site-Specific Steps
 ===================
 
 Nearly everything we have done up to this point will be the same from one VM to the next.
-The following steps will "personalize" this VM as belonging to a particular user/organization.
+The following steps will "personalize" this VM as belonging to a particular user/organization. 
+
+NOTE: These procedures also require access to the DDR gitolite-admin master repo. For security purposes, the gitolite-admin repo should not be cloned to the VM itself. 
 
 
 
