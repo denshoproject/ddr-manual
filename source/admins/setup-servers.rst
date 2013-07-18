@@ -82,3 +82,6 @@ Once your SSH pubkey has been added to `gitolite-admin` and you have been made a
     git clone git@192.168.0.14:gitolite-admin.git
     git clone git@partner.densho.org:gitolite-admin.git
 
+.. note::
+    Make sure you use the user `git` and not your own username.  All Gitolite-managed traffic is handled by the Gitolite user, which in this case is `git`.
+
