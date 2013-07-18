@@ -430,7 +430,7 @@ ddr-cmdln
 
 Install the `ddr-cmdln` app.::
 
-    # apt-get install git-core git-annex libxml2-dev pmount udisks python-dev python-pip
+    # apt-get install git-core git-annex libxml2-dev libxslt1-dev pmount udisks python-dev python-pip
     # cd /usr/local/src
     # git clone https://github.com/densho/ddr-cmdln.git
     # cd /usr/local/src/ddr-cmdln/ddr
@@ -532,7 +532,7 @@ Bootstrap, jQuery, Modernizr
 Test Drive!
 -----------
 
-At this point, you should be able to interact with the DDR-Local web application using a web browser on your host computer.::
+At this point, you should be able to interact with the DDR-Local web application using a web browser on your host computer. (Restarting nginx or a reboot may be necessary)::
 
     http://192.168.56.101/
 
@@ -550,7 +550,9 @@ Site-Specific Steps
 ===================
 
 Nearly everything we have done up to this point will be the same from one VM to the next.
-The following steps will "personalize" this VM as belonging to a particular user/organization.
+The following steps will "personalize" this VM as belonging to a particular user/organization. 
+
+NOTE: These procedures also require access to the DDR gitolite-admin master repo. For security purposes, the gitolite-admin repo should not be cloned to the VM itself. 
 
 
 
@@ -569,7 +571,7 @@ Create a second user with a username matching the organization (`$ORGANIZATION`)
     # adduser $ORGANIZATION
     [enter info]
 
-Become the `$ORGANIZATION` user and generate a passwordless SSH key.::
+Become the `$ORGANIZATION` user and generate a passwordless SSH key. Be sure to note the name of the key.::
 
     # su - $ORGANIZATION
     $ ssh-keygen -t rsa
