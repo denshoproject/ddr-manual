@@ -575,7 +575,7 @@ Create a second user with a username matching the organization (`$ORGANIZATION`)
     # adduser $ORGANIZATION
     [enter info]
 
-Become the `$ORGANIZATION` user and generate a passwordless SSH key. Be sure to note the name of the key.::
+Become the `$ORGANIZATION` user and generate a passwordless SSH key. (Accept the default names and paths for the keyfiles. Do not choose custom names or gitolite will not function correctly.).::
 
     # su - $ORGANIZATION
     $ ssh-keygen -t rsa
