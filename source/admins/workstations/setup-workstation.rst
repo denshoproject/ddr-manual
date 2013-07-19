@@ -110,11 +110,22 @@ USB Hard Drive
 ==============
 
 The DDR application is designed to store collection repositories on an attached USB hard drive.
-This step configures VirtualBox to automatically attach the USB device to this VM whenever it (the VM) is running.
 
-.. important::
-    Once you set up a filter, your VM will expect the USB device to remain attached!
-    If you unplug the device and try to use the VM you will see anomalous behavior!
+Preparing a USB Drive
+---------------------
+
+To prepare a USB drive for the DDR,:
+
+- format the drive as NTFS,
+- create a `ddr/` directory in the drive's root directory.
+
+
+Configuring the VM to use the USB Drive
+---------------------------------------
+
+This step configures VirtualBox to automatically attach the USB device to this VM whenever it (the VM) is running. Each USB drive has its own name/signature so each time you swap in a new drive -- for example, when you are ready to send a drive full of master binaries back to Densho -- you will need to first remove the old drive using the second procedure below, then add a filter for the new drive using the first procedure. 
+
+**IMPORTANT: Once you set up a filter, your VM will expect the USB device to remain attached! If you unplug the device and try to use the VM you will see anomalous behavior!**
 
 - Attach the USB hard drive that you plan to use to your computer.
 - Wait for the device to appear in your computer's list of drives before proceeding.
@@ -129,12 +140,4 @@ If you need to remove the device, follow the opposite procedure:
 - Click the "Remove USB filter" icon.
 - In the VM window, click on "Devices > USB Devices" and un-check the device in the pop-up menu.  If you have your computer's list of drives visible, you should see the USB device reappear in the list.
 
-
-
-Preparing a USB Drive
----------------------
-
-To prepare a USB drive for the DDR, ensure that:
-
-- the drive is formatted as NTFS,
-- the drive's root directory contains a `ddr/` directory.
+**NOTE: Because each USB drive will have a unique name/signature, you will need to perform this procedure each time you swap in a new drive for a full one being sent back to Densho HQ.**
