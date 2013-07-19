@@ -1,5 +1,6 @@
-.. _support:
+.. _community:
 
+=======
 Support
 =======
 

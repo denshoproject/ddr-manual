@@ -1,5 +1,8 @@
-Repository Structure - Entities
-=====================
+.. _structure:
+
+========
+Entities
+========
 
 
 **TL;DNR:** Description of the intellectual entity level of the repository.

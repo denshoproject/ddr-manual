@@ -1,4 +1,7 @@
-Repository Structure - Organizations
+.. _structure:
+
+=============
+Organizations
 =============
 
 

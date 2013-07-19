@@ -1,3 +1,6 @@
+.. _contributor:
+
+======================
 Development Philosophy
 ======================
 

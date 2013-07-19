@@ -1,6 +1,7 @@
-.. _faq:
+.. _guide:
 
-User Guide - Frequently Asked Questions
+==========================
+Frequently Asked Questions
 ==========================
 
 Questions frequently asked by users.  This section needs to be considerate and comforting.

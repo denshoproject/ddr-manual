@@ -1,4 +1,7 @@
-User Guide - Entities
+.. _guide:
+
+==============================
+Entities
 ==============================
 
 Creating and updating intellectual entity records.

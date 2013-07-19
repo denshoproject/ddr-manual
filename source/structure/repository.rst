@@ -1,4 +1,7 @@
-Repository Structure - The Repository
+.. _structure:
+
+==========
+Repository
 ==========
 
 

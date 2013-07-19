@@ -10,76 +10,35 @@ This manual describes the policy requirements for the Densho Digital Repository.
 
 
 
-Repository Structure
---------------------
+.. toctree::
+   :maxdepth: 2
 
-Describes the structure of the components of a repository.
+   structure/index
+
+
 
 .. toctree::
    :maxdepth: 2
 
-   Introduction  <structure/introduction>
-   Repository    <structure/repository>
-   Organizations <structure/organizations>
-   Collections   <structure/collections>
-   Entities      <structure/entities>
-   Files         <structure/files>
+   users/index
 
 
-
-User Guide
-------------
-
-Information for users.  If you're cataloguing artifacts this section is for you.
-
-.. toctree::
-   :maxdepth: 1
-
-   Introduction   <users/introduction>
-   Getting Set Up <users/setup>
-   Collections    <users/collections>
-   Entities       <users/entities>
-   Files          <users/files>
-
-
-
-Admin Guide
----------------------
-
-Info for system administrators.  If people call you when something is broken this section is probably for you.
 
 .. toctree::
    :maxdepth: 2
 
-   admins/introduction
-   admins/servers/index
-   admins/workstations/index
-   admins/cookbook
+   admins/index
 
 
-
-Community Guide
----------------
-
-This part of the documentation details the DDR ecosystem and community.
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
-   community/support
-   community/updates
-
+   community/index
 
 
-Contributor Guide
------------------
-
-If you want to contribute to the project, this part of the documentation is for you.
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
-   dev/philosophy
-   dev/internals
-   dev/todo
-   dev/contributors
+   dev/index

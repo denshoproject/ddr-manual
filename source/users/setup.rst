@@ -1,4 +1,7 @@
-User Guide - Getting Set Up
+.. _guide:
+
+====================
+Getting Set Up
 ====================
 
 How to get the tools you need to do your job.

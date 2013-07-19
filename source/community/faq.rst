@@ -1,5 +1,6 @@
-.. _faq:
+.. _community:
 
+==========================
 Frequently Asked Questions
 ==========================
 

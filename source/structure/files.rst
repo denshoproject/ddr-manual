@@ -1,4 +1,7 @@
-Repository Structure - Files
+.. _structure:
+
+=====
+Files
 =====
 
 

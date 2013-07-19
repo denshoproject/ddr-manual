@@ -1,2 +1,5 @@
-User Guide - Collections
+.. _guide:
+
+==============================
+Collections
 ==============================

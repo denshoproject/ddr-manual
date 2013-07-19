@@ -1,4 +1,7 @@
-Repository Structure - Collections
+.. _structure:
+
+===========
+Collections
 ===========
 
 
