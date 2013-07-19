@@ -62,10 +62,18 @@ Install Virtual Machine
 
 
 
-Copy VM to partner machine
+Import VM to partner machine
 --------------------------
 
 For instructions on creating the base VM, see: https://github.com/densho/ddr-manual/blob/master/source/admins/workstations/create-workstation-vm.rst
+
+To import the pre-configured base DDR workstation VM into VirtualBox:
+
+- Copy the VM appliance file (.ova) to the host machine 
+- Launch VirtualBox and click, "File > Import Appliance", then choose the .ova file
+- The new VM should now appear in the VirtualBox Manager inventory.
+
+If you encounter a fatal error during bootup of the VM, you may need to turn on PAE/NX extensions. With the VM powered down, choose, "Settings > System" then click on the "Processor" tab. Check the box, "Enable PAE/NX" then hit "OK".
 
 Networking
 ----------
