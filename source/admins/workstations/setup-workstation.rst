@@ -26,12 +26,12 @@ Prepare For The Install
 Install VirtualBox
 ------------------
 
-Download VirtualBox from the official web site and install it.
+If VirtualBox has not yet been installed on the physical machine, download the software from the official web site and install it.
 
 - https://www.virtualbox.org/wiki/Downloads
 - Look for "VirtualBox $VERSION_NUMBER for Windows hosts".
 - Also download the "VirtualBox $VERSION_NUMBER Oracle VM VirtualBox Extension Pack".
-- When all files are downloaded, launch the installer and install on your host machine.
+- When all files are downloaded, launch the installer and install on your host machine, then install the extension pack.
 
 
 
