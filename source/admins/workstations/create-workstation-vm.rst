@@ -645,7 +645,7 @@ On the VM, log in as the `ddr` user and confirm that the user now has access.::
 USB Hard Drive
 --------------
 
-The DDR application is designed to store collection repositories on an attached USB hard drive.
+The DDR application is designed to store collection repositories on an attached USB hard drive. 
 
 
 Preparing a USB Drive
@@ -677,3 +677,4 @@ If you need to remove the device, follow the opposite procedure:
 - Click the "Remove USB filter" icon.
 - In the VM window, click on "Devices > USB Devices" and un-check the device in the pop-up menu.  If you have your computer's list of drives visible, you should see the USB device reappear in the list.
 
+**NOTE: Because each USB drive will have a unique name/signature, you will need to perform this procedure each time you swap in a new drive for a full one being sent back to Densho HQ.**
