@@ -556,7 +556,7 @@ Site-Specific Steps
 Nearly everything we have done up to this point will be the same from one VM to the next.
 The following steps will "personalize" this VM as belonging to a particular user/organization. 
 
-NOTE: These procedures also require access to the DDR gitolite-admin master repo. For security purposes, the gitolite-admin repo should not be cloned to the VM itself. 
+**NOTE: These procedures also require access to the DDR gitolite-admin master repo. For security reasons, do not clone the gitolite-admin repo to the VM itself. All operations with the gitolite-admin repo should only be performed on a secure, trusted machine!** 
 
 
 
@@ -575,7 +575,7 @@ Create a second user with a username matching the organization (`$ORGANIZATION`)
     # adduser $ORGANIZATION
     [enter info]
 
-Become the `$ORGANIZATION` user and generate a passwordless SSH key. (Accept the default names and paths for the keyfiles. Do not choose custom names or gitolite will not function correctly.).::
+Become the `$ORGANIZATION` user and generate a passwordless SSH key. (Accept the default names and paths for the keyfiles -- i.e., `$ORGANIZATION/home/.ssh/id_rsa` and `$ORGANIZATION/home/.ssh/id_rsa.pub` Do not choose custom names or gitolite will not function correctly.).::
 
     # su - $ORGANIZATION
     $ ssh-keygen -t rsa
