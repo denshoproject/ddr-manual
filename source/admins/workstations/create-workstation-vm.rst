@@ -642,6 +642,20 @@ USB Hard Drive
 --------------
 
 The DDR application is designed to store collection repositories on an attached USB hard drive.
+
+
+Preparing a USB Drive
+---------------------
+
+To prepare a USB drive for the DDR,:
+
+- format the drive as NTFS,
+- create a `ddr/` directory in the drive's root directory.
+
+
+Configuring the VM to use the USB Drive
+---------------------------------------
+
 This step configures VirtualBox to automatically attach the USB device to this VM whenever it (the VM) is running.
 
 .. note::
@@ -661,12 +675,3 @@ If you need to remove the device, follow the opposite procedure:
 - Click the "Remove USB filter" icon.
 - In the VM window, click on "Devices > USB Devices" and un-check the device in the pop-up menu.  If you have your computer's list of drives visible, you should see the USB device reappear in the list.
 
-
-
-Preparing a USB Drive
----------------------
-
-To prepare a USB drive for the DDR,:
-
-- format the drive as NTFS,
-- create a `ddr/` directory in the drive's root directory.
