@@ -18,42 +18,43 @@ Describes the structure of the components of a repository.
 .. toctree::
    :maxdepth: 2
 
-   structure/repository
-   structure/organizations
-   structure/collections
-   structure/entities
+   Introduction  <structure/introduction>
+   Repository    <structure/repository>
+   Organizations <structure/organizations>
+   Collections   <structure/collections>
+   Entities      <structure/entities>
+   Files         <structure/files>
 
 
 
 User Guide
 ------------
 
-Information for users.  If you're cataloguing artifacts, this section is for you.
+Information for users.  If you're cataloguing artifacts this section is for you.
 
 .. toctree::
    :maxdepth: 1
 
-   users/introduction
-   users/entities
-   users/collections
-   users/setup
-   users/faq
+   Introduction   <users/introduction>
+   Getting Set Up <users/setup>
+   Collections    <users/collections>
+   Entities       <users/entities>
+   Files          <users/files>
 
 
 
 Admin Guide
 ---------------------
 
-Info for 
+Info for system administrators.  If people call you when something is broken this section is probably for you.
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
-   admins/setup-servers
-   admins/create-workstation-vm
-   admins/setup-workstation
-   admins/workflow
-   admins/faq
+   admins/introduction
+   admins/servers/index
+   admins/workstations/index
+   admins/cookbook
 
 
 
@@ -65,7 +66,6 @@ This part of the documentation details the DDR ecosystem and community.
 .. toctree::
    :maxdepth: 1
 
-   community/faq
    community/support
    community/updates
 
@@ -82,4 +82,4 @@ If you want to contribute to the project, this part of the documentation is for 
    dev/philosophy
    dev/internals
    dev/todo
-   dev/authors
+   dev/contributors

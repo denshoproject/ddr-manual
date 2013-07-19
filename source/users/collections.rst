@@ -1,2 +1,2 @@
-Working With Collections
+User Guide - Collections
 ==============================

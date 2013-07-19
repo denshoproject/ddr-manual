@@ -1,4 +1,4 @@
-Intellectual Entities
+Repository Structure - Entities
 =====================
 
 

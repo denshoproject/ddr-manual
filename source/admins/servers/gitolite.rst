@@ -1,15 +1,4 @@
-====================================
-Setting Up the Server Infrastructure
-====================================
-
-How to set up all the back-end stuff.
-
-
-.. note::
-    These instructions assume that you're logged into the console on some form of *NIX machine: Linux, OS X, or possibly Cygwin.
-
-
-
+========
 Gitolite
 ========
 
@@ -23,19 +12,20 @@ In the words of the Gitolite developer,
 
 The Gitolite documentation has a very idiosyncratic, 1990s, free-associative hyperlinking feel to it.  Enjoy!
 
+.. toctree::
+
 
 
 Creating a `gitolite-admin` repository
---------------------------------------
+======================================
 
 Gitolite configuration files are kept in a Git repo.  Changing these configurations is a process of pulling, editing, and pushing to the Gitolite server.  See the  the `gitolite administration page`_ for more info.
 
 .. _`gitolite administration page`: http://gitolite.com/gitolite/admin.html
 
 
-
 Adding a user to `gitolite-admin`
----------------------------------
+=================================
 
 In order to use Gitolite as a normal or admin user, each user must
 
@@ -72,7 +62,6 @@ This pubkey would be named `gjost@sangabriel`.
 Administration permisions for the `gitolite-admin` repository itself are granted via the `gitolite.conf` file contained within the repo.  Admin users must have `RW+` access.  In our case, this means being added to the `@admins` group.
 
 
-
 Clone a copy of `gitolite-admin`
 --------------------------------
 
@@ -84,4 +73,3 @@ Once your SSH pubkey has been added to `gitolite-admin` and you have been made a
 
 .. note::
     Make sure you use the user `git` and not your own username.  All Gitolite-managed traffic is handled by the Gitolite user, which in this case is `git`.
-

@@ -1,4 +1,4 @@
-Workflow
+Cookbook
 ========
 
 How to do the day-to-day stuff.
