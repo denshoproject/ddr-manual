@@ -42,7 +42,7 @@ By default, VMs can only connect to the outside Internet.  VirtualBox's host-onl
 
 - In the "VirtualBox Manager" window, click "File > Preferences", then select the "Network" tab.
 - There should be a host-only network already created. Select it and click the screwdriver icon.
-- The details for the Host-Only Network should be (If they do not match, please note for later or, if possible, adjust to these settings.) ::
+- The details for the Host-Only Network should be: (If they do not match, please note for later or, if possible, adjust to these settings.) ::
 
     Adapter
     - IPv4 Address: 192.168.56.1
@@ -65,7 +65,7 @@ Install Virtual Machine
 Copy VM to partner machine
 --------------------------
 
-For instructions on creating the base VM, see: https://github.com/densho/ddr-manual/blob/master/source/admins/create-workstation-vm.rst
+For instructions on creating the base VM, see: https://github.com/densho/ddr-manual/blob/master/source/admins/workstations/create-workstation-vm.rst
 
 Networking
 ----------
