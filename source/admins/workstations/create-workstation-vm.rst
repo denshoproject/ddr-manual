@@ -589,6 +589,10 @@ As `root`, copy the newly-created private and public keys to the `ddr` user's ho
 
 Copy `ddr`'s **public** key to a machine that has a copy of the gitolite-admin repository (using sFTP or `scp`).  The public key is: `/home/ddr/.ssh/id_rsa.pub`.
 
+
+Add Workstation access to DDR
+-----------------------------
+
 On a machine that has a copy of the `gitolite-admin` repository, add the public key.  Rename the key from `id_rsa.pub` to `$ORGANIZATION@ddrlocal$NUM.pub`::
 
     $ cd /PATH/TO/gitolite-admin
@@ -658,9 +662,7 @@ Configuring the VM to use the USB Drive
 
 This step configures VirtualBox to automatically attach the USB device to this VM whenever it (the VM) is running.
 
-.. note::
-    Once you set up a filter, your VM will expect the USB device to remain attached!
-    If you unplug the device and try to use the VM you will see anomalous behavior!
+**NOTE: Once you set up a filter, your VM will expect the USB device to remain attached! If you unplug the device and try to use the VM you will see anomalous behavior!**
 
 - Attach the USB hard drive that you plan to use to your computer.
 - Wait for the device to appear in your computer's list of drives before proceeding.
