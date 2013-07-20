@@ -556,7 +556,8 @@ Site-Specific Steps
 Nearly everything we have done up to this point will be the same from one VM to the next.
 The following steps will "personalize" this VM as belonging to a particular user/organization. 
 
-**NOTE: These procedures also require access to the DDR gitolite-admin master repo. For security reasons, do not clone the gitolite-admin repo to the VM itself. All operations with the gitolite-admin repo should only be performed on a secure, trusted machine!** 
+.. note::
+    These procedures also require access to the DDR gitolite-admin master repo. For security reasons, do not clone the gitolite-admin repo to the VM itself. All operations with the gitolite-admin repo should only be performed on a secure, trusted machine! 
 
 
 
@@ -662,7 +663,8 @@ Configuring the VM to use the USB Drive
 
 This step configures VirtualBox to automatically attach the USB device to this VM whenever it (the VM) is running.
 
-**NOTE: Once you set up a filter, your VM will expect the USB device to remain attached! If you unplug the device and try to use the VM you will see anomalous behavior!**
+.. note::
+    Once you set up a filter, your VM will expect the USB device to remain attached! If you unplug the device and try to use the VM you will see anomalous behavior!
 
 - Attach the USB hard drive that you plan to use to your computer.
 - Wait for the device to appear in your computer's list of drives before proceeding.
@@ -677,4 +679,5 @@ If you need to remove the device, follow the opposite procedure:
 - Click the "Remove USB filter" icon.
 - In the VM window, click on "Devices > USB Devices" and un-check the device in the pop-up menu.  If you have your computer's list of drives visible, you should see the USB device reappear in the list.
 
-**NOTE: Because each USB drive will have a unique name/signature, you will need to perform this procedure each time you swap in a new drive for a full one being sent back to Densho HQ.**
+.. note::
+    Because each USB drive will have a unique name/signature, you will need to perform this procedure each time you swap in a new drive for a full one being sent back to Densho HQ.
