@@ -105,11 +105,6 @@ In order for `ddr-local` to be able to ingest binary master and mezzanine files,
 
 
 
-Network interfaces
--------------------------
-
-
-
 Test Drive!
 -----------
 
