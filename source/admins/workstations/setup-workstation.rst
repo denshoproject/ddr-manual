@@ -94,13 +94,14 @@ VirtualBox VMs can only access designated directories in the host filesystem.
 In order for `ddr-local` to be able to ingest binary master and mezzanine files, you must designate a directory on your workstation into which you will deposit the files. 
 
 - In the host system (i.e., Windows), create a folder that will be used for sharing. We recommend using a simple location and name such as, "C:\\ddrshare".
-- Right-click on the VM, select Settings, then choose "Shared Folders" in the window.
+- In the VirtualBox Manager right-click on the VM, select Settings, then choose "Shared Folders" in the window.
 - Click "Add shared folder" icon on right side.
 - Browse and select the folder you created above.
 - Give it a name that the VirtualBox will use to identify it: $SHARED_FILES (we suggest, "ddrshare")
   
   - Read-only: NO
   - Auto-mount: YES
+  - Make permanent: NO
 
 
 
