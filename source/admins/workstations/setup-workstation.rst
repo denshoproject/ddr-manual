@@ -46,6 +46,7 @@ By default, VMs can only connect to the outside Internet.  VirtualBox's host-onl
 
     Adapter
     - IPv4 Address: 192.168.56.1
+    - Server Mask: 255.255.255.0
     
     DHCP Server
     - Enable server: YES
@@ -70,7 +71,11 @@ For instructions on creating the base VM, see: https://github.com/densho/ddr-man
 To import the pre-configured base DDR workstation VM into VirtualBox:
 
 - Copy the VM appliance file (.ova) to the host machine 
-- Launch VirtualBox and click, "File > Import Appliance", then choose the .ova file
+- Check that the "Default Machine Folder" under "Preferences > General" is set to "C:\\ddrworkbench". You may have to choose, "Other" and then create the new folder.
+- Launch VirtualBox and click, "File > Import Appliance", then choose "Open Appliance" and navigate to the .ova file
+- In the "Appliance Settings" dialog, check the box, "Reinitialize the MAC address of all network cards."
+- Click, 
+- Navigate 
 - The new VM should now appear in the VirtualBox Manager inventory.
 
 If you encounter a fatal error during bootup of the VM, you may need to turn on PAE/NX extensions. With the VM powered down, choose, "Settings > System" then click on the "Processor" tab. Check the box, "Enable PAE/NX" then hit "OK".
