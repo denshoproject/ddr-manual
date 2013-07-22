@@ -73,10 +73,9 @@ To import the pre-configured base DDR workstation VM into VirtualBox:
 - Copy the VM appliance file (.ova) to the host machine 
 - Check that the "Default Machine Folder" under "Preferences > General" is set to "C:\\ddrworkbench". You may have to choose, "Other" and then create the new folder.
 - Launch VirtualBox and click, "File > Import Appliance", then choose "Open Appliance" and navigate to the .ova file
-- In the "Appliance Settings" dialog, check the box, "Reinitialize the MAC address of all network cards."
-- Click, 
-- Navigate 
+- In the "Appliance Settings" dialog, check the box, "Reinitialize the MAC address of all network cards." Leave all other settings as is. 
 - The new VM should now appear in the VirtualBox Manager inventory.
+- Click "Start" and test the VM bootup. (You may see an extended message about keyboard/mouse control which you can ignore.) 
 
 If you encounter a fatal error during bootup of the VM, you may need to turn on PAE/NX extensions. With the VM powered down, choose, "Settings > System" then click on the "Processor" tab. Check the box, "Enable PAE/NX" then hit "OK".
 
