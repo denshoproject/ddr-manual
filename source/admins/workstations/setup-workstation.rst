@@ -144,9 +144,9 @@ This step configures VirtualBox to automatically attach the USB device to this V
 
 **IMPORTANT: Once you set up a filter, your VM will expect the USB device to remain attached! If you unplug the device and try to use the VM you will see anomalous behavior!**
 
-- Attach the USB hard drive that you plan to use to your computer.
-- Wait for the device to appear in your computer's list of drives before proceeding.
-- In the VM window, click on "Devices > USB Devices" and select the device in the pop-up menu.  If you have your computer's list of drives visible, you should see the USB device disappear from the list.
+- Attach the USB hard drive that you prepared using the instructions above.
+- Wait for the device to appear in the Windows file explorer's list of drives before proceeding.
+- In the VirtualBox Manager window, choose the workbench VM then "Settings > USB Devices" and select the device in the pop-up menu. (NOTE: the volume name you assigned above will *not* be the name of the USB device on the list. Look for the manufacturer name -- e.g., "Western Digital My Passport 0748 [1010]".) If you have your computer's list of drives visible, you should see the USB device disappear from the list.
 - In the VM window, click on "Machine > Settings" and select "USB" from the left-hand side menu.
 - Click the "Add Filter From Device" icon and select the device from the pop-up menu.
 
