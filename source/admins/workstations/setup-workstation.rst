@@ -118,15 +118,23 @@ At this point, you should be able to interact with the DDR-Local web application
 USB Hard Drive
 ==============
 
-The DDR application is designed to store collection repositories on an attached USB hard drive.
+The DDR application is designed to store collection repositories on an attached USB hard drive. 
+
+NOTE: THIS DRIVE SHOULD BE USED EXCLUSIVELY BY THE DDR APPLICATION!!
 
 Preparing a USB Drive
 ---------------------
 
 To prepare a USB drive for the DDR,:
 
-- format the drive as NTFS,
-- create a `ddr/` directory in the drive's root directory.
+First, format the drive as NTFS. In Windows:
+- In the Windows file explorer, find the drive icon.
+- Right-click, and choose, "Format."
+- In the dialog pop-up, make sure the "File system" is set to, "NTFS (Default)".
+- Change the "Volume label" to, "ddr-[PartnerCode]-[Number]". For example, "ddr-hmwf-1".
+- Choose "Quick Format", then click "Start". Click "OK" in the warning dialog; then "Close" when finished.
+
+Next, create a folder called, `ddr` on the drive. 
 
 
 Configuring the VM to use the USB Drive
