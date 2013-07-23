@@ -656,18 +656,18 @@ Add the pubkey and updated conf file and push to the Gitolite server.::
 On the VM, log in as the `ddr` user and confirm that the user now has access.::
 
     $ su - ddr
-    ddr@pnr:~$ ssh git@mits
-    The authenticity of host 'mits (192.168.0.14)' can't be established.
+    ddr@pnr:~$ ssh git@mits.densho.org
+    The authenticity of host 'mits.densho.org (216.168.60.179)' can't be established.
     RSA key fingerprint is a1:0b:04:28:61:88:c6:00:59:4c:8f:36:d3:1f:8c:c8.
     Are you sure you want to continue connecting (yes/no)? yes
-    Warning: Permanently added 'mits,192.168.0.14' (RSA) to the list of known hosts.
+    Warning: Permanently added 'mits.densho.org,216.168.60.179' (RSA) to the list of known hosts.
     PTY allocation request failed on channel 0
-    hello testing, this is git@mits running gitolite3 v3.2-19-gb9bbb78 on git 1.7.2.5
+    hello testing, this is git@mits.densho.org running gitolite3 v3.2-19-gb9bbb78 on git 1.7.2.5
      
      R W C  ddr-testing-[0-9]+
      R W C  ddr-testing-[0-9]+-[0-9]+
      ...
-    Connection to mits closed.
+    Connection to mits.densho.org closed.
 
 
 
