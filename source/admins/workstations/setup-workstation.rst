@@ -79,12 +79,6 @@ To import the pre-configured base DDR workstation VM into VirtualBox:
 
 If you encounter a fatal error during bootup of the VM, you may need to turn on PAE/NX extensions. With the VM powered down, choose, "Settings > System" then click on the "Processor" tab. Check the box, "Enable PAE/NX" then hit "OK".
 
-Networking
-----------
-
-Confirm that client networking works
-
-
 
 Shared Folders
 --------------
