@@ -24,6 +24,23 @@ Prepare For The Install
 
 
 
+SSH Client and Terminal Emulator (optional)
+-------------------------------------------
+
+You may find it significantly easier to connect to your VM from your host OS via SSH, rather than interacting directly though the VM's window.
+
+Windows:
+* `PuTTY <https://duckduckgo.com/PuTTY>`_
+* `Cygwin <http://cygwin.com/>`_
+
+Mac OS X:
+* Already has SSH which you can access via the built-in Terminal app.
+
+Linux:
+* If you're already using Linux you probably figure this out for yourself.
+
+
+
 Install VirtualBox
 ------------------
 
@@ -340,6 +357,13 @@ Disable login for `root`.  Find the line containing `PermitRootLogin` and change
 Restart SSH::
 
     # /etc/init.d/ssh restart
+
+
+
+Log in from your host machine
+-----------------------------
+
+At this point, log out from the VirtualBox window and log in from your host machine using SSH.  It is often more convenient to work from your host OS through an SSH connection.  Exactly how you do this will depend on whether you're using PuTTY or Cygwin, the OS X terminal, or a Linux terminal.  Whatever the case, you should now be able to log in as your regular user.  You should *not* be able to log in as root.
 
 
 
