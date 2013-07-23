@@ -99,7 +99,7 @@ Create a new virtual machine
 In the "VirtualBox Manager" window, click "Machine > New", then select the following options from the various screens that follow::
 
     Name and operating system
-    - Name
+    - Name: ddrworkbench-$PARTNERCODE
     - Type: Linux
     - Version: Debian
     
