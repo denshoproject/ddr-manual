@@ -674,7 +674,7 @@ On the VM, log in as the `ddr` user and confirm that the user now has access.::
 USB Hard Drive
 --------------
 
-The DDR application is designed to store collection repositories on an attached USB hard drive. 
+The DDR application is designed to store collection repositories on an attached USB hard drive. This portion of the VM prep procedure should only be performed if the USB drive will be sent along with the VM for installation at the partner site. If the partner has an existing USB drive at their location that will be used for the DDR, this step is unnecessary. The USB drive configuration should be performed at the partner location.
 
 
 Preparing a USB Drive
