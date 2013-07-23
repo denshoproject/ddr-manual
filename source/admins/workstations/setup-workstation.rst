@@ -101,7 +101,7 @@ In order for `ddr-local` to be able to ingest binary master and mezzanine files,
   
   - Read-only: NO
   - Auto-mount: YES
-  - Make permanent: NO
+  - Make permanent: YES
 
 
 
