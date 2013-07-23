@@ -142,6 +142,8 @@ Configuring the VM to use the USB Drive
 
 This step configures VirtualBox to automatically attach the USB device to this VM whenever it (the VM) is running. Each USB drive has its own name/signature so each time you swap in a new drive -- for example, when you are ready to send a drive full of master binaries back to Densho -- you will need to first remove the old drive using the second procedure below, then add a filter for the new drive using the first procedure. 
 
+**WARNING: VirtualBox has issues with USB3.0 devices. If you are unable to capture the device from the VM window with an error such as, "Device is busy," try another USB port on your physical machine or use a USB2.0 external hard drive instead.
+
 **IMPORTANT: Once you set up a filter, your VM will expect the USB device to remain attached! If you unplug the device and try to use the VM you will see anomalous behavior!**
 
 - Attach the USB hard drive that you prepared using the instructions above.
