@@ -135,10 +135,11 @@ In order for `ddr-local` to be able to ingest documents, you must designate a di
 - Right-click on the VM, select Settings, then choose "Shared Folders" in the window.
 - Click "Add shared folder" icon on right side.
 - Browse and select folder.
-- Give it a name: $SHARED_FOLDER_NAME
+- Folder Name: "ddrshared"
   
   - Read-only: NO
   - Auto-mount: YES
+  - Make Permanent: YES
 
 
 
