@@ -24,6 +24,23 @@ Prepare For The Install
 
 
 
+SSH Client and Terminal Emulator (optional)
+-------------------------------------------
+
+You may find it significantly easier to connect to your VM from your host OS via SSH, rather than interacting directly though the VM's window.
+
+Windows:
+* `PuTTY <https://duckduckgo.com/PuTTY>`_
+* `Cygwin <http://cygwin.com/>`_
+
+Mac OS X:
+* Already has SSH which you can access via the built-in Terminal app.
+
+Linux:
+* If you're already using Linux you probably figure this out for yourself.
+
+
+
 Install VirtualBox
 ------------------
 
@@ -82,7 +99,7 @@ Create a new virtual machine
 In the "VirtualBox Manager" window, click "Machine > New", then select the following options from the various screens that follow::
 
     Name and operating system
-    - Name
+    - Name: ddrworkbench-$PARTNERCODE
     - Type: Linux
     - Version: Debian
     
@@ -344,6 +361,13 @@ Restart SSH::
 
 
 
+Log in from your host machine
+-----------------------------
+
+At this point, log out from the VirtualBox window and log in from your host machine using SSH.  It is often more convenient to work from your host OS through an SSH connection.  Exactly how you do this will depend on whether you're using PuTTY or Cygwin, the OS X terminal, or a Linux terminal.  Whatever the case, you should now be able to log in as your regular user.  You should *not* be able to log in as root.
+
+
+
 Install Miscellaneous Useful Tools
 ----------------------------------
 
@@ -507,10 +531,14 @@ Copy the various configuration files to their proper locations.  The only file y
     # chown root.root /usr/local/src/ddr-local/ddrlocal/ddrlocal/settings.py
     # chmod 644 /usr/local/src/ddr-local/ddrlocal/ddrlocal/settings.py
     
+    # cp /usr/local/src/ddr-local/debian/conf/celeryd.conf /etc/supervisor/conf.d/
     # cp /usr/local/src/ddr-local/debian/conf/gunicorn_ddrlocal.conf /etc/supervisor/conf.d/
+    # chown root.root /etc/supervisor/conf.d/celeryd.conf
     # chown root.root /etc/supervisor/conf.d/gunicorn_ddrlocal.conf
+    # chmod 644 /etc/supervisor/conf.d/celeryd.conf
     # chmod 644 /etc/supervisor/conf.d/gunicorn_ddrlocal.conf
     # supervisorctl reload
+    # supervisorctl restart celery
     # supervisorctl restart ddrlocal
     
     # cp /usr/local/src/ddr-local/debian/conf/ddrlocal.conf /etc/nginx/sites-available
@@ -629,25 +657,25 @@ Add the pubkey and updated conf file and push to the Gitolite server.::
 On the VM, log in as the `ddr` user and confirm that the user now has access.::
 
     $ su - ddr
-    ddr@pnr:~$ ssh git@mits
-    The authenticity of host 'mits (192.168.0.14)' can't be established.
+    ddr@pnr:~$ ssh git@mits.densho.org
+    The authenticity of host 'mits.densho.org (216.168.60.179)' can't be established.
     RSA key fingerprint is a1:0b:04:28:61:88:c6:00:59:4c:8f:36:d3:1f:8c:c8.
     Are you sure you want to continue connecting (yes/no)? yes
-    Warning: Permanently added 'mits,192.168.0.14' (RSA) to the list of known hosts.
+    Warning: Permanently added 'mits.densho.org,216.168.60.179' (RSA) to the list of known hosts.
     PTY allocation request failed on channel 0
-    hello testing, this is git@mits running gitolite3 v3.2-19-gb9bbb78 on git 1.7.2.5
+    hello testing, this is git@mits.densho.org running gitolite3 v3.2-19-gb9bbb78 on git 1.7.2.5
      
      R W C  ddr-testing-[0-9]+
      R W C  ddr-testing-[0-9]+-[0-9]+
      ...
-    Connection to mits closed.
+    Connection to mits.densho.org closed.
 
 
 
 USB Hard Drive
 --------------
 
-The DDR application is designed to store collection repositories on an attached USB hard drive. 
+The DDR application is designed to store collection repositories on an attached USB hard drive. This portion of the VM prep procedure should only be performed if the USB drive will be sent along with the VM for installation at the partner site. If the partner has an existing USB drive at their location that will be used for the DDR, this step is unnecessary. The USB drive configuration should be performed at the partner location.
 
 
 Preparing a USB Drive
