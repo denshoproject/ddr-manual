@@ -104,7 +104,7 @@ In the "VirtualBox Manager" window, click "Machine > New", then select the follo
     - Version: Debian
     
     Memory Size
-    - 1024 MB
+    - 2048 MB
     
     Hard Drive
     - Create a virtual hard drive now
