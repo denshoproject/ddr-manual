@@ -7,12 +7,7 @@ Setting Up a Workstation
 This page documents the process of installing a Linux VM on a local partner machine. These instructions presume that a base DDR VM image has already been created per the process contained in: https://github.com/densho/ddr-manual/blob/master/source/admins/workstations/create-workstation-vm.rst.
 
 
-NOTE: Most of the commands you will type in the Linux virtual machine will be typed as `root`.  To become `root`, type the following at a command prompt::
-
-    $ su - root
-    [enter root password]
-
-As per convention, variables in this documentation are written in upper case with underscores, starting with a "$" sign.  
+NOTE: As per convention, variables in this documentation are written in upper case with underscores, starting with a "$" sign.  
 
 .. toctree::
 
