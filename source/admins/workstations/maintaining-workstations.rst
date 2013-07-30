@@ -23,20 +23,20 @@ Updating a workstation
 The partner workstation is designed to be updated in-place without complete reinstallation of the core software components. The ddr-local application contains a script that can assist with the update process. 
 To run the script: 
 
-- Log on to the VM terminal as `root` or su `root`.
+- Log on to the VM terminal as `root` or su `root`::
 
     $ su - root
     [enter root password]
 
-- Change to the `ddr-local` source direcotry
+- Change to the `ddr-local` source directory::
 
     $ cd /usr/local/src/ddr-local
 
-- Download the latest version of code from the main repository
+- Download the latest version of code from the main repository::
 
     $ git pull
     
-- Run the updater shell script
+- Run the updater shell script::
 
     $ sh ddrlocal/bin/update.sh
 
