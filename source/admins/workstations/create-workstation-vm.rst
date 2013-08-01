@@ -336,6 +336,7 @@ Security Hardening
     # apt-get install ufw
     # ufw allow 22/tcp
     # ufw allow 80/tcp
+    # ufw allow 9001/tcp
     # ufw enable
     # ufw status
     Status: active
@@ -346,6 +347,8 @@ Security Hardening
     22/tcp                     ALLOW       Anywhere (v6)
     80/tcp                     ALLOW       Anywhere
     80/tcp                     ALLOW       Anywhere (v6)
+    9001/tcp                   ALLOW       Anywhere
+    9001/tcp                   ALLOW       Anywhere (v6)
 
 Install the SSH server and `fail2ban`, a daemon that shuts down some types of automated SSH hacking::
 
@@ -531,15 +534,16 @@ Copy the various configuration files to their proper locations.  The only file y
     # chown root.root /usr/local/src/ddr-local/ddrlocal/ddrlocal/settings.py
     # chmod 644 /usr/local/src/ddr-local/ddrlocal/ddrlocal/settings.py
     
+    # cp /usr/local/src/ddr-local/debian/supervisord.conf /etc/supervisor/
     # cp /usr/local/src/ddr-local/debian/conf/celeryd.conf /etc/supervisor/conf.d/
     # cp /usr/local/src/ddr-local/debian/conf/gunicorn_ddrlocal.conf /etc/supervisor/conf.d/
+    # chown root.root /etc/supervisor/supervisord.conf
     # chown root.root /etc/supervisor/conf.d/celeryd.conf
     # chown root.root /etc/supervisor/conf.d/gunicorn_ddrlocal.conf
+    # chmod 644 /etc/supervisor/supervisord.conf
     # chmod 644 /etc/supervisor/conf.d/celeryd.conf
     # chmod 644 /etc/supervisor/conf.d/gunicorn_ddrlocal.conf
-    # supervisorctl reload
-    # supervisorctl restart celery
-    # supervisorctl restart ddrlocal
+    # /etc/init.d/supervisor restart
     
     # cp /usr/local/src/ddr-local/debian/conf/ddrlocal.conf /etc/nginx/sites-available
     # ln -s /etc/nginx/sites-available/ddrlocal.conf /etc/nginx/sites-enabled
