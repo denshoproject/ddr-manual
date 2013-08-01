@@ -7,12 +7,7 @@ Setting Up a Workstation
 This page documents the process of installing a Linux VM on a local partner machine. These instructions presume that a base DDR VM image has already been created per the process contained in: https://github.com/densho/ddr-manual/blob/master/source/admins/workstations/create-workstation-vm.rst.
 
 
-NOTE: Most of the commands you will type in the Linux virtual machine will be typed as `root`.  To become `root`, type the following at a command prompt::
-
-    $ su - root
-    [enter root password]
-
-As per convention, variables in this documentation are written in upper case with underscores, starting with a "$" sign.  
+NOTE: As per convention, variables in this documentation are written in upper case with underscores, starting with a "$" sign.  
 
 .. toctree::
 
@@ -87,12 +82,11 @@ The `ddr-local` virtual machine will take in media documents from your workstati
 VirtualBox VMs can only access designated directories in the host filesystem.
 In order for `ddr-local` to be able to ingest binary master and mezzanine files, you must designate a directory on your workstation into which you will deposit the files. 
 
-- In the host system (i.e., Windows), create a folder that will be used for sharing. It should be called, "C:\\ddrshare".
+- In the host system (i.e., Windows), create a folder that will be used for sharing. **It must be called, "C:\\ddrshared".**
 - In the VirtualBox Manager right-click on the VM, select Settings, then choose "Shared Folders" in the window.
 - Click "Add shared folder" icon on right side.
-- Browse and select the folder you created above.
-- Give it a name that the VirtualBox will use to identify it: $SHARED_FILES (we suggest, "ddrshare")
-  
+- Browse and select the folder (C:\ddrshared) you created above.
+  - Name: ddrshared
   - Read-only: NO
   - Auto-mount: YES
   - Make permanent: YES
