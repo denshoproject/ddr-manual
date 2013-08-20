@@ -557,7 +557,7 @@ Bootstrap, jQuery, Modernizr
 `ddr-local` uses Bootstrap, jQuery, and Modernizr for its user interface.  These are installed in a directory visible to `nginx` and writable by `ddr-local`.::
 
     # cd /var/www/static
-    # wget http://twitter.github.io/bootstrap/assets/bootstrap.zip
+    # wget http://getbootstrap.com/2.3.2/assets/bootstrap.zip
     # 7z x bootstrap.zip
     # cd /var/www/static/js
     # wget http://modernizr.com/downloads/modernizr-latest.js
