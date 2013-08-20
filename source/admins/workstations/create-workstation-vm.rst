@@ -534,7 +534,7 @@ Copy the various configuration files to their proper locations.  The only file y
     # chown root.root /usr/local/src/ddr-local/ddrlocal/ddrlocal/settings.py
     # chmod 644 /usr/local/src/ddr-local/ddrlocal/ddrlocal/settings.py
     
-    # cp /usr/local/src/ddr-local/debian/supervisord.conf /etc/supervisor/
+    # cp /usr/local/src/ddr-local/debian/conf/supervisord.conf /etc/supervisor/
     # cp /usr/local/src/ddr-local/debian/conf/celeryd.conf /etc/supervisor/conf.d/
     # cp /usr/local/src/ddr-local/debian/conf/gunicorn_ddrlocal.conf /etc/supervisor/conf.d/
     # chown root.root /etc/supervisor/supervisord.conf
