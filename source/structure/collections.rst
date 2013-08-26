@@ -35,8 +35,7 @@ File structure
 changelog
 --------------------
 
-A text file which records changes made to the entity and its files.
-See the collections page for format information.
+A text file which records changes made to the collection and its files.
 
 
 

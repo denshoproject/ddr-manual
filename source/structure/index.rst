@@ -10,5 +10,5 @@ Repository Structure
    repository
    organizations
    collections
-   entities
+   objects
    files

@@ -75,7 +75,7 @@ Naming convention
 ====================
 ::
 
-    {REPOSITORY}-{ORGANIZATION}-{COLLECTION}-{ENTITY}-{ROLE}-{HASH}[-{APPEND}].{EXTENSION}
+    {REPOSITORY}-{ORGANIZATION}-{COLLECTION}-{OBJECT}-{ROLE}-{HASH}[-{APPEND}].{EXTENSION}
 
 REPOSITORY
     Keyword for the repository in which this file resides.  Ex: `ddr`.
@@ -86,8 +86,8 @@ ORGANIZATION
 COLLECTION
     ID number of the collection to which the file belongs.  Ex: `42`.
 
-ENTITY
-    ID number of the entity with which the file is associated.  Ex: `56`.
+OBJECT
+    ID number of the object with which the file is associated.  Ex: `56`.
 
 ROLE
     Keyword for the role.  Ex: `master` or `mezzanine`.

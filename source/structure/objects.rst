@@ -1,11 +1,15 @@
 .. _structure:
 
-========
-Entities
-========
+=======
+Objects
+=======
 
 
-**TL;DNR:** Description of the intellectual entity level of the repository.
+**TL;DNR:** Description of the object level of the repository.
+
+.. note::
+    The word "object" is a reserved word in the Python programming language, so the underlying software instead refers to "entities".  You may occasionally see references to "entities" in the software and documentation.
+
 
 
 
@@ -30,7 +34,7 @@ File structure
 changelog
 --------------------
 
-A text file which records changes made to the entity and its files.
+A text file which records changes made to the object and its files.
 See the collections page for format information.
 
 
@@ -38,7 +42,7 @@ See the collections page for format information.
 control
 --------------------
 
-A text file which contains basic low-level metadata for the entity and its files.
+A text file which contains basic low-level metadata for the object and its files.
 See the collections page for format information.
 
 
@@ -46,7 +50,7 @@ See the collections page for format information.
 entity.json
 --------------------
 
-This file contains all the metadata for the entity and for each of its files.
+This file contains all the metadata for the object and for each of its files.
 It is formatted in JSON (JavaScript Object Notation), a text-based open standard designed for human-readable data interchange.
 
 
@@ -54,12 +58,12 @@ It is formatted in JSON (JavaScript Object Notation), a text-based open standard
 files/
 --------------------
 
-A directory which contains the entity's master, mezzanine, and access files.
+A directory which contains the object's master, mezzanine, and access files.
 
 
 
 mets.xml
 --------------------
 
-This file contains METS metadata for the entity and for each of its files.
+This file contains METS metadata for the object and for each of its files.
 It is generated based on the contents of the ``entity.json`` file.
