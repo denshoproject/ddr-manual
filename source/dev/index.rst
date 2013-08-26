@@ -8,6 +8,7 @@ Contributor Guide
    :maxdepth: 1
 
    philosophy
-   todo
+   stack
    workflow
    contributors
+   todo
