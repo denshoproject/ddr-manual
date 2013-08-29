@@ -9,7 +9,8 @@ This page documents the process of installing a Linux VM on a local partner mach
 
 NOTE: As per convention, variables in this documentation are written in upper case with underscores, starting with a "$" sign.  
 
-.. toctree::
+.. contents::
+.. section-numbering::
 
 
 
@@ -17,9 +18,10 @@ Prepare For The Install
 =======================
 
 
-
 Install VirtualBox
 ------------------
+
+**IMPORTANT: For virtualization to function, it may be necessary to enable it from the BIOS settings of the physical machine. For Intel-based hardware, this is usually found under the "Security" section of the BIOS as a setting called, "VT-x Extensions."**
 
 If VirtualBox has not yet been installed on the physical machine, download the software from the official web site and install it.
 
