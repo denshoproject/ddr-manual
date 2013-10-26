@@ -418,7 +418,7 @@ DDR Applications and Dependencies - Automated Installation
 
 In this section we will use a script to automatically install the DDR code and its supporting applications.
 
-Log in to your VM and become `root`, then follow these instructions:
+Log in to your VM and become `root`, then follow these instructions::
 
     # git clone https://github.com/densho/ddr-local.git
     # cd ddr-local/ddrlocal
