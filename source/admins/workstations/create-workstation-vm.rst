@@ -426,6 +426,8 @@ Log in to your VM and become `root`, then follow these instructions::
 
 Enter a password for the `ddr` user, then wait as the `install.sh` script installs Debian packages and Python code and builds up your system.  On a basic VM this takes about 7 minutes.
 
+When you are done, skip the next section and proceed to "Site-Specific Steps".
+
 
 
 DDR Applications and Dependencies - Manual Installation
