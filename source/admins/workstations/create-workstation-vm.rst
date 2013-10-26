@@ -413,10 +413,25 @@ If something goes wrong while installing the DDR, or if the developer makes a no
 
 
 
-DDR Applications and Dependencies
-=================================
+DDR Applications and Dependencies - Automated Installation
+==========================================================
 
-You will now begin installing the DDR code and its supporting applications.
+In this section we will use a script to automatically install the DDR code and its supporting applications.
+
+Log in to your VM and become `root`, then follow these instructions:
+
+    # git clone https://github.com/densho/ddr-local.git
+    # cd ddr-local/ddrlocal
+    # sh bin/install.sh
+
+Enter a password for the `ddr` user, then wait as the `install.sh` script installs Debian packages and Python code and builds up your system.  On a basic VM this takes about 7 minutes.
+
+
+
+DDR Applications and Dependencies - Manual Installation
+=======================================================
+
+This section details how to install the DDR code and its supporting applications by hand.  It is basically the same as running the `install.sh` script above but hopefully you will come away knowing more about what's going on under the hood.
 
 
 
