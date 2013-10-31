@@ -118,13 +118,14 @@ Preparing a USB Drive
 To prepare a USB drive for the DDR,:
 
 First, format the drive as NTFS. In Windows:
+
 - In the Windows file explorer, find the drive icon.
 - Right-click, and choose, "Format."
 - In the dialog pop-up, make sure the "File system" is set to, "NTFS (Default)".
 - Change the "Volume label" to, "ddr-[PartnerCode]-[Number]". For example, "ddr-hmwf-1".
 - Choose "Quick Format", then click "Start". Click "OK" in the warning dialog; then "Close" when finished.
 
-Next, create a folder called, `ddr` on the drive. 
+Next, create a folder called, "ddr" in the root directory of the drive. This "ddr" directory must exist for the workbench app to function!
 
 
 Configuring the VM to use the USB Drive
