@@ -30,13 +30,16 @@ SSH Client and Terminal Emulator (optional)
 You may find it significantly easier to connect to your VM from your host OS via SSH, rather than interacting directly though the VM's window.
 
 Windows:
+
 * `PuTTY <https://duckduckgo.com/PuTTY>`_
 * `Cygwin <http://cygwin.com/>`_
 
 Mac OS X:
+
 * Already has SSH which you can access via the built-in Terminal app.
 
 Linux:
+
 * If you're already using Linux you probably figure this out for yourself.
 
 
