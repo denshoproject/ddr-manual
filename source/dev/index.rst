@@ -8,7 +8,7 @@ Contributor Guide
    :maxdepth: 1
 
    philosophy
-   stack
+   stack/index
    workflow
    contributors
    todo
