@@ -423,6 +423,7 @@ In this section we will use a script to automatically install the DDR code and i
 
 Log in to your VM and become `root`, then follow these instructions::
 
+    # apt-get install git-core
     # git clone https://github.com/densho/ddr-local.git
     # cd ddr-local/ddrlocal
     # sh bin/install.sh
