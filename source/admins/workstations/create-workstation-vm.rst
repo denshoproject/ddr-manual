@@ -386,6 +386,8 @@ Install Miscellaneous Useful Tools
 Install VirtualBox Guest Additions
 ----------------------------------
 
+..note:: Note: Debian 7.4 may have included the VirtualBox extensions in the core installer...stay tuned. (2/11/2014). 
+
 source: http://virtualboxes.org/doc/installing-guest-additions-on-debian/
 
 Install required packages in the VM, then configure system for building kernel modules::
@@ -423,6 +425,7 @@ In this section we will use a script to automatically install the DDR code and i
 Log in to your VM and become `root`, then follow these instructions::
 
     # apt-get install git-core
+    # cd /usr/local/src
     # git clone https://github.com/densho/ddr-local.git
     # cd ddr-local/ddrlocal
     # sh bin/install.sh
