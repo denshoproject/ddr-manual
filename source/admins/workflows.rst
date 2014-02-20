@@ -38,20 +38,35 @@ At Densho HQ, using "ddr-testing-1" example collection repo:
 2. Review and approve using ddr-local webui.
 3. Run ddrfilter, pointing output to /densho/kinkura/working::
 
-   su ddr
-   cd /usr/local/src/ddr-local/ddrlocal
-   ddrfilter -ma -s /densho/kinkura/gold/ddr-testing-1 -d /densho/kinkura/working/ddr-testing-1
+    su ddr
+    cd /usr/local/src/ddr-cmdln/ddr
+    ./bin/ddrfilter -ma -s /densho/kinkura/gold/ddr-testing-1 -d /densho/kinkura/working/ddr-testing-1
 
-4. Move PUBLIC_ddr-testing-1 to /densho/kinkura/public/ddr-testing-1::
+   Result::
+    
+    ddr@kinkura:/densho/kinkura/working# ls
+    FILTER_ddr-densho-testing-1
+    FILTER_ddr-densho-testing-1.log
+    FILTER_ddr-densho-testing-1.sh
+    
+4. Run the generated filtering script::
 
-   mv /densho/kinkura/working/PUBLIC_ddr-testing-1 /densho/kinkura/public/ddr-testing-1
+    sh /densho/kinkura/working/FILTER_ddr-densho-testing-1.sh | tee -a /densho/kinkura/working/FILTER_ddr-testing-1.log
 
-5. Run ddrpubcopy, pointing output to /densho/kinkura/transfer/ddr-testing-1
+5. Move PUBLIC_ddr-testing-1 to /densho/kinkura/public/ddr-testing-1::
 
-   su ddr
-   cd /usr/local/src/ddr-local/ddrlocal
-   ddrpubcopy -ma -c /densho/kinkura/public/ddr-testing-1 -d /densho/kinkura/transfer
+    mv /densho/kinkura/working/PUBLIC_ddr-testing-1 /densho/kinkura/public/ddr-testing-1
+
+6. Run ddrpubcopy, pointing output to /densho/kinkura/transfer/ddr-testing-1::
+
+    su ddr
+    cd /usr/local/src/ddr-local/ddrlocal
+    ddrpubcopy -ma -c /densho/kinkura/public/ddr-testing-1 -d /densho/kinkura/transfer
 
 6. Transfer files from HQ to public storage.
 
-7. Run ddrindex on /densho/kinkura/public/ddr-testing-1, targeting public ElasticSearch server in colo.
+7. Run ddrindex on /densho/kinkura/public/ddr-testing-1, targeting public ElasticSearch server in colo::
+
+    su ddr
+    cd /usr/local/src/ddr-cmdln/ddr
+    ./bin/ddrindex index -H localhost:9200 --recursive -i documents -p /densho/kinkura/public/ddr-testing-1
