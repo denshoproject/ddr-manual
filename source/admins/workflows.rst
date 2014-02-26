@@ -69,4 +69,5 @@ At Densho HQ, using "ddr-testing-1" example collection repo:
 
     su ddr
     cd /usr/local/src/ddr-cmdln/ddr
-    ./bin/ddrindex index -H PUBLIC_ES_SERVER:9200 --newstyle --recursive -i documents -p /densho/kinkura/public/ddr-testing-1
+    ./bin/ddrindex index -H PUBLIC_ES_SERVER:9200 --newstyle --recursive -i documents -p \
+    /densho/kinkura/public/ddr-testing-1 | tee /densho/kinkura/public/ddrindex_ddr-testing-1.log
