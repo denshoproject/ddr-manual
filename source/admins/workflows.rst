@@ -29,6 +29,8 @@ Publishing Repos
 
 The following details the procedure for publishing completed Collection repos. This is specific to the archival processes and operational environment of the DDR project at Densho. 
 
+The commands are available with `ddr-cmdln` and `ddr-local` installed. `ddr-cmdln` should be on the `137-browse-ui` branch.
+
 At Densho HQ, using "ddr-testing-1" example collection repo:
 
 1. Move/copy ddr-testing-1 from import staging to /densho/kinkura/gold/ddr-testing-1::
@@ -72,3 +74,5 @@ At Densho HQ, using "ddr-testing-1" example collection repo:
     ./bin/ddrindex index -H PUBLIC_ES_SERVER:9200 --newstyle --recursive -i documents \
     -p /densho/kinkura/public/ddr-testing-1 | \ 
     tee /densho/kinkura/working/logs/ddrindex_ddr-testing-1.log
+   
+   ddrindex can be run against an entire directory with `--recursive` mode selected. 
