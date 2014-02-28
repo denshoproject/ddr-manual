@@ -76,3 +76,18 @@ At Densho HQ, using "ddr-testing-1" example collection repo:
     tee /densho/kinkura/working/logs/ddrindex_ddr-testing-1.log
    
    ddrindex can be run against an entire directory with `--recursive` mode selected. 
+   
+Other Utilities
+-------------------------------------
+
+It may be necessary to clobber an entire collection and its child entities into published status. The `ddrmassupdate` script will traverse an entire collection repo and find all `collection.json` and `entity.json` files, modifying the `'status'` attribute to the value `'completed'`. As the developer has stated in the docs::
+
+    WARNING! THIS SCRIPT IS AN EXTREMELY STUPID BLUNT INSTRUMENT!
+    
+To run the script::
+
+    su root
+    cd /usr/local/src/ddr-cmdln/ddr
+    ./bin/ddrmassupdate -c /PATH/TO/MY/ddr-testing-1
+    
+Note that you *must* be `root` or have privs to write in the `/usr/local/src/ddr-cmdln/ddr` directory in order to use the script because of the default location of the logfile. Happy clobbering! 
