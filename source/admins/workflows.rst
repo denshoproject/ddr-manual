@@ -91,3 +91,63 @@ To run the script::
     ./bin/ddrmassupdate -c /PATH/TO/MY/ddr-testing-1
     
 Note that you *must* be `root` or have privs to write in the `/usr/local/src/ddr-cmdln/ddr` directory in order to use the script because of the default location of the logfile. Happy clobbering! 
+
+
+Refresh Public Server
+=====================
+
+Workflow for completely replacing data in Elasticsearch, for `ddr-public`.
+
+The following commands must be run on the server on which the repositories reside.  First open a Python interpreter::
+
+    $ su ddr
+    [password]
+    $ python
+    Python 2.7.3 (default, Mar 14 2014, 11:57:14) 
+    [GCC 4.7.2] on linux2
+    Type "help", "copyright", "credits" or "license" for more information.
+    >>> 
+
+Import the necessary libraries, then set variables for your Elasticsearch host and for the index you'll be putting documents in.::
+
+    from DDR import models
+    from DDR import docstore
+    
+    HOSTS = [{'host':'192.168.X.Y', 'port':9200}]
+    INDEX = 'documents0'
+
+Next, delete any existing index, create a new index, and upload mappings and facet information.::
+
+    docstore.delete_index(HOSTS, INDEX)
+    
+    docstore.create_index(HOSTS, INDEX)
+    docstore.put_mappings(HOSTS, INDEX, docstore.HARD_CODED_MAPPINGS_PATH, models.MODELS_DIR)
+    docstore.put_facets(HOSTS, INDEX, docstore.HARD_CODED_FACETS_PATH)
+
+Set an alias for the index.  This name must match `DOCSTORE_INDEX` in `ddr-public/ddrpublic/ddrpublic/settings.py`.::
+
+    es = docstore._get_connection(HOSTS)
+    es.indices.put_alias(index=[INDEX], name='ALIAS', body={})
+
+Each repository and organization must have a corresponding metadata document.  The organization files can be found in the organizations' inventory repositories.::
+
+    # This is still a little clunky.
+    import json
+    def loads( path ):
+        with open(path, 'r') as f:
+            data = json.loads(f.read())
+        return data
+    
+    PATH = '/PATH/TO/REPOSITORIES'
+    es = docstore._get_connection(HOSTS)
+    
+    es.index(index=INDEX, doc_type='repository', id='ddr', body=loads('%s/ddr/repository.json' % PATH))
+    
+    # Do this once per organization.
+    es.index(index=INDEX, doc_type='organization', id='ddr-densho', body=loads('%s/REPO-ORG/organization.json' % PATH))
+
+Press `Control-D` to exit the Python interpreter.
+
+Use the `ddrindex` command to upload metadata for each collection repository.::
+
+    $ ddrindex index -H HOST:PORT -r -i INDEX -p /PATH/TO/REPOSITORIES/REPO-ORG-CID
