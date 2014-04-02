@@ -737,3 +737,145 @@ If you need to remove the device, follow the opposite procedure:
 
 .. note::
     Because each USB drive will have a unique name/signature, you will need to perform this procedure each time you swap in a new drive for a full one being sent back to Densho HQ.
+
+
+Disk Image
+----------
+
+Alternative to keeping collections on a USB hard drive (1.5.3)
+
+Preparing a Disk Image
+----------------------
+
+Before you start, note the device names, filesystems, and sizes for device that are attached to the system.  This is to avoid accidentally reformatting the wrong device.  A number of tools provide this information.::
+
+    $ df 
+    Filesystem               1K-blocks      Used Available Use% Mounted on
+    rootfs                     7627880   3306624   3933776  46% /
+    udev                         10240         0     10240   0% /dev
+    tmpfs                       415104       316    414788   1% /run
+    /dev/mapper/partner-root   7627880   3306624   3933776  46% /
+    tmpfs                         5120         0      5120   0% /run/lock
+    tmpfs                       830200         0    830200   0% /run/shm
+    /dev/sda1                   233191     19354    201396   9% /boot
+    none                     971127804 647786216 323341588  67% /media/sf_ddrshared
+    /dev/sdc1                488375968 284164688 204211280  59% /media/WD5000BMV-2
+    
+    $ lsblk -f
+    NAME                      FSTYPE LABEL       MOUNTPOINT
+    sda                                          
+    ├─sda1                                       /boot
+    ├─sda2                                       
+    └─sda5                                       
+      ├─partner-root (dm-0)                      /
+      └─partner-swap_1 (dm-1)                    [SWAP]
+    sr0                                          
+    sdc                                          
+    └─sdc1                    ntfs   WD5000BMV-2
+
+In this case, `/dev/sdc1` is a USB drive formatted as a DDR drive.  `/dev/sda` is not listed here but if you installed according to this document's instructions it contains the boot partition, operating system, and other files for the VM.
+
+Create the new virtual disk in VirtualBox.
+
+- Shut down the VM if it is running.
+- In VirtualBox Manager, right-click on the VM and choose Settings.
+- Under "Storage," notice that the SATA controller is the second item in the storage tree. Underneath should be a VMDK file named after the VM (e.g. "ddrworkbench.vmdk").
+- Click on the SATA controller.  You should see the "Add CD/DVD Device" and "Add Hard Disk" icons. Click the hard disk.
+- In the pop-up dialog, choose "Create new disk".
+- On the hard drive file type screen select "VMDK". Other choices are certainly valid, though VMDK files are also readable by VMware.
+- On the storage type screen choose "Fixed size".
+- Give the virtual harddrive file a name and configure the size.
+
+Creating the disk image may take a long time.  When it is finished, start the VM.
+
+- Get the device ID from `fdisk`.  It will be a device that previously didn't exist and so should not match the information you collected above.  Since you just created the disk image it most likely is not formatted, so look for a "Disk /dev/DEVICE doesn't contain a valid partition table" message.  Note that `/dev/sda` is almost certainly the drive that contains the VM's operating system, so don't select that.::
+
+    $ sudo fdisk -l
+    [sudo] password for USERNAME:
+     
+    Disk /dev/sdb: 137.4 GB, 137438953472 bytes
+    255 heads, 63 sectors/track, 16709 cylinders, total 268435456 sectors
+    Units = sectors of 1 * 512 = 512 bytes
+    Sector size (logical/physical): 512 bytes / 512 bytes
+    I/O size (minimum/optimal): 512 bytes / 512 bytes
+    Disk identifier: 0x00000000
+     
+    Disk /dev/sdb doesn't contain a valid partition table
+    
+    ...
+
+- Create a single partition that fills the disk image.::
+
+    $ sudo su
+    root@pnr:/home/gjost# fdisk /dev/sdb
+    Device contains neither a valid DOS partition table, nor Sun, SGI or OSF disklabel
+    Building a new DOS disklabel with disk identifier 0x59565fb0.
+    Changes will remain in memory only, until you decide to write them.
+    After that, of course, the previous content won't be recoverable.
+     
+    Warning: invalid flag 0x0000 of partition table 4 will be corrected by w(rite)
+    
+    Command (m for help): n
+    Partition type:
+       p   primary (0 primary, 0 extended, 4 free)
+       e   extended
+    Select (default p): p
+    Partition number (1-4, default 1): 1
+    First sector (2048-268435455, default 2048): [RETURN]
+    Using default value 2048
+    Last sector, +sectors or +size{K,M,G} (2048-268435455, default 268435455): [RETURN]
+    Using default value 268435455
+     
+    Command (m for help): w
+    The partition table has been altered!
+     
+    Calling ioctl() to re-read partition table.
+    Syncing disks.
+
+- Format the partition as `ext4`.::
+
+    # mkfs.ext4 /dev/sdb1 
+    mke2fs 1.42.5 (29-Jul-2012)
+    Filesystem label=
+    OS type: Linux
+    Block size=4096 (log=2)
+    Fragment size=4096 (log=2)
+    Stride=0 blocks, Stripe width=0 blocks
+    8388608 inodes, 33554176 blocks
+    1677708 blocks (5.00%) reserved for the super user
+    First data block=0
+    Maximum filesystem blocks=0
+    1024 block groups
+    32768 blocks per group, 32768 fragments per group
+    8192 inodes per group
+    Superblock backups stored on blocks: 
+        32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632, 2654208, 
+        4096000, 7962624, 11239424, 20480000, 23887872
+     
+    Allocating group tables: done                            
+    Writing inode tables: done                            
+    Creating journal (32768 blocks): done
+    Writing superblocks and filesystem accounting information: done
+
+- Make a directory to serve as the mount point.  Replace "DISKNAME" with the disk image name.::
+
+    # mkdir /media/DISKNAME
+
+- Add the new partition to `fstab` so it is mounted automatically on startup.::
+
+    # vi /etc/fstab
+    
+    # Add the following line to the end of the file:
+    /dev/sdb1    /media/DISKNAME    ext4    defaults,noatime    0    2
+
+- Reboot the VM.
+
+Finally, prep for use with ddr-local.  Make a `ddr` folder at the root of the drive that is owned by the `ddr` user.::
+
+    # mkdir /media/DISKNAME/ddr
+    # chown -R ddr.ddr /media/DISKNAME/ddr
+
+
+Configuring the VM to use the Disk Image
+----------------------------------------
+
