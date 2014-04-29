@@ -23,6 +23,63 @@ DDR Collection repos are always named using the DDR ID convention::
     ddr-[PartnerID]-[CollectionIDPart]
     E.g., "ddr-densho-2"
 
+Importing Entities and Files
+-------------------------------------------
+
+The standard method for working with the DDR is through the ddr-local web ui; however, it is also possible to create new Entities and Files using the manual batch import scripts. 
+
+The commands are available with `ddr-cmdln` and `ddr-local` installed. Both should be on the `master` branch.
+
+To use the Entities importer:
+
+1. Make certain the target Collection repo is located where the VM can access it. The Collection repo must already exist!
+2. Prep a valid Entities CSV file and place in a directory that the VM can access. A valid import file must be well-formed CSV that contains the following headers::
+
+   id,status,public,title,description,creation,location,creators,language,genre,format,extent,contributors,alternate_id,digitize_person,digitize_organization,credit,topics,persons,facilities,parent,rights,rights_statement,notes
+
+3. Log into a command-line session as the `ddr` user and start an interactive python session.::
+
+   su ddr
+   cd /usr/local/src/ddr-local/ddrlocal
+   ./manage.py shell -i bpython
+   
+4. In the python shell, run the importer method.::
+
+    from importers import densho
+    user='Your Name'
+    mail='your.email@densho.org'
+    collection='/PATH/TO/ddr-repo-name
+    csv='/PATH/TO/ddr-repo-name-entities-data.csv'
+    densho.import_entities(csv,collection,user,mail)
+    
+5. The importer will send status messages for each entity create operation to the screen; you can capture the terminal output and log if necessary.
+
+To use the Files importer:
+
+1. Prep valid CSV file and place in a directory with the import binaries that the VM can access.
+
+1. Make certain the target Collection repo is located where the VM can access it. The Collection repo and any Entity to which you would like to attach Files must already exist!
+2. Prep a valid Files CSV file and place in a directory that the VM can access. A valid import file must be well-formed CSV that contains the following headers::
+
+   entity_id,file,role,public,rights,digitize_person,tech_notes,label,sort
+   
+3. Log into a command-line session as the `ddr` user and start an interactive python session.::
+
+   su ddr
+   cd /usr/local/src/ddr-local/ddrlocal
+   ./manage.py shell -i bpython
+   
+4. In the python shell, run the importer method.::
+
+    from importers import densho
+    user='Your Name'
+    mail='your.email@densho.org'
+    collection='/PATH/TO/ddr-repo-name
+    csv='/PATH/TO/ddr-repo-name-files-data.csv'
+    densho.import_files(csv,collection,user,mail)
+    
+5. The importer will send status messages for each entity create operation to the screen; you can capture the terminal output and log if necessary.
+
 
 Publishing Repos
 -------------------------------------------
