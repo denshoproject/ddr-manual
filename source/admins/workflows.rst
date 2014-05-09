@@ -35,13 +35,13 @@ To use the Entities importer:
 1. Make certain the target Collection repo is located where the VM can access it. The Collection repo must already exist!
 2. Prep a valid Entities CSV file and place in a directory that the VM can access. A valid import file must be well-formed CSV that contains the following headers::
 
-   id,status,public,title,description,creation,location,creators,language,genre,format,extent,contributors,alternate_id,digitize_person,digitize_organization,credit,topics,persons,facilities,parent,rights,rights_statement,notes
+    id,status,public,title,description,creation,location,creators,language,genre,format,extent,contributors,alternate_id,digitize_person,digitize_organization,credit,topics,persons,facilities,parent,rights,rights_statement,notes
 
 3. Log into a command-line session as the `ddr` user and start an interactive python session.::
 
-   su ddr
-   cd /usr/local/src/ddr-local/ddrlocal
-   ./manage.py shell -i bpython
+    su ddr
+    cd /usr/local/src/ddr-local/ddrlocal
+    ./manage.py shell -i bpython
    
 4. In the python shell, run the importer method.::
 
@@ -59,15 +59,15 @@ To use the Files importer:
 1. Prep valid CSV file and place in a directory with the import binaries that the VM can access.
 
 1. Make certain the target Collection repo is located where the VM can access it. The Collection repo and any Entity to which you would like to attach Files must already exist!
-2. Prep a valid Files CSV file and place in a directory that the VM can access. A valid import file must be well-formed CSV that contains the following headers::
+2. Prep a valid Files CSV file and place in a directory that the VM can access. A valid import file must be well-formed CSV that contains the following headers: ::
 
-   entity_id,file,role,public,rights,digitize_person,tech_notes,label,sort
+    entity_id,file,role,public,rights,digitize_person,tech_notes,label,sort
    
 3. Log into a command-line session as the `ddr` user and start an interactive python session.::
 
-   su ddr
-   cd /usr/local/src/ddr-local/ddrlocal
-   ./manage.py shell -i bpython
+    su ddr
+    cd /usr/local/src/ddr-local/ddrlocal
+    ./manage.py shell -i bpython
    
 4. In the python shell, run the importer method.::
 
