@@ -71,7 +71,7 @@ To use the Files importer:
    
 4. In the python shell, run the importer method.::
 
-    from importers import densho
+    from migration import densho
     user='Your Name'
     mail='your.email@densho.org'
     collection='/PATH/TO/ddr-repo-name
