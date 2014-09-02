@@ -178,8 +178,8 @@ Next, delete any existing index, create a new index, and upload mappings and fac
     docstore.delete_index(HOSTS, INDEX)
     
     docstore.create_index(HOSTS, INDEX)
-    docstore.put_mappings(HOSTS, INDEX, docstore.HARD_CODED_MAPPINGS_PATH, models.MODELS_DIR)
-    docstore.put_facets(HOSTS, INDEX, docstore.HARD_CODED_FACETS_PATH)
+    docstore.put_mappings(HOSTS, INDEX, docstore.MAPPINGS_PATH, models.MODELS_DIR)
+    docstore.put_facets(HOSTS, INDEX, docstore.FACETS_PATH)
 
 Set an alias for the index.  This name must match `DOCSTORE_INDEX` in `ddr-public/ddrpublic/ddrpublic/settings.py`.::
 
