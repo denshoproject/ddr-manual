@@ -378,7 +378,7 @@ Install Miscellaneous Useful Tools
 
 ::
 
-    # apt-get install ack-grep byobu bzip2 curl elinks htop logrotate mg multitail p7zip-full wget
+    # apt-get install ack-grep bpython byobu bzip2 curl elinks htop logrotate mg multitail p7zip-full wget
 
 
 
@@ -422,17 +422,44 @@ DDR Applications and Dependencies - Automated Installation
 
 In this section we will use a script to automatically install the DDR code and its supporting applications.
 
-Log in to your VM and become `root`, then follow these instructions::
+Log in to your VM and become `root`.  Add a `ddr` user::
+
+    # adduser ddr
+    [enter info]
+
+Then install the prerequisites and install the `ddr-local` app itself.::
 
     # apt-get install git-core
-    # cd /usr/local/src
-    # git clone https://github.com/densho/ddr-local.git
-    # cd ddr-local/ddrlocal
-    # sh bin/install.sh
+    # git clone https://github.com/densho/ddr-local.git /usr/local/src/ddr-local
+    # cd /usr/local/src/ddr-local/ddrlocal
+    # make install
 
-Enter a password for the `ddr` user, then wait as the `install.sh` script installs Debian packages and Python code and builds up your system.  On a basic VM this takes about 7 minutes.
+Wait as Make installs Debian packages and Python code and builds up your system.  On a basic VM this takes between 5-10 minutes.  If everything finishes without errors, restart the servers and the web application.::
+
+    # make restart
+    # make reload
+
+If this will be a stand-alone workstation or if you are using a Qumulo-style NFS and this machine will be the one to run the background indexing processes, run the following to set up and start the background process.::
+
+    # make enable-bkgnd
+    # make reload
 
 When you are done, skip the next section and proceed to "Site-Specific Steps".
+
+
+Switching branches
+------------------
+
+If you need to work on a different branch of the code you need to make sure that the entire codebase is on the same branch.
+
+For example, switching to the `batch-edit` branch::
+
+    # make branch BRANCH=batch-edit
+    # make update
+    # make restart
+
+If the branch you're switching to has made changes to the 'ddr' repo, you may need to switch branches there as well.
+
 
 
 
