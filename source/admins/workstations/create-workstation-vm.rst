@@ -382,7 +382,6 @@ Install Miscellaneous Useful Tools
 
 
 
-
 Install VirtualBox Guest Additions
 ----------------------------------
 
@@ -417,8 +416,8 @@ If something goes wrong while installing the DDR, or if the developer makes a no
 
 
 
-DDR Applications and Dependencies - Automated Installation
-==========================================================
+DDR Applications and Dependencies
+=================================
 
 In this section we will use a script to automatically install the DDR code and its supporting applications.
 
@@ -432,187 +431,75 @@ Then install the prerequisites and install the `ddr-local` app itself.::
     # apt-get install git-core
     # git clone https://github.com/densho/ddr-local.git /usr/local/src/ddr-local
     # cd /usr/local/src/ddr-local/ddrlocal
+    
+    # If you are testing a branch, switch to that branch.
+    # git checkout -b BRANCHNAME origin/BRANCHNAME
+    
     # make install
 
-Wait as Make installs Debian packages and Python code and builds up your system.  On a basic VM this takes between 5-10 minutes.  If everything finishes without errors, restart the servers and the web application.::
+Wait as Make installs Debian packages and Python code and builds up your system.  On a basic VM this takes between 5-10 minutes.
 
-    # make restart
-    # make reload
+
+
+Configuration
+-------------
+
+Repository-wide specifications and configurations are stored in a `ddr` repo that will be installed below.
+
+Most settings are in `/etc/ddr/ddr.cfg`.  Settings in `/etc/ddr/local.cfg` will override settings in `/etc/ddr/ddr.cfg`, so `local.cfg` may be used to customize your setup.  These files are shared by `ddr-local`, `ddr-cmdln`, and `ddr-public`.
+
+Settings specific to Django are in `/usr/local/src/ddr-public/ddrpublic/ddrpublic/settings.py`.
 
 If this will be a stand-alone workstation or if you are using a Qumulo-style NFS and this machine will be the one to run the background indexing processes, run the following to set up and start the background process.::
 
     # make enable-bkgnd
-    # make reload
 
-When you are done, skip the next section and proceed to "Site-Specific Steps".
+`ddr-local` doesn't use the Django ORM for much, but you have to create a database anyway::
+
+    # make syncdb
+
+
+
+Restart
+-------
+
+Restart the servers and the web application to see the effects of your edits.::
+
+    # make restart
 
 
 Switching branches
 ------------------
 
-If you need to work on a different branch of the code you need to make sure that the entire codebase is on the same branch.
+Once you have everything installed, if you need to work on a different branch of the code you may need to make sure that the entire codebase is on the same branch.
 
-For example, switching to the `batch-edit` branch::
+These lines check out the specified branch, download and install Python dependencies for each project, and compile/install `ddr-cmdln`.  These steps are all necessary, or new code may not have the proper dependencies.::
+
+    # cd /usr/local/src/ddr-cmdln/ddr
+    # git checkout -b $BRANCH origin/$BRANCH # <<< If branch does not yet exist.
+    # git checkout $BRANCH                   # <<< If updating existing branch.
+    # pip install -U -r requirements/production.txt
+    # python setup.py install
+    # cd /usr/local/src/ddr-local/ddrlocal
+    # git checkout -b $BRANCH origin/$BRANCH # <<< If branch does not yet exist.
+    # git checkout $BRANCH                   # <<< If updating existing branch.
+    # pip install -U -r requirements/production.txt
+
+Newer branches have a `make branch` task designed to automate as much of this as possible.  For example, switching to the `batch-edit` branch::
 
     # make branch BRANCH=batch-edit
-    # make update
-    # make restart
 
-If the branch you're switching to has made changes to the 'ddr' repo, you may need to switch branches there as well.
+Some branches may use a branch of the 'ddr' repo.  If so then you must switch branches on the 'ddr' repo and restart.::
 
-
-
-
-DDR Applications and Dependencies - Manual Installation
-=======================================================
-
-This section details how to install the DDR code and its supporting applications by hand.  It is basically the same as running the `install.sh` script above but hopefully you will come away knowing more about what's going on under the hood.
-
-
-
-Create a `ddr` user
--------------------
-
-Create a `ddr` user; the various DDR applications will run as this user.::
-
-    # adduser ddr
-    [enter info]
-
-Add the `ddr` user to the `vboxsf` group so it can access shared folder(s) on the host OS::
-
-    # adduser ddr vboxsf
-
-
-
-www-server
-----------
-
-::
-
-    # apt-get install nginx
-
-Test that the web browser works by visiting the following URL in a web browser on your host computer.  You should see a welcome message from the web server.::
-
-    http://192.168.56.101/
-    [Welcome to nginx!]
-
-
-
-cache server
-------------
-
-::
-
-    # apt-get install redis-server
-
-
-
-ddr-cmdln
----------
-
-Install the `ddr-cmdln` app.::
-
-    # apt-get install git-core git-annex libxml2-dev libxslt1-dev pmount udisks python-dev python-pip
-    # cd /usr/local/src
-    # git clone https://github.com/densho/ddr-cmdln.git
-    # cd /usr/local/src/ddr-cmdln/ddr
-    # python setup.py install
-    # pip install -r /usr/local/src/ddr-cmdln/ddr/requirements/production.txt
-
-Add the `ddr` user to the `plugdev` group so it can mount USB devices::
-
-    # adduser ddr plugdev
-
-
-
-ddr-lint
---------
-
-Install the `ddr-lint` app.::
-
-    # apt-get install libxml2 libxml2-dev libxslt1-dev
-    # cd /usr/local/src
-    # git clone https://github.com/densho/ddr-lint.git
-    # cd /usr/local/src/ddr-lint/ddrlint
-    # python setup.py install
-    # pip install -r /usr/local/src/ddr-cmdln/ddr/requirements/production.txt
-
-
-
-ddr-local
----------
-
-Install the `ddr-local` web app.::
-
-    # apt-get install libssl-dev python-dev libxml2 libxml2-dev libxslt1-dev supervisor
-    # cd /usr/local/src
-    # git clone https://github.com/densho/ddr-local.git
+    # cd /var/www/media/base/ddr/
+    # git checkout -b $BRANCH origin/$BRANCH # <<< If branch does not yet exist.
+    # git checkout $BRANCH                   # <<< If updating existing branch.
     # cd /usr/local/src/ddr-local/ddrlocal
-    # pip install -r /usr/local/src/ddr-local/ddrlocal/requirements/production.txt
-
-
-
-Create Directories
-------------------
-
-Create and set permissions for various directories used by the applications::
-
-    # mkdir /etc/ddr
-    # mkdir /var/log/ddr
-    # mkdir /var/lib/ddr
-    # mkdir /var/www
-    # mkdir /var/www/media
-    # mkdir /var/www/media/cache
-    # mkdir /var/www/static
-    # mkdir /var/www/static/js
-    # chown -R ddr /var/log/ddr/
-    # chown -R ddr /var/lib/ddr/
-    # chown -R ddr /var/www/media
-
-
-
-Configuration Files
--------------------
-
-Copy the various configuration files to their proper locations.  The only file you should ever have to edit is `/etc/ddr/ddr.cfg`.::
     
-    # cp /usr/local/src/ddr-local/debian/conf/ddr.cfg /etc/ddr/
-    # chown root.root /etc/ddr/ddr.cfg
-    # chmod 644 /etc/ddr/ddr.cfg
-    
-    # cp /usr/local/src/ddr-local/debian/conf/settings.py /usr/local/src/ddr-local/ddrlocal/ddrlocal/
-    # chown root.root /usr/local/src/ddr-local/ddrlocal/ddrlocal/settings.py
-    # chmod 644 /usr/local/src/ddr-local/ddrlocal/ddrlocal/settings.py
-    
-    # cp /usr/local/src/ddr-local/debian/conf/supervisord.conf /etc/supervisor/
-    # cp /usr/local/src/ddr-local/debian/conf/celeryd.conf /etc/supervisor/conf.d/
-    # cp /usr/local/src/ddr-local/debian/conf/gunicorn_ddrlocal.conf /etc/supervisor/conf.d/
-    # chown root.root /etc/supervisor/supervisord.conf
-    # chown root.root /etc/supervisor/conf.d/celeryd.conf
-    # chown root.root /etc/supervisor/conf.d/gunicorn_ddrlocal.conf
-    # chmod 644 /etc/supervisor/supervisord.conf
-    # chmod 644 /etc/supervisor/conf.d/celeryd.conf
-    # chmod 644 /etc/supervisor/conf.d/gunicorn_ddrlocal.conf
-    # /etc/init.d/supervisor restart
-    
-    # cp /usr/local/src/ddr-local/debian/conf/ddrlocal.conf /etc/nginx/sites-available
-    # ln -s /etc/nginx/sites-available/ddrlocal.conf /etc/nginx/sites-enabled
-    # /etc/init.d/nginx restart
+After switching branches, you must copy new versions of the config files and restart before changes will take effect.::
 
-
-
-Bootstrap, jQuery, Modernizr
-----------------------------
-
-`ddr-local` uses Bootstrap, jQuery, and Modernizr for its user interface.  These are installed in a directory visible to `nginx` and writable by `ddr-local`.::
-
-    # cd /var/www/static
-    # wget http://getbootstrap.com/2.3.2/assets/bootstrap.zip
-    # 7z x bootstrap.zip
-    # cd /var/www/static/js
-    # wget http://modernizr.com/downloads/modernizr-latest.js
-    # wget http://code.jquery.com/jquery-1.10.2.min.js
-    # ln -s jquery-1.10.2.min.js jquery.js
+    # make reload
+    # make restart
 
 
 
@@ -622,6 +509,8 @@ Test Drive!
 At this point, you should be able to interact with the DDR-Local web application using a web browser on your host computer. (Restarting nginx or a reboot may be necessary)::
 
     http://192.168.56.101/
+
+If you do not have a Store installed (see below) you will see errors when you try to view the collections list of other pages that require actual data.
 
 
 
@@ -732,8 +621,7 @@ USB Hard Drive
 The DDR application is designed to store collection repositories on an attached USB hard drive. This portion of the VM prep procedure should only be performed if the USB drive will be sent along with the VM for installation at the partner site. If the partner has an existing USB drive at their location that will be used for the DDR, this step is unnecessary. The USB drive configuration should be performed at the partner location.
 
 
-Preparing a USB Drive
----------------------
+**Preparing a USB Drive**
 
 To prepare a USB drive for the DDR,:
 
@@ -741,8 +629,7 @@ To prepare a USB drive for the DDR,:
 - create a `ddr/` directory in the drive's root directory.
 
 
-Configuring the VM to use the USB Drive
----------------------------------------
+**Configuring the VM to use the USB Drive**
 
 This step configures VirtualBox to automatically attach the USB device to this VM whenever it (the VM) is running.
 
@@ -771,8 +658,7 @@ Disk Image
 
 Alternative to keeping collections on a USB hard drive (1.5.3)
 
-Preparing a Disk Image
-----------------------
+**Preparing a Disk Image**
 
 Before you start, note the device names, filesystems, and sizes for device that are attached to the system.  This is to avoid accidentally reformatting the wrong device.  A number of tools provide this information.::
 
@@ -903,6 +789,15 @@ Finally, prep for use with ddr-local.  Make a `ddr` folder at the root of the dr
     # chown -R ddr.ddr /media/DISKNAME/ddr
 
 
-Configuring the VM to use the Disk Image
-----------------------------------------
+**Configuring the VM to use the Disk Image**
 
+
+
+Repository-wide configuration
+=============================
+
+Repository-wide specifications and configurations are stored in a `ddr` repo.  Create a base directory and clone the `ddr` repo to it.::
+
+    # git clone USER@HOST:PATH/ddr.git /media/DISKNAME/ddr/ddr
+
+Note that if you are testing code you may need to switch branches in the `ddr` repo.  Please see the "Switching branches" section.
