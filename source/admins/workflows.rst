@@ -86,7 +86,7 @@ Publishing Repos
 
 The following details the procedure for publishing completed Collection repos. This is specific to the archival processes and operational environment of the DDR project at Densho. 
 
-The commands are available with `ddr-cmdln` and `ddr-local` installed. `ddr-cmdln` should be on the `137-browse-ui` branch.
+The commands are available with `ddr-cmdln` and `ddr-local` installed. Both should be on the `master` branch.
 
 At Densho HQ, using "ddr-testing-1" example collection repo:
 
@@ -99,7 +99,7 @@ At Densho HQ, using "ddr-testing-1" example collection repo:
 
     su ddr
     cd /usr/local/src/ddr-cmdln/ddr
-    ./bin/ddrfilter -ma -s /densho/kinkura/gold/ddr-testing-1 -d /densho/kinkura/working
+    ./bin/ddrfilter -k -ma -s /densho/kinkura/gold/ddr-testing-1 -d /densho/kinkura/working
 
    Result::
     
