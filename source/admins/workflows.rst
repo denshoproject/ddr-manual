@@ -9,14 +9,26 @@ This page documents the data workflows in the DDR system.
 .. contents::
 .. section-numbering::
 
+Organization Workflows
+======================
 
-Repo Workflow
-=======================
+Organization Repos
+-------------------------------------------
+
+Information about each DDR partner -- called an Organization in the system -- is stored in a git repo. These repos are always named using the DDR ID convention::
+
+    ddr-[PartnerID]
+    E.g., "ddr-densho"
+
+
+
+Collection Workflows
+====================
 
 Collection Repos
 -------------------------------------------
 
-The basic data unit of the DDR system is the Collection, which is instantiated as a git repo. The git repo holds a structured directory of metadata text files as well as the git annex repo info and -- in some cases -- the annex file binary data itself. 
+The basic content unit of the DDR system is the Collection, which is instantiated as a git repo. The git repo holds a structured directory of metadata text files as well as the git annex repo info and -- in some cases -- the annex file binary data itself. 
 
 DDR Collection repos are always named using the DDR ID convention::
 
