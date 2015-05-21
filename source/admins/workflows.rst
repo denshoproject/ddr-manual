@@ -20,7 +20,9 @@ Information about each DDR partner -- called an Organization in the system -- is
     ddr-[PartnerID]
     E.g., "ddr-densho"
 
-
+Adding Organizations
+-------------------------------------------
+TODO
 
 Collection Workflows
 ====================
