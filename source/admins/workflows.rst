@@ -147,6 +147,7 @@ At Densho HQ, using "ddr-testing-1" example collection repo:
     tee /densho/kinkura/working/logs/ddrindex_ddr-testing-1.log
    
    ddrindex can be run against an entire directory with `--recursive` mode selected. 
+   (NOTE: The index name for ddrstage is 'stage'.)
    
 Other Utilities
 -------------------------------------
