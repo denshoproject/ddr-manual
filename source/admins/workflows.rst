@@ -22,7 +22,11 @@ Information about each DDR partner -- called an Organization in the system -- is
 
 Adding Organizations
 -------------------------------------------
-TODO
+* Add organization repo access rules to gitolite config on mits
+* Add records for organization and users/group to partner ID service on `partner.densho.org`.
+* [`editor-ui`] Make certain a local copy of the organization repo is available in the mounted store root.
+* [`ddr-public`] Add the organization record to the production ElasticSearch index.
+* [`ddr-public`] Add a subdir containing the organization icon to production nginx media server store. (i.e., `tulie:/var/www/media/base/`)
 
 Collection Workflows
 ====================
