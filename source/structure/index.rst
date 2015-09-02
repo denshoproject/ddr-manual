@@ -8,9 +8,11 @@ Repository Structure
    :maxdepth: 1
 
    dvcs
-   store
    repository
    organizations
    collections
    objects
    files
+   store
+   workstations
+   servers
