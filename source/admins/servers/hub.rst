@@ -1,8 +1,8 @@
 .. _guide:
 
-================
-Hub Server Setup
-================
+==========
+Hub Server
+==========
 
 This page documents the process of creating a Linux virtual machine to serve DDR repositories to the public.
 
@@ -23,9 +23,8 @@ Applications
 The following applications run on the Hub server:
 
 * Gitolite
-* cgit
-* ddr-workbench
-* Nginx
+* Cgit
+* DDR Workbench
 
 
 Prepare For The Install
