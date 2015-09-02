@@ -10,8 +10,219 @@ This page documents the data workflows in the DDR system.
 .. section-numbering::
 
 
-Repo Workflow
+Infrastructure
+====================
+
+
+TODO Set up Gitolite
+--------------------
+
+
+TODO Set up ID service
+--------------------
+
+
+
+Repository
+====================
+
+
+Choose a keyword
+--------------------
+
+Choose a single lowercase word or acronym (i.e. no spaces).  This will get used everywhere!  An example:
+
+* ddr
+
+
+TODO Set up a `gitolite-admin` repo
+-----------------------
+
+Gitolite configuration files are kept in a Git repo.  Changing these configurations is a process of pulling, editing, and pushing to the Gitolite server.  See the  the `gitolite administration page`_ for more info.
+
+.. _`gitolite administration page`: http://gitolite.com/gitolite/admin.html
+
+
+TODO Set up a Repository repo
+-----------------------
+
+
+
+Organizations
 =======================
+
+
+Choose a keyword
+--------------------
+
+Choose a single lowercase word or acronym (i.e. no spaces).  This will get used everywhere!  Some examples:
+
+* ddr-densho
+* ddr-hmwf
+* ddr-janm
+
+
+TODO Add organization to `gitolite-admin` repo.
+-----------------------
+
+
+Set up an organization repo
+-----------------------
+
+#. Find an existing organization repo.  If you can't find one, see the *Organization* page under *Repository Structure*.
+#. Copy the `organization.json` file into a new directory.  Do not copy the `.git` directory or any Store files.
+#. Modify the files to suit the new organization.
+#. Initialize a new Git repo and make the initial commit.::
+     
+     $ cd REPO-ORG/
+     $ git init
+     # git add organization.json
+     $ git commit -m "initial commit"
+
+#. Clone a bare copy of the repo.::
+
+     $ cd ..
+     $ git clone --bare REPO-ORG/ REPO-ORG.git
+
+#. Upload the bare repo to the Hub server AKA `mits`, put in the `repositories` directory and set the proper permissions.::
+
+     USER@local $ scp -r REPO-ORG.git USER@mits.densho.org:/tmp/
+     USER@local $ ssh USER@mits.densho.org
+     USER@mits $ sudo cp -R /tmp/REPO-ORG.git /home/git/repositories/
+     USER@mits $ sudo chown -R git.git /home/git/repositories/REPO-ORG.git
+     USER@mits $ sudo su - git
+     git@mits:~$ 
+     # recursively chmod directories and files
+     git@mits:~$ cd /home/git/repositories/
+     git@mits:~/repositories$ for i in `find . -type d`; do chmod 750 $i; done
+     git@mits:~/repositories$ for i in `find . -type f`; do chmod 640 $i; done
+
+The organization repo should now be ready for use.  See the Store section for how to clone organization repos to a particular Store.
+
+
+Add organization to ID service
+-----------------------
+
+In order to automatically generate Collection and Object IDs across the distributed archive the ID service must have a record for each partner organization.
+
+#. Visit the ID serice site (http://partner.densho.org/workbench/).
+#. Log in as a user with admin privileges.
+#. Go to the admin page (http://partner.densho.org/workbench/admin/). Note that there is currently no link to this page; you have to cut-and-paste the URL or type it in the URL field of your browser.
+#. Go to the *Groups* page. Confirm that the new group is not listed there.
+#. Click *Add*.
+#. Enter the ORG part of the organization ID (e.g. "densho", "hmwf"), leave the Permissions field blank, and click "Save".
+
+In order for users to be able to get new collection and object IDs, they must be added to the organization group.  Please see the User section.
+
+
+
+Workstations
+=======================
+
+
+TODO Add key to `gitolite-admin`.
+--------------------
+
+The `gitolite-admin` repository governs which *SSH keys* have access to which Git repositories.  Please see the 
+
+In order to use Gitolite as a normal or admin user, the following must be true:
+
+- The `/home/ddr/.ssh/` directory on the user's workstation VM must contain an SSH keypair,
+- The workstation's **public** key must be present in the `gitolite-admin` repository, and
+- The user's username must be present in the `gitolite.conf` file.
+
+Instructions for adding a pubkey can be found on Gitolite's `adding and removing users page`_.  Other topics are covered on pages linked to from the `gitolite administration page`_.
+
+.. _`adding and removing users page`: http://gitolite.com/gitolite/users.html
+.. _`gitolite administration page`: http://gitolite.com/gitolite/admin.html
+
+SSH pubkey filess are named `id_rsa.pub`.  Before you add a key to `gitolite-admin`, rename it in the form `USERNAME@HOSTNAME.pub`.  This will enable a single *username* to access Gitolite from multiple hosts.  Look inside the key, note the username and hostname.::
+
+    ssh-rsa A1aB2bC3cA1aB2bC3cA1aB2bC3cA1aB2bC3cA1aB2bC3cA1aB2bC3cA1aB2bC3cA1aB2bC3c
+    A1aB2bC3cA1aB2bC3cA1aB2bC3cA1aB2bC3cA1aB2bC3cA1aB2bC3cA1aB2bC3cA1aB2bC3cA1aB2bC3
+    cA1aB2bC3cA1aB2bC3cA1aB2bC3cA1aB2bC3cA1aB2bC3cA1aB2bC3cA1aB2bC3cA1aB2bC3cA1aB2bC
+    3cA1aB2bC3cA1aB2bC3cA1aB2bC3cA1aB2bC3cA1aB2bC3cA1aB2bC3cA1aB2bC3cA1aB2bC3cA1aB2b
+    C3cA1aB2bC3cA1aB2bC3cA1aB2bC3cA1aB2bC3cA1aB2bC3cA1aB2bC3cA1a gjost@memex
+
+In this example the username is `gjost` and the hostname is `memex`; the pubkey file would be renamed `gjost@memex.pub`.
+
+The same person might want to access Gitolite from a different machine.  In this case the key might look like this::
+
+    ssh-rsa d4e5f6DEFd4e5f6DEFd4e5f6DEFd4e5f6DEFd4e5f6DEFd4e5f6DEFd4e5f6DEFd4e5f6DEF
+    d4e5f6DEFd4e5f6DEFd4e5f6DEFd4e5f6DEFd4e5f6DEFd4e5f6DEFd4e5f6DEFd4e5f6DEFd4e5f6DE
+    Fd4e5f6DEFd4e5f6DEFd4e5f6DEFd4e5f6DEFd4e5f6DEFd4e5f6DEFd4e5f6DEFd4e5f6DEFd4e5f6D
+    EFd4e5f6DEFd4e5f6DEFd4e5f6DEFd4e5f6DEFd4e5f6DEFd4e5f6DEFd4e5f6DEFd4e5f6DEFd4e5f6
+    DEFd4e5f6DEFd4e5f6DEFd4e5f6DEFd4e5f6DEFd4e5f6DEFd4e5f6DEFd4e gjost@sangabriel
+
+This pubkey would be named `gjost@sangabriel`.
+
+Administration permisions for the `gitolite-admin` repository itself are granted via the `gitolite.conf` file contained within the repo.  Admin users must have `RW+` access.  In our case, this means being added to the `@admins` group.
+
+
+Clone a copy of `gitolite-admin`
+--------------------------------
+
+Once your SSH pubkey has been added to `gitolite-admin` and you have been made a member of the `@admins` group, you can clone the repo using one of the following commands or a variation.  Exactly what you use depends on whether you are inside or outside a firewall, the contents of your local machine's `/etc/hosts` directory, etc.::
+
+    git clone git@mits:gitolite-admin.git
+    git clone git@192.168.0.14:gitolite-admin.git
+    git clone git@partner.densho.org:gitolite-admin.git
+
+.. note::
+    Make sure you use the user `git` and not your own username.  All Gitolite-managed traffic is handled by the Gitolite user, which in this case is `git`.
+
+
+
+Users
+=======================
+
+Every addition and change to the repository is performed by one user or another.  
+
+
+Add user to ID service
+--------------------
+
+Users must be registered with and logged in to the ID service in order to request new Collection and Object IDs.  The ID service stores their real name and email address.  When they log in to the ID service, this information is remembered by the local Editor application.  Their name and email address is recorded in the `changelog` and `Git commits` or every action they perform.
+
+#. Visit the ID serice site (http://partner.densho.org/workbench/).
+#. Log in as a user with admin privileges.
+#. Go to the admin page (http://partner.densho.org/workbench/admin/). Note that there is currently no link to this page; you have to cut-and-paste the URL or type it in the URL field of your browser.
+#. Go to the *Users* page. Confirm that the new user is not listed there.
+#. Click *Add*.
+#. Enter their Personal Info, check the box to mark them as Active, assign Staff or Superuser status as needed, and add them to the appropriate group(s).  Leave the User Permissions settings blank.  Click "Save".
+
+NOTE: The ID service only governs the organizations to which users can add new Collection and Object IDs.  Access to Collection repositories is governed by `gitolite-admin`.
+
+
+
+
+Stores
+=======================
+
+
+TODO Create a new Store
+-----------------------
+
+HDD
+USB
+
+
+TODO Clone a repository repo
+-----------------------
+
+
+TODO Clone organization repo(s)
+-----------------------
+
+
+TODO Update repository and organization repos
+-----------------------
+
+
+
+Collections
+=======================
+
 
 Collection Repos
 -------------------------------------------
@@ -23,8 +234,47 @@ DDR Collection repos are always named using the DDR ID convention::
     ddr-[PartnerID]-[CollectionIDPart]
     E.g., "ddr-densho-2"
 
-Importing Entities and Files
--------------------------------------------
+
+Create new collection repo
+--------------------
+
+To create a new Collection using the web editor:
+
+#. Log in to the web editor.
+#. Make sure you are logged in.
+#. Make sure you have a Store mounted.
+#. Go to the "Collections" list page (http://192.168.56.101/ui/collections/).
+#. Click the "New Collection" button under the appropriate partner heading.
+#. A new Collection will be created on the Hub server AKA `mits` and then cloned to your local Store.
+
+Creating a new Collection using the command-line is similar, except that there is currently a bug.  Open a terminal window, SSH in to the VM.::
+
+    $ sudo su ddr
+    $ cd /var/www/media/ddr/
+    $ ddr create -u USER -m MAIL \
+      -t /usr/local/src/ddr-cmdln/ddr/DDR/templates \
+      -c /var/www/media/ddr/REPO-ORG-CID/
+
+
+Clone collection repo to Store
+--------------------
+
+To clone an existing Collection:
+
+#. Log in to the web editor.
+#. Make sure you are logged in.
+#. Make sure you have a Store mounted.
+#. Log in to your workstation VM.
+#. Enter the following at the command line.::
+
+    $ sudo su ddr
+    $ cd /var/www/media/ddr/
+    $ ddr clone --user USER --mail MAIL --cid REPO-ORG-CID \
+      --dest /var/www/media/ddr/REPO-ORG-CID
+
+
+TODO Import Entities and Files
+--------------------
 
 The standard method for working with the DDR is through the ddr-local web ui; however, it is also possible to create new Entities and Files using the manual batch import scripts. 
 
@@ -32,18 +282,18 @@ The commands are available with `ddr-cmdln` and `ddr-local` installed. Both shou
 
 To use the Entities importer:
 
-1. Make certain the target Collection repo is located where the VM can access it. The Collection repo must already exist!
-2. Prep a valid Entities CSV file and place in a directory that the VM can access. A valid import file must be well-formed CSV that contains the following headers::
+#. Make certain the target Collection repo is located where the VM can access it. The Collection repo must already exist!
+#. Prep a valid Entities CSV file and place in a directory that the VM can access. A valid import file must be well-formed CSV that contains the following headers::
 
     id,status,public,title,description,creation,location,creators,language,genre,format,extent,contributors,alternate_id,digitize_person,digitize_organization,credit,topics,persons,facilities,parent,rights,rights_statement,notes
 
-3. Log into a command-line session as the `ddr` user and start an interactive python session.::
+#. Log into a command-line session as the `ddr` user and start an interactive python session.::
 
     su ddr
     cd /usr/local/src/ddr-local/ddrlocal
     ./manage.py shell -i bpython
    
-4. In the python shell, run the importer method.::
+#. In the python shell, run the importer method.::
 
     from migration import densho
     user='Your Name'
@@ -52,24 +302,23 @@ To use the Entities importer:
     csv='/PATH/TO/ddr-repo-name-entities-data.csv'
     densho.import_entities(csv,collection,user,mail)
     
-5. The importer will send status messages for each entity create operation to the screen; you can capture the terminal output and log if necessary.
+#. The importer will send status messages for each entity create operation to the screen; you can capture the terminal output and log if necessary.
 
 To use the Files importer:
 
-1. Prep valid CSV file and place in a directory with the import binaries that the VM can access.
-
-1. Make certain the target Collection repo is located where the VM can access it. The Collection repo and any Entity to which you would like to attach Files must already exist!
-2. Prep a valid Files CSV file and place in a directory that the VM can access. A valid import file must be well-formed CSV that contains the following headers: ::
+#. Prep valid CSV file and place in a directory with the import binaries that the VM can access.
+#. Make certain the target Collection repo is located where the VM can access it. The Collection repo and any Entity to which you would like to attach Files must already exist!
+#. Prep a valid Files CSV file and place in a directory that the VM can access. A valid import file must be well-formed CSV that contains the following headers: ::
 
     entity_id,file,role,public,rights,digitize_person,tech_notes,label,sort
    
-3. Log into a command-line session as the `ddr` user and start an interactive python session.::
+#. Log into a command-line session as the `ddr` user and start an interactive python session.::
 
     su ddr
     cd /usr/local/src/ddr-local/ddrlocal
     ./manage.py shell -i bpython
    
-4. In the python shell, run the importer method.::
+#. In the python shell, run the importer method.::
 
     from migration import densho
     user='Your Name'
@@ -78,28 +327,30 @@ To use the Files importer:
     csv='/PATH/TO/ddr-repo-name-files-data.csv'
     densho.import_files(csv,collection,user,mail)
     
-5. The importer will send status messages for each entity create operation to the screen; you can capture the terminal output and log if necessary.
+#. The importer will send status messages for each entity create operation to the screen; you can capture the terminal output and log if necessary.
 
 
-Publishing Repos
+TODO Prepare Collections for publication
 -------------------------------------------
 
 The following details the procedure for publishing completed Collection repos. This is specific to the archival processes and operational environment of the DDR project at Densho. 
 
 The commands are available with `ddr-cmdln` and `ddr-local` installed. Both should be on the `master` branch.
 
-At Densho HQ, using "ddr-testing-1" example collection repo:
+At Densho HQ, using `ddr-testing-1` example collection repo:
 
-1. Move/copy ddr-testing-1 from import staging to /densho/kinkura/gold/ddr-testing-1::
+#. Move/copy `ddr-testing-1` from import staging to `/densho/kinkura/gold/ddr-testing-1`::
 
     mv /densho/drstores/ddr1/ddr-testing-1 /densho/kinkura/gold/ddr-testing-1
 
-2. Review and approve using ddr-local webui.
-3. Run ddrfilter, pointing output to /densho/kinkura/working::
+#. Review and approve using ddr-local webui.
+#. Run `ddrfilter`, pointing output to `/densho/kinkura/working`::
 
     su ddr
     cd /usr/local/src/ddr-cmdln/ddr
-    ./bin/ddrfilter -k -ma -s /densho/kinkura/gold/ddr-testing-1 -d /densho/kinkura/working
+    ./bin/ddrfilter --keeptmp --mezzanine --access \
+      --source /densho/kinkura/gold/ddr-testing-1 \
+      --destdir /densho/kinkura/working
 
    Result::
     
@@ -108,32 +359,34 @@ At Densho HQ, using "ddr-testing-1" example collection repo:
     FILTER_ddr-densho-testing-1.log
     FILTER_ddr-densho-testing-1.sh
     
-4. Run the generated filtering script::
+#. Run the generated filtering script::
 
     sh /densho/kinkura/working/FILTER_ddr-densho-testing-1.sh | tee -a /densho/kinkura/working/FILTER_ddr-testing-1.log
 
-5. Move PUBLIC_ddr-testing-1 to /densho/kinkura/public/ddr-testing-1::
+#. Move `PUBLIC_ddr-testing-1` to `/densho/kinkura/public/ddr-testing-1`::
 
     mv /densho/kinkura/working/PUBLIC_ddr-testing-1 /densho/kinkura/public/ddr-testing-1
 
-6. Run ddrpubcopy, pointing output to /densho/kinkura/transfer/ddr-testing-1::
+#. Run `ddrpubcopy`, pointing output to `/densho/kinkura/transfer/ddr-testing-1`::
 
     su ddr
     cd /usr/local/src/ddr-local/ddrlocal
-    ddrpubcopy -ma -c /densho/kinkura/public/ddr-testing-1 -d /densho/kinkura/transfer
+    ddrpubcopy --mezzanine --access \
+      --collection /densho/kinkura/public/ddr-testing-1 \
+      --destbase /densho/kinkura/transfer
 
-6. Transfer files from HQ to public storage.
+#. Transfer files from HQ to public storage.
 
-7. Run ddrindex on /densho/kinkura/public/ddr-testing-1, targeting public ElasticSearch server in colo::
+#. Run `ddr-index` on `/densho/kinkura/public/ddr-testing-1`, targeting public ElasticSearch server in colo::
 
     su ddr
-    cd /usr/local/src/ddr-cmdln/ddr
-    ./bin/ddrindex index -H PUBLIC_ES_SERVER:9200 --recursive -i documents0 \
-    -p /densho/kinkura/public/ddr-testing-1 | \ 
-    tee /densho/kinkura/working/logs/ddrindex_ddr-testing-1.log
+    ddr-index index --host PUBLIC_ES_SERVER:9200 --index INDEX --recursive --public \
+      /densho/kinkura/public/ddr-testing-1 | \ 
+      tee /densho/kinkura/working/logs/ddrindex_ddr-testing-1.log
    
-   ddrindex can be run against an entire directory with `--recursive` mode selected. 
-   
+   ddrindex can be run against an entire directory with `--recursive` mode selected.
+
+
 Other Utilities
 -------------------------------------
 
@@ -150,8 +403,8 @@ To run the script::
 Note that you *must* be `root` or have privs to write in the `/usr/local/src/ddr-cmdln/ddr` directory in order to use the script because of the default location of the logfile. Happy clobbering! 
 
 
-Refresh Public Server
-=====================
+TODO Publish collection repos to public server
+--------------------
 
 Workflow for completely replacing data in Elasticsearch, for `ddr-public`.
 
