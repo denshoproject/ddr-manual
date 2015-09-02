@@ -11,5 +11,3 @@ This document describes how to create and install DDR workstation VMs.
 
    create-workstation-vm
    setup-workstation
-   ddr-local
-   ddr-cmdln
