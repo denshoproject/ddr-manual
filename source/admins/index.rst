@@ -11,3 +11,4 @@ Admin Guide
    servers/index
    workstations/index
    cookbook
+   workflows
