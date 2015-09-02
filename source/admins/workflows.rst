@@ -10,6 +10,7 @@ This page documents the data workflows in the DDR system.
 .. section-numbering::
 
 
+
 Infrastructure
 ====================
 
@@ -51,7 +52,12 @@ TODO Set up a Repository repo
 Organizations
 =======================
 
+Information about each DDR partner -- called an Organization in the system -- is stored in a git repo. These repos are always named using the DDR ID convention::
 
+    ddr-[PartnerID]
+    E.g., "ddr-densho"
+
+  
 Choose a keyword
 --------------------
 
@@ -64,6 +70,8 @@ Choose a single lowercase word or acronym (i.e. no spaces).  This will get used 
 
 TODO Add organization to `gitolite-admin` repo.
 -----------------------
+
+* Add organization repo access rules to gitolite config on mits
 
 
 Set up an organization repo
@@ -100,6 +108,10 @@ Set up an organization repo
 The organization repo should now be ready for use.  See the Store section for how to clone organization repos to a particular Store.
 
 
+TODO Clone organization repo to Store
+-----------------------
+
+
 Add organization to ID service
 -----------------------
 
@@ -113,6 +125,13 @@ In order to automatically generate Collection and Object IDs across the distribu
 #. Enter the ORG part of the organization ID (e.g. "densho", "hmwf"), leave the Permissions field blank, and click "Save".
 
 In order for users to be able to get new collection and object IDs, they must be added to the organization group.  Please see the User section.
+
+
+TODO Add organization to ddr-public
+------------------------------
+
+* [`ddr-public`] Add the organization record to the production ElasticSearch index.
+* [`ddr-public`] Add a subdir containing the organization icon to production nginx media server store. (i.e., `tulie:/var/www/media/base/`)
 
 
 
@@ -227,7 +246,7 @@ Collections
 Collection Repos
 -------------------------------------------
 
-The basic data unit of the DDR system is the Collection, which is instantiated as a git repo. The git repo holds a structured directory of metadata text files as well as the git annex repo info and -- in some cases -- the annex file binary data itself. 
+The basic content unit of the DDR system is the Collection, which is instantiated as a git repo. The git repo holds a structured directory of metadata text files as well as the git annex repo info and -- in some cases -- the annex file binary data itself. 
 
 DDR Collection repos are always named using the DDR ID convention::
 
@@ -329,6 +348,62 @@ To use the Files importer:
     
 #. The importer will send status messages for each entity create operation to the screen; you can capture the terminal output and log if necessary.
 
+Merging Parnter Binary Content
+-------------------------------------------
+Because of the size of the binary content, it is not feasible to transfer the binary content in the git-annexes directly over the network from remote sites. When binaries are ingested into the DDR system, they are stored in a local git-annex, usually located on the workstation itself. Upon syncing the collection, other repo clones -- i.e., on mits.densho.org and in the Densho HQ, know of the existence of each binary and of their respective checksums; but in order for binary content to be preserved on the Densho infrastructure and published to the DDR public site, it must be transferred to the Seattle HQ. 
+
+Using an ext3 or ext4 formatted, empty USB drive at the remote site:
+
+1. Connect the USB hdd used for transfer to the local VM
+2. Capture USB device in VirtualBox. Devices-->USB Devices-->[drive name]
+3. Mount USB to local share. E.g.: ::
+
+    sudo pmount /dev/sdb1 /media/usbhdd
+
+4. Make a directory on the drive where the transfer repo(s) will reside.::
+
+    sudo mkdir /media/usbhdd/ddr
+    
+5. As the ddr user, clone the desired collection repo to the USB::
+
+    cd /media/usbhdd/ddr
+    git clone git@mits.densho.org:ddr-testing-1.git
+
+6. Create a git-annex for the usb transfer repo::
+
+    cd /media/usbhdd/ddr/ddr-testing-1
+    git annex init "usb-transfer-1"
+
+7. Navigate to the transfer repo and add the existing collection repo as a remote::
+
+    cd /media/nfs/gold/ddr-testing-1
+    git remote add ddr-testing-local /media/ddrstore/ddr/ddr-testing-1
+   
+8. Pull the binary content into the transfer annex::
+
+    git annex get .
+
+
+Upon receipt of USB hdd at Densho (and after making a local backup of usb data):
+
+1. Connect to local instance of ddr-local VM
+2. Capture USB device in VirtualBox. Devices-->USB Devices-->[drive name]
+3. Mount USB to local share. E.g.: ::
+
+    sudo pmount /dev/sdb1 /media/usbhdd
+
+4. Navigate to local collection repo and add remote on usb drive::
+
+    cd /media/nfs/gold/ddr-testing-1
+    git remote add usb-transfer-1 /media/nfs/gold/ddr-testing-1
+   
+5. Pull the binary content into the local annex::
+
+    git annex get .
+
+6. Remove the usb remote from the local repo::
+
+    git remote rm usb-transfer-1
 
 TODO Prepare Collections for publication
 -------------------------------------------
@@ -380,9 +455,13 @@ At Densho HQ, using `ddr-testing-1` example collection repo:
 #. Run `ddr-index` on `/densho/kinkura/public/ddr-testing-1`, targeting public ElasticSearch server in colo::
 
     su ddr
-    ddr-index index --host PUBLIC_ES_SERVER:9200 --index INDEX --recursive --public \
-      /densho/kinkura/public/ddr-testing-1 | \ 
-      tee /densho/kinkura/working/logs/ddrindex_ddr-testing-1.log
+    cd /usr/local/src/ddr-cmdln/ddr
+    ./bin/ddrindex index -H PUBLIC_ES_SERVER:9200 --recursive -i documents0 \
+    -p /densho/kinkura/public/ddr-testing-1 | \ 
+    tee /densho/kinkura/working/logs/ddrindex_ddr-testing-1.log
+   
+   ddrindex can be run against an entire directory with `--recursive` mode selected. 
+   (NOTE: The index name for ddrstage is 'stage'.)
    
    ddrindex can be run against an entire directory with `--recursive` mode selected.
 
