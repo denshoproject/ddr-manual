@@ -14,4 +14,3 @@ These instructions were created for a server running Debian 6.0 AKA â€œSqueezeâ€
 
    hub
    public
-   gitolite

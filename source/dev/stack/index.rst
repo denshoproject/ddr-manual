@@ -35,6 +35,12 @@ ddr-workbench
 Gitolite
 --------------------
 
+`Gitolite <http://gitolite.com/gitolite/>`_ is a tool for granting clients the ability to create and update Git repositories on a server without having to create shell accounts for them.
+It is a key component of the whole DDR infrastructure.
+
+Our usage of Gitolite is pretty simple.  Basically, we have set up a Gitolite server in accordance with with the Gitolite documentation, managed access to it using `gitolite-admin`, and put all of our repositories in the `/home/git/repositories` directory.
+
+
 cgit
 --------------------
 
