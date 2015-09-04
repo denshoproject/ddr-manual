@@ -68,7 +68,12 @@ TODO Migration process
 
 Edit `/home/git/.gitolite.rc` to enable the git-annex-shell command.  Find the ENABLE list and add this line in there somewhere::
 
-  'git-annex-shell ua',
+  # List of commands and features to enable
+  
+  ENABLE => [
+  
+      # git-annex
+      'git-annex-shell ua',
 
 Reference:
 
@@ -103,19 +108,40 @@ Edit the Cgit config file `/etc/cgitrc`.  Include at least the following::
   # cgit config
   # see cgitrc(5) for details
    
-  css=/cgit.css
-  logo=/cgit.png
+  embedded=0
+  remove-suffix=1
+  side-by-side-diffs=1
    
   virtual-root=/
+   
+  logo=http://ddr.densho.org/assets/images/denshoLogo-black-notext-150x104.png
    
   # Where cgit will look for repositories.
   scan-path=/var/www/repositories/
    
   # Text printed as heading on the repository index page.
-  root-title=HUB SERVER TITLE HERE
+  root-title=HUB SERVER TITLE
    
   # Text printed below the heading on the repository index page.
-  root-desc=HUB SERVER DESCRIPTION HERE
+  root-desc=HUB SERVER DESCRIPTION
+   
+  ##
+  ## List of common mimetypes
+  ##
+  mimetype.gif=image/gif
+  mimetype.html=text/html
+  mimetype.jpg=image/jpeg
+  mimetype.jpeg=image/jpeg
+  mimetype.pdf=application/pdf
+  mimetype.png=image/png
+  mimetype.svg=image/svg+xml
+   
+  # Highlight source code with python pygments-based highlighter
+  source-filter=/var/www/cgit/filters/syntax-highlighting.py
+   
+  # Format markdown, restructuredtext, manpages, text files, and html files
+  # through the right converters
+  about-filter=/var/www/cgit/filters/about-formatting.sh
 
 Edit the Nginx config file, adding the following to the relevant `server` block::
 
@@ -134,6 +160,8 @@ Edit the Nginx config file, adding the following to the relevant `server` block:
           fastcgi_pass  unix:/run/fcgiwrap.socket;
       }
   }
+
+Repositories may not be visible until after a reboot.
 
 Reference:
 
