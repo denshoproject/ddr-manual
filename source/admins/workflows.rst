@@ -482,10 +482,45 @@ To run the script::
 Note that you *must* be `root` or have privs to write in the `/usr/local/src/ddr-cmdln/ddr` directory in order to use the script because of the default location of the logfile. Happy clobbering! 
 
 
-TODO Publish collection repos to public server
+[develop (new)] Publish collection repos to public server
 --------------------
 
-Workflow for completely replacing data in Elasticsearch, for `ddr-public`.
+NEW Workflow for completely replacing data in Elasticsearch, for `ddr-public`.
+
+List indexes and aliases, and get status info for specified index.::
+  
+    $ ddr-index status -H localhost:9200 -i documents
+
+Delete an existing index.::
+  
+    $ ddr-index remove -H localhost:9200 -i documents
+
+Initialize a new index.  This step creates the index and uploads mappings and facet information.::
+      
+    $ ddr-index init -H localhost:9200 -i documents /var/www/media/ddr/ddr
+
+Set an alias for the index.  This name must match `DOCSTORE_INDEX` in `ddr-public/ddrpublic/ddrpublic/settings.py`.::
+      
+    $ ddr-index alias -H localhost:9200 -i documents -a ddrpublic-stage
+
+Each repository and organization must have a corresponding metadata document.  The organization files can be found in the organizations' inventory repositories.::
+    
+    $ ddr-index repo -H localhost:9200 -i documents /var/www/media/ddr/REPO/repository.json
+    $ ddr-index org -H localhost:9200 -i documents /var/www/media/ddr/REPO-ORG/organization.json
+    
+Upload metadata for each collection repository.::
+      
+    $ ddr-index index -H localhost:9200 -i documents --recursive --newstyle /var/www/media/ddr
+
+Complete usage information is available from the `ddr-index` command itself.::
+
+    $ ddr-index --help
+
+
+[master (old)] Publish collection repos to public server
+--------------------
+
+OLD Workflow for completely replacing data in Elasticsearch, for `ddr-public`.
 
 The following commands must be run on the server on which the repositories reside.  First open a Python interpreter::
 
