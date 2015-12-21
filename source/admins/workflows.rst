@@ -456,14 +456,12 @@ At Densho HQ, using `ddr-testing-1` example collection repo:
 
     su ddr
     cd /usr/local/src/ddr-cmdln/ddr
-    ./bin/ddrindex index -H PUBLIC_ES_SERVER:9200 --recursive -i documents0 \
+    ./bin/ddrindex index -H PUBLIC_ES_SERVER:9200 --recursive -i ddrpublic-production \
     -p /densho/kinkura/public/ddr-testing-1 | \ 
-    tee /densho/kinkura/working/logs/ddrindex_ddr-testing-1.log
+    tee -a /densho/kinkura/working/logs/ddrindex_ddr-testing-1.log
    
    ddrindex can be run against an entire directory with `--recursive` mode selected. 
    (NOTE: The index name for ddrstage is 'stage'.)
-   
-   ddrindex can be run against an entire directory with `--recursive` mode selected.
 
 
 Other Utilities
