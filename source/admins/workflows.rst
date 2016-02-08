@@ -348,7 +348,7 @@ To use the Files importer:
     
 #. The importer will send status messages for each entity create operation to the screen; you can capture the terminal output and log if necessary.
 
-Merging Parnter Binary Content
+Merging Partner Binary Content
 -------------------------------------------
 Because of the size of the binary content, it is not feasible to transfer the binary content in the git-annexes directly over the network from remote sites. When binaries are ingested into the DDR system, they are stored in a local git-annex, usually located on the workstation itself. Upon syncing the collection, other repo clones -- i.e., on mits.densho.org and in the Densho HQ, know of the existence of each binary and of their respective checksums; but in order for binary content to be preserved on the Densho infrastructure and published to the DDR public site, it must be transferred to the Seattle HQ. 
 
@@ -573,3 +573,10 @@ Press `Control-D` to exit the Python interpreter.
 Use the `ddrindex` command to upload metadata for each collection repository.::
 
     $ ddrindex index -H HOST:PORT -r -i INDEX -p /PATH/TO/REPOSITORIES/REPO-ORG-CID
+
+Topics
+=======================
+
+The working version of the DDR Topics controlled vocabulary is maintained in Google Drive at::
+
+    https://docs.google.com/a/densho.us/spreadsheets/d/11S6PtE1sSJzPa-fdHlQMYgYcD5ZzBTbmgFjWOizaWU8/edit?usp=sharing
