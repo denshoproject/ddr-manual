@@ -574,9 +574,18 @@ Use the `ddrindex` command to upload metadata for each collection repository.::
 
     $ ddrindex index -H HOST:PORT -r -i INDEX -p /PATH/TO/REPOSITORIES/REPO-ORG-CID
 
-Topics
+Controlled Vocabularies
 =======================
 
-The working version of the DDR Topics controlled vocabulary is maintained in Google Drive at::
+The DDR supports several controlled vocabularies that provide standard values for several attributes in collection, entity and file metadata.
+
+Topics
+-------------------------------------
+
+The working version of the Topics controlled vocabulary is maintained in Google Drive at::
 
     https://docs.google.com/a/densho.us/spreadsheets/d/11S6PtE1sSJzPa-fdHlQMYgYcD5ZzBTbmgFjWOizaWU8/edit?usp=sharing
+
+The API endpoint is::
+
+    http://ddr.densho.org/api/0.1/facet/topics/
