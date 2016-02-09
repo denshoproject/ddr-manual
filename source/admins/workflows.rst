@@ -586,13 +586,30 @@ The working version of the Topics controlled vocabulary is maintained in Google 
 
     https://docs.google.com/a/densho.us/spreadsheets/d/11S6PtE1sSJzPa-fdHlQMYgYcD5ZzBTbmgFjWOizaWU8/edit?usp=sharing
 
-The API endpoint is::
+The canonical version is a json file `topics.json` located in the `ddr-vocab` repo at::
+
+    https://github.com/densho/ddr-vocab
+
+The production API endpoint is served from `schoolboy` at::
+
+    http://partner.densho.org/vocab/api/0.2/topics.json
+
+The public API endpoint is::
 
     http://ddr.densho.org/api/0.2/facet/topics/
+    
 
 Facilities
 -------------------------------------
 
-The API endpoint is::
+The canonical version is a json file `facility.json` located in the `ddr-vocab` repo at::
+
+    https://github.com/densho/ddr-vocab
+
+The production API endpoint is served from `schoolboy` at::
+
+    http://partner.densho.org/vocab/api/0.2/facility.json
+
+The public API endpoint is::
 
     http://ddr.densho.org/api/0.2/facet/facility/
