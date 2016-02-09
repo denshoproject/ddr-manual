@@ -589,3 +589,10 @@ The working version of the Topics controlled vocabulary is maintained in Google 
 The API endpoint is::
 
     http://ddr.densho.org/api/0.1/facet/topics/
+
+Facilities
+-------------------------------------
+
+The API endpoint is::
+
+    http://ddr.densho.org/api/0.1/facet/facility/
