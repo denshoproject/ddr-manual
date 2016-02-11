@@ -23,10 +23,14 @@ Digital Repository (ddr-public)
 - Browse by Topic/Facility (http://ddr.densho.org/browse/)
 - Public REST API (http://ddr.densho.org/api/0.1/facet/)
 
-Data resides in Elasticsearch `ddr-public` index, doctype `facet`.  Data is exposed to servers within the colo LAN via the Elasticsearch REST API.  Each Elasticsearch document contains an entire set of terms.
+Data resides in Elasticsearch `ddr-public` index, doctype `facet`.
+Each set of terms resides in a single Elasticsearch document.
+Data is exposed to servers within the colo LAN via the Elasticsearch REST API.
 
 - http://HOST:9200/ddrpublic-production/facet/topics/
 - http://HOST:9200/ddrpublic-production/facet/facility/
+
+Vocab data is uploaded to Elasticsearch by `ddr-index facets` (see below).
 
 
 Encyclopedia (encyc-front)
