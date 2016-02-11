@@ -15,13 +15,40 @@ Infrastructure
 ====================
 
 
-TODO Set up Gitolite
+Set up a user on the Ansible server
 --------------------
 
+Refer to the `README` document in the `ansible-colo` repository for complete setup information.
 
-TODO Set up ID service
+
+Run package updates on public servers
 --------------------
 
+Ansible automates the process of running package updates/upgrades on all servers at once.
+
+Update each VM's copy of the Debian packages::
+
+    $ ansible all -m command -a "apt-get update" -sK
+
+See which packages will be upgraded but don't change anything::
+    
+    $ ansible all -m command -a "apt-get upgrade -s" -sK
+
+Upgrade packages (`-y` means "assume Yes to all queries and do not prompt")::
+  
+    $ ansible all -m command -a "apt-get upgrade -y" -sK
+
+The `-sK` flags are short of `--sudo --ask-pass`, which tells Ansible to run the playbook under `sudo` and ask you for the `ansible` user's password at runtime.
+
+
+Run Ansible playbooks
+--------------------
+
+::
+   
+    $ ansible-playbook -sK PLAYBOOK.yml
+
+The `-sK` flags are short of `--sudo --ask-pass`, which tells Ansible to run the playbook under `sudo` and ask you for the `ansible` user's password at runtime.
 
 
 Repository
