@@ -617,6 +617,9 @@ Vocabulary data resides in the following repositories:
 - `git@github.com:densho/ddr-vocab <https://github.com/densho/ddr-vocab>`_
 - `git@mits.densho.org:ddr.git <http://partner.densho.org/cgit/cgit.cgi/ddr>`_
 
+See :doc:`controlled-vocabs` for more info.
+
+
 Updating
 --------------------
 
