@@ -574,42 +574,47 @@ Use the `ddrindex` command to upload metadata for each collection repository.::
 
     $ ddrindex index -H HOST:PORT -r -i INDEX -p /PATH/TO/REPOSITORIES/REPO-ORG-CID
 
+
 Controlled Vocabularies
 =======================
 
 The DDR supports several controlled vocabularies that provide standard values for several attributes in collection, entity and file metadata.
 
-Topics
--------------------------------------
+Currently there are two vocabularies:
 
-The working version of the Topics controlled vocabulary is maintained in Google Drive at::
+- topics
+- facility
 
-    https://docs.google.com/a/densho.us/spreadsheets/d/11S6PtE1sSJzPa-fdHlQMYgYcD5ZzBTbmgFjWOizaWU8/edit?usp=sharing
+Vocabulary data resides in the following repositories:
 
-The canonical version is a json file `topics.json` located in the `ddr-vocab` repo at::
+- `git@github.com:densho/ddr-vocab <https://github.com/densho/ddr-vocab>`_
+- `git@mits.densho.org:ddr.git <http://partner.densho.org/cgit/cgit.cgi/ddr>`_
 
-    https://github.com/densho/ddr-vocab
+Updating
+--------------------
 
-The production API endpoint is served from `schoolboy` at::
+Clone the `ddr-vocab` repository, replace `$(VOCAB).json`, commit, and push to GitHub.::
 
-    http://partner.densho.org/vocab/api/0.2/topics.json
+  $ git clone git@github.com:densho/ddr-vocab
+  $ cd ddr-vocab
+  [edit api/0.2/$VOCAB.json]
+  $ git add -p api/0.2/$VOCAB.json
+  $ git commit
+  $ git push
 
-The public API endpoint is::
+Clone the `ddr` repository, replace `$(VOCAB).json`, commit, and push to Gitolite server (`mits2`).::
 
-    http://ddr.densho.org/api/0.2/facet/topics/
-    
+  $ git clone git@mits.densho.org:ddr.git
+  $ cd ddr
+  [edit vocab/$VOCAB.json]
+  $ git add -p vocab/$VOCAB.json
+  $ git commit
+  $ git push
 
-Facilities
--------------------------------------
+Pull `ddr-vocab` repository to the workbench/vocabs API server (`schoolboy`) by running the Ansible playbook `ddrwkb`.  See "Run Ansible playbooks" section above.
 
-The canonical version is a json file `facility.json` located in the `ddr-vocab` repo at::
+Pull `ddr` repository to `ddr-public` production/stage servers by running the Ansible playbook `ddrpub`.  See "Run Ansible playbooks" section above.
 
-    https://github.com/densho/ddr-vocab
+Pull `ddr` repository to any ddr integration VM (i.e., `kinkura`) that will be running `ddr-index`.
 
-The production API endpoint is served from `schoolboy` at::
-
-    http://partner.densho.org/vocab/api/0.2/facility.json
-
-The public API endpoint is::
-
-    http://ddr.densho.org/api/0.2/facet/facility/
+Run `ddr-index` against production Elasticsearch to refresh existing facets.
