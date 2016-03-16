@@ -623,6 +623,17 @@ See :doc:`controlled-vocabs` for more info.
 Updating
 --------------------
 
+When adding, removing, or otherwise modifying vocab files, run following in the Python console to regenerate the ancestor/sibling/children links.::
+
+  $ cd /usr/local/src/ddr-local/ddrlocal
+  $ source /usr/local/src/env/ddrlocal/bin/activate
+  $ python manage.py shell
+  >>> from DDR import vocab
+  >>> index = vocab.Index()
+  >>> path = '/PATH/TO/topics.json'
+  >>> index.read(path)
+  >>> index.write(path)
+
 Clone the `ddr-vocab` repository, replace `$(VOCAB).json`, commit, and push to GitHub.::
 
   $ git clone git@github.com:densho/ddr-vocab
