@@ -144,9 +144,9 @@ Add organization to ID service
 
 In order to automatically generate Collection and Object IDs across the distributed archive the ID service must have a record for each partner organization.
 
-#. Visit the ID serice site (http://partner.densho.org/workbench/).
+#. Visit the ID service site (https://idservice.densho.org/).
 #. Log in as a user with admin privileges.
-#. Go to the admin page (http://partner.densho.org/workbench/admin/). Note that there is currently no link to this page; you have to cut-and-paste the URL or type it in the URL field of your browser.
+#. Go to the admin page (https://idservice.densho.org/admin/). Note that there is currently no link to this page; you have to cut-and-paste the URL or type it in the URL field of your browser.
 #. Go to the *Groups* page. Confirm that the new group is not listed there.
 #. Click *Add*.
 #. Enter the ORG part of the organization ID (e.g. "densho", "hmwf"), leave the Permissions field blank, and click "Save".
