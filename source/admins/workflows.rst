@@ -446,11 +446,11 @@ At Densho HQ, using `ddr-testing-1` example collection repo:
     mv /densho/drstores/ddr1/ddr-testing-1 /densho/kinkura/gold/ddr-testing-1
 
 #. Review and approve using ddr-local webui.
-#. Run `ddrfilter`, pointing output to `/densho/kinkura/working`::
+#. Run `ddr-filter`, pointing output to `/densho/kinkura/working`::
 
     su ddr
     cd /usr/local/src/ddr-cmdln/ddr
-    ./bin/ddrfilter --keeptmp --mezzanine --access \
+    ./bin/ddr-filter --keeptmp --mezzanine --access \
       --source /densho/kinkura/gold/ddr-testing-1 \
       --destdir /densho/kinkura/working
 
@@ -469,13 +469,13 @@ At Densho HQ, using `ddr-testing-1` example collection repo:
 
     mv /densho/kinkura/working/PUBLIC_ddr-testing-1 /densho/kinkura/public/ddr-testing-1
 
-#. Run `ddrpubcopy`, pointing output to `/densho/kinkura/transfer/ddr-testing-1`::
+#. Run `ddr-pubcopy`, pointing output to `/densho/kinkura/transfer/ddr-testing-1`::
 
     su ddr
     cd /usr/local/src/ddr-local/ddrlocal
-    ddrpubcopy --mezzanine --access \
-      --collection /densho/kinkura/public/ddr-testing-1 \
-      --destbase /densho/kinkura/transfer
+    ddr-pubcopy --mezzanine --access \
+       /densho/kinkura/public/ddr-testing-1 \
+       /densho/kinkura/transfer
 
 #. Transfer files from HQ to public storage.
 
@@ -483,11 +483,11 @@ At Densho HQ, using `ddr-testing-1` example collection repo:
 
     su ddr
     cd /usr/local/src/ddr-cmdln/ddr
-    ./bin/ddrindex index -H PUBLIC_ES_SERVER:9200 --recursive -i ddrpublic-production \
-    -p /densho/kinkura/public/ddr-testing-1 | \ 
+    ./bin/ddr-index index -H PUBLIC_ES_SERVER:9200 --recursive -i ddrpublic-production \
+      /densho/kinkura/public/ddr-testing-1 | \ 
     tee -a /densho/kinkura/working/logs/ddrindex_ddr-testing-1.log
    
-   ddrindex can be run against an entire directory with `--recursive` mode selected. 
+   ddr-index can be run against an entire directory with `--recursive` mode selected. 
    (NOTE: The index name for ddrstage is 'stage'.)
 
 
