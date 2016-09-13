@@ -319,61 +319,47 @@ To clone an existing Collection:
       --dest /var/www/media/ddr/REPO-ORG-CID
 
 
-TODO Import Entities and Files
+Import Entities and Files
 --------------------
 
 The standard method for working with the DDR is through the ddr-local web ui; however, it is also possible to create new Entities and Files using the manual batch import scripts. 
 
 The commands are available with `ddr-cmdln` and `ddr-local` installed. Both should be on the `master` branch.
 
-To use the Entities importer:
+**To EXPORT objects or files:**
 
 #. Make certain the target Collection repo is located where the VM can access it. The Collection repo must already exist!
-#. Prep a valid Entities CSV file and place in a directory that the VM can access. A valid import file must be well-formed CSV that contains the following headers::
+#. Log into a command-line session as the `ddr` user and generate a blank Entities CSV file.  Replace `OBJECTTYPE` with the type of object (`entity` or `file`).  Replace paths with the correct paths to the collection repository and to the file you wish to create.::
 
-    id,status,public,title,description,creation,location,creators,language,genre,format,extent,contributors,alternate_id,digitize_person,digitize_organization,credit,topics,persons,facilities,parent,rights,rights_statement,notes
+    $ sudo su ddr
+    $ ddr-export --blank OBJECTTYPE /PATH/TO/ddr-repo-name /PATH/ddr-repo-name-entities.csv
 
-#. Log into a command-line session as the `ddr` user and start an interactive python session.::
+**To IMPORT objects or files:**
 
-    su ddr
-    cd /usr/local/src/ddr-local/ddrlocal
-    ./manage.py shell -i bpython
-   
-#. In the python shell, run the importer method.::
+#. Place the CSV file in a directory that the VM can access.
+#. Log into a command-line session as the `ddr` user.  Replace `OBJECTTYPE` with the type of object (`entity` or `file`).  Replace paths with the correct paths to the collection repository and to the file you wish to create.  `ddr-import` will access the ID service so replace `IDSERVICE_USER` and `IDSERVICE_PASSWORD` with valid ID service credentials.  Use the `--dryrun` flag to read the CSV file and create objects but not modify any files.::
 
-    from migration import densho
-    user='Your Name'
-    mail='your.email@densho.org'
-    collection='/PATH/TO/ddr-repo-name
-    csv='/PATH/TO/ddr-repo-name-entities-data.csv'
-    densho.import_entities(csv,collection,user,mail)
-    
-#. The importer will send status messages for each entity create operation to the screen; you can capture the terminal output and log if necessary.
+    $ sudo su ddr
+    $ ddr-import OBJECTTYPE -U IDSERVICE_USER -P IDSERVICE_PASSWORD /PATH/ddr-repo-name-entities.csv /PATH/TO/ddr-repo-name
 
-To use the Files importer:
+#. The importer will print status messages for each entity create operation to the screen.
 
-#. Prep valid CSV file and place in a directory with the import binaries that the VM can access.
-#. Make certain the target Collection repo is located where the VM can access it. The Collection repo and any Entity to which you would like to attach Files must already exist!
-#. Prep a valid Files CSV file and place in a directory that the VM can access. A valid import file must be well-formed CSV that contains the following headers: ::
+#. If you have imported objects AKA entities you need to register the IDs with the ID service so that adding new objects does not cause and ID conflict.  Replace example values as in previous steps.  Use the `--dryrun` flag to see which IDs will be created (and to see if there are any conflicts) without actually changing information on the ID service.::
 
-    entity_id,file,role,public,rights,digitize_person,tech_notes,label,sort
-   
-#. Log into a command-line session as the `ddr` user and start an interactive python session.::
+    $ sudo su ddr
+    $ ddr-import register -U IDSERVICE_USER -P IDSERVICE_PASSWORD /PATH/ddr-repo-name-entities.csv /PATH/TO/ddr-repo-name
 
-    su ddr
-    cd /usr/local/src/ddr-local/ddrlocal
-    ./manage.py shell -i bpython
-   
-#. In the python shell, run the importer method.::
+#. Print help information using the `--help` flag.::
 
-    from migration import densho
-    user='Your Name'
-    mail='your.email@densho.org'
-    collection='/PATH/TO/ddr-repo-name
-    csv='/PATH/TO/ddr-repo-name-files-data.csv'
-    densho.import_files(csv,collection,user,mail)
-    
-#. The importer will send status messages for each entity create operation to the screen; you can capture the terminal output and log if necessary.
+    $ sudo su ddr
+    $ ddr-import --help
+
+#. **IMPORTANT** `ddr-import` will modify and stage your files but will not actually commit them!  Remember to commit your changes once you are satisfied with your changes.::
+
+    $ sudo su ddr
+    $ cd /PATH/ddr-repo-name-entities.csv /PATH/TO/ddr-repo-name
+    $ git commit -m "DESCRIBE YOUR CHANGES HERE"
+
 
 Merging Partner Binary Content
 -------------------------------------------
