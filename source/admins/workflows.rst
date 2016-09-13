@@ -620,7 +620,43 @@ Vocabulary data resides in the following repositories:
 See :doc:`controlled-vocabs` for more info.
 
 
-Updating
+Updating Controlled Vocabs #0
+--------------------
+
+Download from Google Docs: `File > Download as > Comma-separated values (.CSV)`
+
+Edit so spreadsheet has following headers::
+
+  - id
+  - _title
+  - title
+  - parent_id
+  - weight
+  - created
+  - modified
+  - encyc_urls
+  - description
+
+Edit first three lines, before headers start::
+
+  'id','topics'
+  'title','Topics'
+  'description','DDR Topics'
+
+Put the .CSV file someplace where it can be read by DDR (see *clone* section of *Updating Controlled Vocabs #1*).
+
+Generate new `$VOCAB.json` file::
+
+  $ cd /usr/local/src/ddr-local/ddrlocal
+  $ source /usr/local/src/env/ddrlocal/bin/activate
+  $ python manage.py shell
+  >>> from DDR import vocab
+  >>> index = vocab.Index()
+  >>> index.read('/PATH/TO/OFFICIAL-DenshoTopicsForImport - New Topics.csv')
+  >>> index.write('/PATH/TO/ddr-vocab/api/0.2/topics.json')
+
+
+Updating Controlled Vocabs #1
 --------------------
 
 When adding, removing, or otherwise modifying vocab files, run following in the Python console to regenerate the ancestor/sibling/children links.::
