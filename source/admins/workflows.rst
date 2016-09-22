@@ -298,7 +298,7 @@ Creating a new Collection using the command-line is similar, except that there i
     $ sudo su ddr
     $ cd /var/www/media/ddr/
     $ ddr create -u USER -m MAIL \
-      -t /usr/local/src/ddr-cmdln/ddr/DDR/templates \
+      -t [/etc/ddr/ddr-defs/templates/ead.xml] \
       -c /var/www/media/ddr/REPO-ORG-CID/
 
 
