@@ -230,9 +230,9 @@ Add user to ID service
 
 Users must be registered with and logged in to the ID service in order to request new Collection and Object IDs.  The ID service stores their real name and email address.  When they log in to the ID service, this information is remembered by the local Editor application.  Their name and email address is recorded in the `changelog` and `Git commits` or every action they perform.
 
-#. Visit the ID serice site (http://partner.densho.org/workbench/).
+#. Visit the ID service site (https://idservice.densho.org/).
 #. Log in as a user with admin privileges.
-#. Go to the admin page (http://partner.densho.org/workbench/admin/). Note that there is currently no link to this page; you have to cut-and-paste the URL or type it in the URL field of your browser.
+#. Go to the admin page (https://idservice.densho.org/admin/). Note that there is currently no link to this page; you have to cut-and-paste the URL or type it in the URL field of your browser.
 #. Go to the *Users* page. Confirm that the new user is not listed there.
 #. Click *Add*.
 #. Enter their Personal Info, check the box to mark them as Active, assign Staff or Superuser status as needed, and add them to the appropriate group(s).  Leave the User Permissions settings blank.  Click "Save".
