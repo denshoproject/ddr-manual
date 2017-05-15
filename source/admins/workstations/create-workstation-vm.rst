@@ -162,11 +162,11 @@ In order for `ddr-local` to be able to ingest documents, you must designate a di
 
 
 
-Download Debian Stable ("Wheezy")
+Download Debian Stable
 ---------------------------------
 
 - http://www.debian.org/distrib/
-- Click on "32-bit PC netinst iso" to start the download.
+- Click on "64-bit PC netinst iso" to start the download.
 - Note the location of the downloaded file: `$DEBIAN_ISO`.
 
 
@@ -385,8 +385,6 @@ Install Miscellaneous Useful Tools
 Install VirtualBox Guest Additions
 ----------------------------------
 
-..note:: Note: Debian 7.4 may have included the VirtualBox extensions in the core installer...stay tuned. (2/11/2014). 
-
 source: http://virtualboxes.org/doc/installing-guest-additions-on-debian/
 
 Install required packages in the VM, then configure system for building kernel modules::
@@ -426,11 +424,13 @@ Log in to your VM and become `root`.  Add a `ddr` user::
     # adduser ddr
     [enter info]
 
+IMPORTANT: In the Densho HQ environment, it is *critical* that the `ddr` user has the uid and gid set to `1001`. 
+
 Then install the prerequisites and install the `ddr-local` app itself.::
 
     # apt-get install git-core
     # git clone https://github.com/densho/ddr-local.git /usr/local/src/ddr-local
-    # cd /usr/local/src/ddr-local/ddrlocal
+    # cd /usr/local/src/ddr-local/
     
     # If you are testing a branch, switch to that branch.
     # git checkout -b BRANCHNAME origin/BRANCHNAME
