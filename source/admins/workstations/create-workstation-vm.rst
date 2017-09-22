@@ -258,78 +258,6 @@ Reboot the VM and log in.
 
 
 
-Network interfaces
--------------------------
-
-Edit the networking config file::
-
-    # nano /etc/network/interfaces
-
-so that it looks like the following::
-
-    # This file describes the network interfaces available on your system
-    # and how to activate them. For more information, see interfaces(5).
-     
-    # The loopback network interface
-    auto lo
-    iface lo inet loopback
-     
-    # The primary network interface
-    allow-hotplug eth0
-    iface eth0 inet dhcp
-     
-    # host-only interface
-    auto eth1
-    iface eth1 inet static
-    address 192.168.56.101
-    netmask 255.255.255.0
-    network 192.168.56.0
-    broadcast 192.168.56.255
-
-Reboot the machine::
-
-    # reboot
-
-Log in and confirm that you have IP addresses for both network interfaces (`eth0` and `eth1`)::
-
-    # ifconfig
-    eth0      Link encap:Ethernet  HWaddr 08:00:27:40:b8:f8  
-              inet addr:10.0.2.15  Bcast:10.0.2.255  Mask:255.255.255.0
-              inet6 addr: fe80::a00:27ff:fe40:b8f8/64 Scope:Link
-              UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
-              RX packets:8988 errors:0 dropped:0 overruns:0 frame:0
-              TX packets:4585 errors:0 dropped:0 overruns:0 carrier:0
-              collisions:0 txqueuelen:1000 
-              RX bytes:6956862 (6.6 MiB)  TX bytes:302963 (295.8 KiB)
-     
-    eth1      Link encap:Ethernet  HWaddr 08:00:27:e8:cc:63  
-              inet addr:192.168.56.101  Bcast:192.168.56.255  Mask:255.255.255.0
-              inet6 addr: fe80::a00:27ff:fee8:cc63/64 Scope:Link
-              UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
-              RX packets:16121 errors:0 dropped:0 overruns:0 frame:0
-              TX packets:8454 errors:0 dropped:0 overruns:0 carrier:0
-              collisions:0 txqueuelen:1000 
-              RX bytes:11265980 (10.7 MiB)  TX bytes:3098236 (2.9 MiB)
-     
-    lo        Link encap:Local Loopback  
-              inet addr:127.0.0.1  Mask:255.0.0.0
-              inet6 addr: ::1/128 Scope:Host
-              UP LOOPBACK RUNNING  MTU:16436  Metric:1
-              RX packets:203 errors:0 dropped:0 overruns:0 frame:0
-              TX packets:203 errors:0 dropped:0 overruns:0 carrier:0
-              collisions:0 txqueuelen:0 
-              RX bytes:41345 (40.3 KiB)  TX bytes:41345 (40.3 KiB)
-
-Ping a common domain name and confirm that you get a response::
-
-    # ping google.com
-    PING google.com (74.125.224.168) 56(84) bytes of data.
-    64 bytes from lax02s01-in-f8.1e100.net (74.125.224.168): icmp_req=1 ttl=51 time=10.6 ms
-    64 bytes from lax02s01-in-f8.1e100.net (74.125.224.168): icmp_req=2 ttl=51 time=9.80 ms
-    64 bytes from lax02s01-in-f8.1e100.net (74.125.224.168): icmp_req=3 ttl=51 time=10.6 ms
-
-
-
 Security Hardening
 -----------------
 
@@ -366,39 +294,6 @@ Restart SSH::
 
 
 
-Log in from your host machine
------------------------------
-
-At this point, log out from the VirtualBox window and log in from your host machine using SSH.  It is often more convenient to work from your host OS through an SSH connection.  Exactly how you do this will depend on whether you're using PuTTY or Cygwin, the OS X terminal, or a Linux terminal.  Whatever the case, you should now be able to log in as your regular user.  You should *not* be able to log in as root.
-
-
-
-Install Miscellaneous Useful Tools
-----------------------------------
-
-::
-
-    # apt-get install ack-grep bpython byobu bzip2 curl elinks htop logrotate mg multitail p7zip-full wget
-
-
-
-Install VirtualBox Guest Additions
-----------------------------------
-
-source: http://virtualboxes.org/doc/installing-guest-additions-on-debian/
-
-Install required packages in the VM, then configure system for building kernel modules::
-
-    # apt-get install build-essential module-assistant
-    # m-a prepare
-
-In the VM window, click on "Devices > Install Guest Additions". ::
-
-    # mount /media/cdrom
-    # sh /media/cdrom/VBoxLinuxAdditions.run
-
-
-
 Snapshot
 --------
 
@@ -417,27 +312,100 @@ If something goes wrong while installing the DDR, or if the developer makes a no
 DDR Applications and Dependencies
 =================================
 
-In this section we will use a script to automatically install the DDR code and its supporting applications.
+It is recommended to install `ddr-local` from a package repository, since your install will receive upgrades automatically as part of the normal system package update process.
 
-Log in to your VM and become `root`.  Add a `ddr` user::
+**Adding the Repository**
 
-    # adduser ddr
-    [enter info]
+To use our repository you must first add the packaging signing key using the `apt-key` tool and then add the repository itself to your list of APT sources. Commands for accomplishing this are listed below (for completeness we include commands to install curl and the apt tools - you may already have these installed).
+::
+    $ sudo apt-get update && sudo apt-get install curl apt-transport-https gnupg
+    $ sudo curl -s http://packages.densho.org/debian/keys/archive.asc | sudo apt-key add -
+    $ echo "deb http://packages.densho.org/debian/ jessie main" | sudo tee /etc/apt/sources.list.d/packages_densho_org_debian.list
 
-IMPORTANT: In the Densho HQ environment, it is *critical* that the `ddr` user has the uid and gid set to `1001`. 
+**Installing the Package**
 
-Then install the prerequisites and install the `ddr-local` app itself.::
+You can now install the DDR Editor with the following commands:
+::
+    $ sudo apt-get update && sudo apt-get install ddrlocal-master
 
-    # apt-get install git-core
-    # git clone https://github.com/densho/ddr-local.git /usr/local/src/ddr-local
-    # cd /usr/local/src/ddr-local/
+*Updating the Editor*
+
+Once the package is installed you can get updates as part of the normal system update/upgrade process:
+::
+    $ sudo apt-get update && sudo apt-get upgrade
+
+
+
+The DDR user
+------------
+
+IMPORTANT: The editor run as the `ddr` user, which is installed as part of the package install.  In the Densho HQ environment, it is *critical* that the `ddr` user has the uid and gid set to `1001`.
+::
+    $ cd /opt/ddr-local/
+    $ sudo make ddr-user
+
+User uid and gid are set in `/etc/passwd`.  If both of these commands return the same output you are good.
+::
+    $ cat /etc/passwd | grep ddr
+    ddr:x:1001:1001::/home/ddr:/bin/bash
+    $ cat /etc/passwd | grep 1001
+    ddr:x:1001:1001::/home/ddr:/bin/bash
+
+
+
+Network interfaces
+-------------------------
+
+Use the Makefile to install a networking config file to set the VM to a standard IP address (192.168.56.101).
+::
+    $ cd /opt/ddr-local/
+    $ sudo make network-config
+    $ sudo reboot
+
+Log in and confirm that you have IP addresses for both network interfaces (`eth0` and `eth1`)
+::
+    # on Debian 8 / jessie
+    $ sudo ifconfig
+    # on Debian 9 / stretch
+    $ sudo ip address
+
+Either of these commands should return something like the following
+::
+    eth0      Link encap:Ethernet  HWaddr 08:00:27:40:b8:f8
+              inet addr:10.0.2.15  Bcast:10.0.2.255  Mask:255.255.255.0
+              ...
     
-    # If you are testing a branch, switch to that branch.
-    # git checkout -b BRANCHNAME origin/BRANCHNAME
+    eth1      Link encap:Ethernet  HWaddr 08:00:27:e8:cc:63
+              inet addr:192.168.56.101  Bcast:192.168.56.255  Mask:255.255.255.0
+              ...
     
-    # make install
+    lo        Link encap:Local Loopback
+              inet addr:127.0.0.1  Mask:255.0.0.0
+              ...
 
-Wait as Make installs Debian packages and Python code and builds up your system.  On a basic VM this takes between 5-10 minutes.
+Ping a common domain name and confirm that you get a response::
+
+    $ ping google.com
+    PING google.com (74.125.224.168) 56(84) bytes of data.
+    64 bytes from lax02s01-in-f8.1e100.net (74.125.224.168): icmp_req=1 ttl=51 time=10.6 ms
+    64 bytes from lax02s01-in-f8.1e100.net (74.125.224.168): icmp_req=2 ttl=51 time=9.80 ms
+    64 bytes from lax02s01-in-f8.1e100.net (74.125.224.168): icmp_req=3 ttl=51 time=10.6 ms
+
+
+
+Install VirtualBox Guest Additions
+----------------------------------
+
+source: http://virtualboxes.org/doc/installing-guest-additions-on-debian/
+
+The Makefile can install VirtualBox Guest Additions, which is required
+for accessing shared directories on the host system.
+::
+    $ cd /opt/ddr-local/
+    $ sudo make vbox-guest
+
+This step requires you to click "Devices > Insert Guest Additions CD
+Image" in the device window.
 
 
 
@@ -452,11 +420,13 @@ Settings specific to Django are in `/usr/local/src/ddr-public/ddrpublic/ddrpubli
 
 If this will be a stand-alone workstation or if you are using a Qumulo-style NFS and this machine will be the one to run the background indexing processes, run the following to set up and start the background process.::
 
-    # make enable-bkgnd
+    $ cd /opt/ddr-local/
+    $ sudo make enable-bkgnd
 
 `ddr-local` doesn't use the Django ORM for much, but you have to create a database anyway::
 
-    # make syncdb
+    $ cd /opt/ddr-local/
+    $ sudo make syncdb
 
 
 
@@ -465,41 +435,24 @@ Restart
 
 Restart the servers and the web application to see the effects of your edits.::
 
-    # make restart
+    $ cd /opt/ddr-local/
+    $ sudo make restart
 
 
 Switching branches
 ------------------
 
-Once you have everything installed, if you need to work on a different branch of the code you may need to make sure that the entire codebase is on the same branch.
+*Package Install*
 
-These lines check out the specified branch, download and install Python dependencies for each project, and compile/install `ddr-cmdln`.  These steps are all necessary, or new code may not have the proper dependencies.::
+The DDR editor is available in two branches: master and develop.
+The master branch is more stable and is intended for production use.
+The develop branch is for more cutting edge features that may not be quite ready for the master branch.
 
-    # cd /usr/local/src/ddr-cmdln/ddr
-    # git checkout -b $BRANCH origin/$BRANCH # <<< If branch does not yet exist.
-    # git checkout $BRANCH                   # <<< If updating existing branch.
-    # pip install -U -r requirements/production.txt
-    # python setup.py install
-    # cd /usr/local/src/ddr-local/ddrlocal
-    # git checkout -b $BRANCH origin/$BRANCH # <<< If branch does not yet exist.
-    # git checkout $BRANCH                   # <<< If updating existing branch.
-    # pip install -U -r requirements/production.txt
-
-Newer branches have a `make branch` task designed to automate as much of this as possible.  For example, switching to the `batch-edit` branch::
-
-    # make branch BRANCH=batch-edit
-
-Some branches may use a branch of the 'ddr' repo.  If so then you must switch branches on the 'ddr' repo and restart.::
-
-    # cd /var/www/media/base/ddr/
-    # git checkout -b $BRANCH origin/$BRANCH # <<< If branch does not yet exist.
-    # git checkout $BRANCH                   # <<< If updating existing branch.
-    # cd /usr/local/src/ddr-local/ddrlocal
-    
-After switching branches, you must copy new versions of the config files and restart before changes will take effect.::
-
-    # make reload
-    # make restart
+It is not recommended that you switch branches manually, as updates will probably damage your install.
+If you wish to use the develop branch instead of the master branch, remove `ddrlocal-master` and install `ddrlocal-develop`.
+::
+    $ sudo apt-get remove ddrlocal-master
+    $ sudo apt-get install ddrlocal-develop
 
 
 
