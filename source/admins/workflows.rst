@@ -633,8 +633,8 @@ Put the .CSV file someplace where it can be read by DDR (see *clone* section of 
 
 Generate new `$VOCAB.json` file::
 
-  $ cd /usr/local/src/ddr-local/ddrlocal
-  $ source /usr/local/src/env/ddrlocal/bin/activate
+  $ cd /opt/ddr-local/venv/ddrlocal
+  $ source /opt/ddr-local/venv/ddrlocal/bin/activate
   $ python manage.py shell
   >>> from DDR import vocab
   >>> index = vocab.Index()
@@ -647,8 +647,8 @@ Updating Controlled Vocabs #1
 
 When adding, removing, or otherwise modifying vocab files, run following in the Python console to regenerate the ancestor/sibling/children links.::
 
-  $ cd /usr/local/src/ddr-local/ddrlocal
-  $ source /usr/local/src/env/ddrlocal/bin/activate
+  $ cd /opt/ddr-local/venv/ddrlocal
+  $ source /opt/ddr-local/venv/ddrlocal/bin/activate
   $ python manage.py shell
   >>> from DDR import vocab
   >>> index = vocab.Index()
