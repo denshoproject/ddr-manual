@@ -316,10 +316,18 @@ It is recommended to install `ddr-local` from a package repository, since your i
 
 **Adding the Repository**
 
-To use our repository you must first add the packaging signing key using the `apt-key` tool and then add the repository itself to your list of APT sources. Commands for accomplishing this are listed below (for completeness we include commands to install curl and the apt tools - you may already have these installed).
+To use our package repository you must first be able to access it.  Until the repository has a domain name you must edit your `/etc/hosts` file
+::
+   $ sudo vi /etc/hosts
+
+and add the following line:
+::
+   192.168.0.6 packages.densho.org
+
+Next you must add the packaging signing key using the `apt-key` tool and then add the repository itself to your list of APT sources.  Commands for accomplishing this are listed below (for completeness we include commands to install curl and the apt tools - you may already have these installed).
 ::
     $ sudo apt-get update && sudo apt-get install curl apt-transport-https gnupg
-    $ sudo curl -s http://packages.densho.org/debian/keys/archive.asc | sudo apt-key add -
+    $ curl -s http://packages.densho.org/debian/keys/archive.asc | sudo apt-key add -
     $ echo "deb http://packages.densho.org/debian/ jessie main" | sudo tee /etc/apt/sources.list.d/packages_densho_org_debian.list
 
 **Installing the Package**
