@@ -418,12 +418,12 @@ Upon receipt of USB hdd at Densho (and after making a local backup of usb data):
 
     git remote rm usb-transfer-1
 
-TODO Prepare Collections for publication
+Prepare Collections for publication
 -------------------------------------------
 
 The following details the procedure for publishing completed Collection repos. This is specific to the archival processes and operational environment of the DDR project at Densho. 
 
-The commands are available with `ddr-cmdln` and `ddr-local` installed. Both should be on the `master` branch.
+The commands are available with `ddr-cmdln`, `ddr-local`, and `ddr-defs` installed. All0 should be on the `master` branch.   
 
 At Densho HQ, using `ddr-testing-1` example collection repo:
 
@@ -432,7 +432,7 @@ At Densho HQ, using `ddr-testing-1` example collection repo:
     mv /densho/drstores/ddr1/ddr-testing-1 /densho/kinkura/gold/ddr-testing-1
 
 #. Review and approve using ddr-local webui.
-#. Run `ddr-filter`, pointing output to `/densho/kinkura/working`::
+#. [OPTIONAL] Run `ddr-filter`, pointing output to `/densho/kinkura/working`::
 
     su ddr
     cd /usr/local/src/ddr-cmdln/ddr
@@ -447,11 +447,11 @@ At Densho HQ, using `ddr-testing-1` example collection repo:
     FILTER_ddr-densho-testing-1.log
     FILTER_ddr-densho-testing-1.sh
     
-#. Run the generated filtering script::
+#. [OPTIONAL] Run the generated filtering script::
 
     sh /densho/kinkura/working/FILTER_ddr-densho-testing-1.sh | tee -a /densho/kinkura/working/FILTER_ddr-testing-1.log
 
-#. Move `PUBLIC_ddr-testing-1` to `/densho/kinkura/public/ddr-testing-1`::
+#. [OPTIONAL] Move `PUBLIC_ddr-testing-1` to `/densho/kinkura/public/ddr-testing-1`::
 
     mv /densho/kinkura/working/PUBLIC_ddr-testing-1 /densho/kinkura/public/ddr-testing-1
 
@@ -459,7 +459,7 @@ At Densho HQ, using `ddr-testing-1` example collection repo:
 
     su ddr
     cd /usr/local/src/ddr-local/ddrlocal
-    ddr-pubcopy --mezzanine --access \
+    ddr-pubcopy --mezzanine --access --transcript \
        /densho/kinkura/public/ddr-testing-1 \
        /densho/kinkura/transfer
 
@@ -493,100 +493,29 @@ To run the script::
 Note that you *must* be `root` or have privs to write in the `/usr/local/src/ddr-cmdln/ddr` directory in order to use the script because of the default location of the logfile. Happy clobbering! 
 
 
-[develop (new)] Publish collection repos to public server
+Preparing `ddr-public` Elasticsearch cluster
 --------------------
 
-NEW Workflow for completely replacing data in Elasticsearch, for `ddr-public`.
+These steps outline the process for using `ddr-index` tools to prepare an Elasticsearch cluster to hold `ddr-public` data. They require that the `ddr-cmdln`, `ddr-local` and `ddr-defs` repos are present, and running on the `master` branch. This procedure assumes that the `ddr-public`-compatible version of Elasticsearch is installed (currently 2.4.4), and that the cluster is already up and running.
 
-List indexes and aliases, and get status info for specified index.::
+#. Create the DDR index.  This step initializes the index and uploads mappings and facet information. Note that the ESHOST_IP and index name, `ddrpublic-production` in this case, must match the `docstore_host` and `docstore_index` vars in both the `[local]` and `[public]` sections of `/etc/ddr/ddrlocal.cfg` or the overrides in `/etc/ddr/ddrlocal-local.cfg`::
+      
+    $ ddr-index init -H http://ESHOST_IP:9200 -i ddrpublic-production /PATH/TO/ddr-defs
+
+You can check if the DDR index already exists with the following command::
+
+    $ ddr-index status -H http://ESHOST_IP:9200 -i ddrpublic-production
+
+You can also delete the existing index, if you need to completely re-initialize the ES cluster for `ddr-public`::
   
-    $ ddr-index status -H localhost:9200 -i documents
-
-Delete an existing index.::
-  
-    $ ddr-index remove -H localhost:9200 -i documents
-
-Initialize a new index.  This step creates the index and uploads mappings and facet information.::
-      
-    $ ddr-index init -H localhost:9200 -i documents /var/www/media/ddr/ddr
-
-Set an alias for the index.  This name must match `DOCSTORE_INDEX` in `ddr-public/ddrpublic/ddrpublic/settings.py`.::
-      
-    $ ddr-index alias -H localhost:9200 -i documents -a ddrpublic-stage
-
-Each repository and organization must have a corresponding metadata document.  The organization files can be found in the organizations' inventory repositories.::
+    $ ddr-index remove -H http://ESHOST_IP:9200 -i ddrpublic-production
     
-    $ ddr-index repo -H localhost:9200 -i documents /var/www/media/ddr/REPO/repository.json
-    $ ddr-index org -H localhost:9200 -i documents /var/www/media/ddr/REPO-ORG/organization.json
+#. Set up repository and organization documents. Before indexing any collection content, the ES index must contain 'repository' and 'organization' metadata. The 'repository' data is basic information about the `ddr-public` instance, and the 'organization' json documents describe each individual DDR partner. Partner content cannot be indexed until the the corresponding 'organization' json document is indexed. The 'organization' files can be found in the organizations' inventory repositories; the master 'repository' json is in the 'ddr' repo::
     
-Upload metadata for each collection repository.::
-      
-    $ ddr-index index -H localhost:9200 -i documents --recursive --newstyle /var/www/media/ddr
-
-Complete usage information is available from the `ddr-index` command itself.::
-
-    $ ddr-index --help
-
-
-[master (old)] Publish collection repos to public server
---------------------
-
-OLD Workflow for completely replacing data in Elasticsearch, for `ddr-public`.
-
-The following commands must be run on the server on which the repositories reside.  First open a Python interpreter::
-
-    $ su ddr
-    [password]
-    $ python
-    Python 2.7.3 (default, Mar 14 2014, 11:57:14) 
-    [GCC 4.7.2] on linux2
-    Type "help", "copyright", "credits" or "license" for more information.
-    >>> 
-
-Import the necessary libraries, then set variables for your Elasticsearch host and for the index you'll be putting documents in.::
-
-    from DDR import models
-    from DDR import docstore
+    $ ddr-index repo -H http://ESHOST_IP:9200 -i ddrpublic-production /PATH/TO/ddr/repository.json
+    $ ddr-index org -H http://ESHOST_IP:9200 -i ddrpublic-production /PATH/TO/REPO-ORG/organization.json
     
-    HOSTS = [{'host':'192.168.X.Y', 'port':9200}]
-    INDEX = 'documents0'
-
-Next, delete any existing index, create a new index, and upload mappings and facet information.::
-
-    docstore.delete_index(HOSTS, INDEX)
-    
-    docstore.create_index(HOSTS, INDEX)
-    docstore.put_mappings(HOSTS, INDEX, docstore.MAPPINGS_PATH, models.MODELS_DIR)
-    docstore.put_facets(HOSTS, INDEX, docstore.FACETS_PATH)
-
-Set an alias for the index.  This name must match `DOCSTORE_INDEX` in `ddr-public/ddrpublic/ddrpublic/settings.py`.::
-
-    es = docstore._get_connection(HOSTS)
-    es.indices.put_alias(index=[INDEX], name='ALIAS', body={})
-
-Each repository and organization must have a corresponding metadata document.  The organization files can be found in the organizations' inventory repositories.::
-
-    # This is still a little clunky.
-    import json
-    def loads( path ):
-        with open(path, 'r') as f:
-            data = json.loads(f.read())
-        return data
-    
-    PATH = '/PATH/TO/REPOSITORIES'
-    es = docstore._get_connection(HOSTS)
-    
-    es.index(index=INDEX, doc_type='repository', id='ddr', body=loads('%s/ddr/repository.json' % PATH))
-    
-    # Do this once per organization.
-    es.index(index=INDEX, doc_type='organization', id='ddr-densho', body=loads('%s/REPO-ORG/organization.json' % PATH))
-
-Press `Control-D` to exit the Python interpreter.
-
-Use the `ddrindex` command to upload metadata for each collection repository.::
-
-    $ ddrindex index -H HOST:PORT -r -i INDEX -p /PATH/TO/REPOSITORIES/REPO-ORG-CID
-
+The ES cluster is now ready to accept DDR collection data. 
 
 Controlled Vocabularies
 =======================
