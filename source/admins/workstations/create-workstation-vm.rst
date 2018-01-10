@@ -328,7 +328,16 @@ Next you must add the packaging signing key using the `apt-key` tool and then ad
 ::
     $ sudo apt-get update && sudo apt-get install curl apt-transport-https gnupg
     $ curl -s http://packages.densho.org/debian/keys/archive.asc | sudo apt-key add -
+
+Next add the appopriate entry to `/etc/apt/sources.list.d`.
+
+For Debian 8 (Jessie):
+::
     $ echo "deb http://packages.densho.org/debian/ jessie main" | sudo tee /etc/apt/sources.list.d/packages_densho_org_debian.list
+
+For Debian 9 (Stretch):
+::
+    $ echo "deb http://packages.densho.org/debian/ stretch main" | sudo tee /etc/apt/sources.list.d/packages_densho_org_debian.list
 
 **Installing the Package**
 
