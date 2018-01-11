@@ -322,34 +322,27 @@ It is recommended to install `ddr-local` from a package repository, since your i
 
 **Adding the Repository**
 
-To use our package repository you must first be able to access it.  Until the repository has a domain name you must edit your `/etc/hosts` file
-::
-   $ sudo vi /etc/hosts
-
-and add the following line:
-::
-   192.168.0.6 packages.densho.org
-
-Next you must add the packaging signing key using the `apt-key` tool and then add the repository itself to your list of APT sources.  Commands for accomplishing this are listed below (for completeness we include commands to install curl and the apt tools - you may already have these installed).
+Add the packaging signing key using the `apt-key` tool and then add the repository itself to your list of APT sources.  Commands for accomplishing this are listed below (for completeness we include commands to install curl and the apt tools - you may already have these installed).
 ::
     $ sudo apt-get update && sudo apt-get install curl apt-transport-https gnupg
-    $ curl -s http://packages.densho.org/debian/keys/archive.asc | sudo apt-key add -
+    $ curl -s https://packages.densho.org/debian/keys/archive.asc | sudo apt-key add -
 
 Next add the appopriate entry to `/etc/apt/sources.list.d`.
 
 For Debian 8 (Jessie):
 ::
-    $ echo "deb http://packages.densho.org/debian/ jessie main" | sudo tee /etc/apt/sources.list.d/packages_densho_org_debian.list
+    $ echo "deb https://packages.densho.org/debian/ jessie main" | sudo tee /etc/apt/sources.list.d/densho.list
 
 For Debian 9 (Stretch):
 ::
-    $ echo "deb http://packages.densho.org/debian/ stretch main" | sudo tee /etc/apt/sources.list.d/packages_densho_org_debian.list
+    $ echo "deb https://packages.densho.org/debian/ stretch main" | sudo tee /etc/apt/sources.list.d/densho.list
 
 **Installing the Package**
 
-You can now install the DDR Editor with the following commands:
+You can now install the DDR Editor with the following commands (substitute 'master' with a branch name if you are installing a branch, e.g. 'develop'):
 ::
-    $ sudo apt-get update && sudo apt-get install ddrlocal-master
+    $ sudo apt-get update
+    $ sudo apt-get install ddrlocal-master
 
 *Updating the Editor*
 
