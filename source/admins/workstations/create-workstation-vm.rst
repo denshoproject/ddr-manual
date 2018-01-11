@@ -355,10 +355,7 @@ Once the package is installed you can get updates as part of the normal system u
 The DDR user
 ------------
 
-IMPORTANT: The editor run as the `ddr` user, which is installed as part of the package install.  In the Densho HQ environment, it is *critical* that the `ddr` user has the uid and gid set to `1001`.
-::
-    $ cd /opt/ddr-local/
-    $ sudo make ddr-user
+IMPORTANT: The editor run as the `ddr` user, which is installed as part of the package install.  In the Densho HQ environment, it is *critical* that the `ddr` user has the uid and gid set to `1001`.  In other cases this likely does not matter.
 
 User uid and gid are set in `/etc/passwd`.  If both of these commands return the same output you are good.
 ::
@@ -367,6 +364,10 @@ User uid and gid are set in `/etc/passwd`.  If both of these commands return the
     $ cat /etc/passwd | grep 1001
     ddr:x:1001:1001::/home/ddr:/bin/bash
 
+The installer should have set up the user/group properly but just in case you can change it manually; do this as soon after setting up the VM as possible.
+::
+    $ cd /opt/ddr-local/
+    $ sudo make ddr-user
 
 
 Network interfaces
