@@ -103,7 +103,7 @@ In the "VirtualBox Manager" window, click "Machine > New", then select the follo
     Name and operating system
     - Name: ddrworkbench-$PARTNERCODE
     - Type: Linux
-    - Version: Debian
+    - Version: Debian (64-bit)
     
     Memory Size
     - 2048 MB
@@ -112,7 +112,7 @@ In the "VirtualBox Manager" window, click "Machine > New", then select the follo
     - Create a virtual hard drive now
     
     Hard drive file type
-    - VMDK
+    - VDI
     
     Storage on physical hard drive
     - Dynamically allocated
@@ -195,7 +195,7 @@ Install Debian on the VM
     - American English
     
     Configure the network: Primary network interface
-    - eth0
+    - eth0 or enp0s3
     
     Configure the network: Hostname
     - Enter your VM name
@@ -236,6 +236,9 @@ Install Debian on the VM
     Partition disks: Write changes?
     - Yes
     
+    Configure the package manager: Scan another CD or DVD?
+    - No
+    
     Configure the package manager: Debian archive mirror country
     - United States
     
@@ -253,6 +256,9 @@ Install Debian on the VM
     
     Install GRUB boot loader?
     - Yes
+    
+    Device for boot loader installation:
+    - Select `ata-VBOX_HARDDISK_*` or similar.
 
 Reboot the VM and log in.
 
