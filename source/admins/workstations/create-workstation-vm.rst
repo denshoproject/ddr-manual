@@ -447,6 +447,38 @@ If this will be a stand-alone workstation or if you are using a Qumulo-style NFS
 
 
 
+Elasticsearch
+-------------
+
+Local search is optionally provided by Elasticsearch. You can install it thusly:
+::
+    $ cd /opt/ddr-local/
+    $ sudo make get-elasticsearch
+    $ sudo make install-elasticsearch
+
+The Elasticsearch service is disabled by default.  To enable it at boot
+::
+    $ sudo systemctl enable elasticsearch.service
+
+The `ddrindex` command uses the Elasticsearch config from the `[public]` section because reasons. You can override that selection in `/etc/ddr/ddrlocal-local.cfg`.
+::
+    $ sudo vi /etc/ddr/ddrlocal-local.cfg
+
+Add the following to the file:
+::
+    [public]
+    docstore_host=127.0.0.1:9200
+    docstore_index=ddrlocal
+
+Follow `ddrindex` instructions to set up an Elasticsearch index for local searching.
+::
+    $ cd /opt/ddr-local
+    $ sudo su ddr
+    ddr$ source /opt/ddr-local/venv/bin/activate
+    ddr$ ddrindex help
+
+
+
 Restart
 -------
 
