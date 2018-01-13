@@ -300,6 +300,15 @@ Restart SSH::
 
 
 
+Adding other appliances 
+-----------------
+
+These are appliances that are highly useful in day-to-day troubleshooting and monitering
+
+::
+    $ apt-get update && apt-get install sudo byobu glances nfs-common
+
+
 Snapshot
 --------
 
@@ -349,7 +358,6 @@ You can now install the DDR Editor with the following commands (substitute 'mast
 Once the package is installed you can get updates as part of the normal system update/upgrade process:
 ::
     $ sudo apt-get update && sudo apt-get upgrade
-
 
 
 The DDR user
