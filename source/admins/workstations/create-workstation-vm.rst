@@ -472,10 +472,14 @@ The `ddrindex` command uses the Elasticsearch config from the `[public]` section
 ::
     $ sudo vi /etc/ddr/ddrlocal-local.cfg
 
-Add the following to the file:
+Add the following to the local config file.  You must add host and index settings to both the `[local]` and `[public]` settings.  `[local]` settings refer to the Elasticsearch index used by this copy of the DDR editor.  `[public]` settings refer to the index used by the public web sites.  Note that the `[local]` section requires a `docstore_enabled` setting before editor search functions will work.:
 ::
-    [public]
+    [local]
     docstore_enabled=True
+    docstore_host=127.0.0.1:9200
+    docstore_index=ddrlocal
+    
+    [public]
     docstore_host=127.0.0.1:9200
     docstore_index=ddrlocal
 
@@ -484,6 +488,9 @@ Follow `ddrindex` instructions to set up an Elasticsearch index for local search
     $ cd /opt/ddr-local
     $ sudo su ddr
     ddr$ source /opt/ddr-local/venv/ddrlocal/bin/activate
+    ddr$ ddrindex
+    ddr$ ddrindex conf
+    ddr$ ddrindex status
     ddr$ ddrindex help
 
 
