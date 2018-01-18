@@ -475,6 +475,7 @@ The `ddrindex` command uses the Elasticsearch config from the `[public]` section
 Add the following to the file:
 ::
     [public]
+    docstore_enabled=True
     docstore_host=127.0.0.1:9200
     docstore_index=ddrlocal
 
