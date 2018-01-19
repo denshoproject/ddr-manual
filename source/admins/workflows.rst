@@ -421,25 +421,25 @@ Upon receipt of USB hdd at Densho (and after making a local backup of usb data):
 Preparing `ddr-public` Elasticsearch cluster
 --------------------
 
-These steps outline the process for using `ddr-index` tools to prepare an Elasticsearch cluster to hold `ddr-public` data. They are only necessary if the `ddr-public` index does not already exist, and require that the `ddr-cmdln`, `ddr-local` and `ddr-defs` repos are present, and running on the `master` branch. This procedure assumes that the `ddr-public`-compatible version of Elasticsearch is installed (currently 2.4.4), and that the cluster is already up and running.
+These steps outline the process for using `ddrindex` tools to prepare an Elasticsearch cluster to hold `ddr-public` data. They are only necessary if the `ddr-public` index does not already exist, and require that the `ddr-cmdln`, `ddr-local` and `ddr-defs` repos are present, and running on the `master` branch. This procedure assumes that the `ddr-public`-compatible version of Elasticsearch is installed (currently 2.4.4), and that the cluster is already up and running.
 
 #. Create the DDR index.  This step initializes the index and uploads mappings and facet information. Note that the ESHOST_IP and index name, `ddrpublic-production` in this case, must match the `docstore_host` and `docstore_index` vars in both the `[local]` and `[public]` sections of `/etc/ddr/ddrlocal.cfg` or the overrides in `/etc/ddr/ddrlocal-local.cfg`::
       
-    $ ddr-index init -H http://ESHOST_IP:9200 -i ddrpublic-production /PATH/TO/ddr-defs
+    $ ddrindex create --hosts http://ESHOST_IP:9200 --index ddrpublic-production
 
 You can check if the DDR index already exists with the following command::
 
-    $ ddr-index status -H http://ESHOST_IP:9200 -i ddrpublic-production
+    $ ddrindex status --hosts http://ESHOST_IP:9200 --index ddrpublic-production
 
 You can also delete the existing index, if you need to completely re-initialize the ES cluster for `ddr-public`::
   
-    $ ddr-index remove -H http://ESHOST_IP:9200 -i ddrpublic-production
+    $ ddrindex destroy --hosts http://ESHOST_IP:9200 --index ddrpublic-production
     
 #. Set up repository and organization documents. Before indexing any collection content, the ES index must contain 'repository' and 'organization' metadata. The 'repository' data is basic information about the `ddr-public` instance, and the 'organization' json documents describe each individual DDR partner. Partner content cannot be indexed until the the corresponding 'organization' json document is indexed. The 'organization' files can be found in the organizations' inventory repositories; the master 'repository' json is in the 'ddr' repo::
     
-    $ ddr-index repo -H http://ESHOST_IP:9200 -i ddrpublic-production /PATH/TO/ddr/repository.json
-    $ ddr-index org -H http://ESHOST_IP:9200 -i ddrpublic-production /PATH/TO/REPO-ORG/organization.json
-    
+    $ ddrindex postjson -H http://ESHOST_IP:9200 -i ddrpublic-production repository ddr /PATH/TO/ddr/repository.json
+    $ ddrindex postjson -H http://ESHOST_IP:9200 -i ddrpublic-production organization REPO-ORG /PATH/TO/REPO-ORG/organization.json
+
 The ES cluster is now ready to accept DDR collection data. 
 
 Prepare Collections for publication
