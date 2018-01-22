@@ -476,19 +476,22 @@ Add the following to the local config file.  You must add host and index setting
 ::
     [local]
     docstore_enabled=True
-    docstore_host=127.0.0.1:9200
+    docstore_host=10.0.1.127:9200
     docstore_index=ddrlocal
     
     [public]
-    docstore_host=127.0.0.1:9200
+    docstore_host=10.0.127:9200
     docstore_index=ddrlocal
+
+docstore_hosts should point to where the elasticsearch server is running; if this is at the denshohq point it at Kyuzo. If it is a partner VM it should point at the local machine.:
+::
 
 Follow `ddrindex` instructions to set up an Elasticsearch index for local searching.
 ::
     $ cd /opt/ddr-local
     $ sudo su ddr
     ddr$ source /opt/ddr-local/venv/ddrlocal/bin/activate
-    ddr$ ddrindex
+    ddr$ ddrindex status
     ddr$ ddrindex conf
     ddr$ ddrindex status
     ddr$ ddrindex help
