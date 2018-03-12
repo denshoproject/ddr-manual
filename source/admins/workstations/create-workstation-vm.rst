@@ -457,8 +457,9 @@ If this will be a stand-alone workstation or if you are using a Qumulo-style NFS
 
 Elasticsearch
 -------------
+Search is optionally provided by Elasticsearch which can be run as a local installation (i.e., ES instance on the VM itself), or against a network-accessible ES cluster located off the VM.
 
-Local search is optionally provided by Elasticsearch. You can install it thusly:
+If you wish use a local instance, you can install it thusly:
 ::
     $ cd /opt/ddr-local/
     $ sudo make get-elasticsearch
@@ -482,6 +483,8 @@ Add the following to the local config file.  You must add host and index setting
     [public]
     docstore_host=127.0.0.1:9200
     docstore_index=ddrlocal
+
+In a setup where your ES cluster is not hosted on the VM itself, you will need to replace the `docstore_host` with the IP address:port of the host machine (i.e., `docstore_host=10.1.0.57:9200`). You may also need to change the `docstore_index` if you have set up the index with a name other than `ddrlocal`.
 
 Follow `ddrindex` instructions to set up an Elasticsearch index for local searching.
 ::
