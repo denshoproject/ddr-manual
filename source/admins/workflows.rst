@@ -154,12 +154,16 @@ In order to automatically generate Collection and Object IDs across the distribu
 In order for users to be able to get new collection and object IDs, they must be added to the organization group.  Please see the User section.
 
 
-TODO Add organization to ddr-public
+Add organization to ddr-public
 ------------------------------
 
-* [`ddr-public`] Add the organization record to the production ElasticSearch index.
-* [`ddr-public`] Add a subdir containing the organization icon to production nginx media server store. (i.e., `tulie:/var/www/media/base/`)
+To support searching and filtering by organization ("partner") in `ddr-public`, the following procedures must be performed:
 
+#. Index the organization record into the production ElasticSearch index.::
+
+    ddrindex org -i [DOCSTORE_INDEX] -h [DOCSTORE_HOSTS] /path/to/[ORG_REPO]/organization.json
+
+#. Add a subdir containing the organization's icon image binary to production nginx media server store. (e.g., `tulie:/var/www/media/base/`)
 
 
 Workstations
@@ -437,8 +441,8 @@ You can also delete the existing index, if you need to completely re-initialize 
     
 #. Set up repository and organization documents. Before indexing any collection content, the ES index must contain 'repository' and 'organization' metadata. The 'repository' data is basic information about the `ddr-public` instance, and the 'organization' json documents describe each individual DDR partner. Partner content cannot be indexed until the the corresponding 'organization' json document is indexed. The 'organization' files can be found in the organizations' inventory repositories; the master 'repository' json is in the 'ddr' repo::
     
-    $ ddrindex postjson -H http://ESHOST_IP:9200 -i ddrpublic-production repository ddr /PATH/TO/ddr/repository.json
-    $ ddrindex postjson -H http://ESHOST_IP:9200 -i ddrpublic-production organization REPO-ORG /PATH/TO/REPO-ORG/organization.json
+    $ ddrindex repo -h http://ESHOST_IP:9200 -i ddrpublic-production /PATH/TO/ddr/repository.json
+    $ ddrindex org -h http://ESHOST_IP:9200 -i ddrpublic-production organization /PATH/TO/REPO-ORG/organization.json
 
 The ES cluster is now ready to accept DDR collection data. 
 
@@ -447,7 +451,7 @@ Prepare Collections for publication
 
 The following details the procedure for publishing completed Collection repos. This is specific to the archival processes and operational environment of the DDR project at Densho. 
 
-The commands are available with `ddr-cmdln`, `ddr-local`, and `ddr-defs` installed. All0 should be on the `master` branch.   
+The commands are available with `ddr-cmdln`, `ddr-local`, and `ddr-defs` installed. All should be on the `master` branch.   
 
 At Densho HQ, using `ddr-testing-1` example collection repo:
 
@@ -489,15 +493,15 @@ At Densho HQ, using `ddr-testing-1` example collection repo:
 
 #. Transfer files from HQ to public storage.
 
-#. Run `ddr-index` on `/densho/kinkura/public/ddr-testing-1`, targeting public ElasticSearch server in colo::
+#. Run `ddrindex` on `/densho/kinkura/public/ddr-testing-1`, targeting public ElasticSearch server in colo::
 
     su ddr
     cd /usr/local/src/ddr-cmdln/ddr
-    ./bin/ddr-index index -H PUBLIC_ES_SERVER:9200 --recursive -i ddrpublic-production \
+    ./bin/ddrindex publish -h PUBLIC_ES_SERVER:9200 --recursive -i ddrpublic-production \
       /densho/kinkura/public/ddr-testing-1 | \ 
     tee -a /densho/kinkura/working/logs/ddrindex_ddr-testing-1.log
    
-   ddr-index can be run against an entire directory with `--recursive` mode selected. 
+   ddrindex can be run against an entire directory with `--recursive` mode selected. 
    (NOTE: The index name for ddrstage is 'stage'.)
 
 
@@ -606,6 +610,6 @@ Pull `ddr-vocab` repository to the workbench/vocabs API server (`schoolboy`) by 
 
 Pull `ddr` repository to `ddr-public` production/stage servers by running the Ansible playbook `ddrpub`.  See "Run Ansible playbooks" section above.
 
-Pull `ddr` repository to any ddr integration VM (i.e., `kinkura`) that will be running `ddr-index`.
+Pull `ddr` repository to any ddr integration VM (i.e., `kinkura`) that will be running `ddrindex`.
 
-Run `ddr-index` against production Elasticsearch to refresh existing facets.
+Run `ddrindex` against production Elasticsearch to refresh existing facets.
