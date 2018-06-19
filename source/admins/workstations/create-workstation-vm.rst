@@ -451,7 +451,7 @@ If this will be a stand-alone workstation or if you are using a Qumulo-style NFS
 `ddr-local` doesn't use the Django ORM for much, but you have to create a database anyway::
 
     $ cd /opt/ddr-local/
-    $ sudo make syncdb
+    $ sudo make migrate
 
 
 
