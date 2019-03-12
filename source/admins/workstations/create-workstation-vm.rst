@@ -210,7 +210,7 @@ Install Debian on the VM
     - Densho Partner
     
     Set up users and passwords: Username for your account
-    - ddrclient
+    - [orginization name]
     
     Set up users and passwords: Choose a password for the new user
     - ************ [choose a good password, write it down, keep in safe place]
@@ -305,8 +305,7 @@ Adding other appliances
 
 These are appliances that are highly useful in day-to-day troubleshooting and monitering
 
-::
-    $ apt-get update && apt-get install sudo byobu glances nfs-common
+    # apt-get update && apt-get install sudo byobu glances nfs-common
 
 
 Snapshot
@@ -423,11 +422,16 @@ Install VirtualBox Guest Additions
 
 source: http://virtualboxes.org/doc/installing-guest-additions-on-debian/
 
-The Makefile can install VirtualBox Guest Additions, which is required
+Install VirtualBox Guest Additions, which is required
 for accessing shared directories on the host system.
 ::
-    $ cd /opt/ddr-local/
-    $ sudo make vbox-guest
+    Login as root;
+    Update your APT database with apt-get update;
+    Install the latest security updates with apt-get upgrade;
+    Install required packages with apt-get install build-essential module-assistant;
+    Configure your system for building kernel modules by running m-a prepare;
+    Click on Install Guest Additions… from the Devices menu, then run mount /media/cdrom.
+    Run sh /media/cdrom/VBoxLinuxAdditions.run, and follow the instructions on screen.
 
 This step requires you to click "Devices > Insert Guest Additions CD
 Image" in the device window.
