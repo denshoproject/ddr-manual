@@ -483,6 +483,8 @@ Add the following to the local config file.  You must add host and index setting
     docstore_enabled=True
     docstore_host=127.0.0.1:9200
     docstore_index=ddrlocal
+    git_annex_whereis=False
+    vocabs_path=http://partner.densho.org/vocab/api/0.2
     
     [public]
     docstore_host=127.0.0.1:9200
