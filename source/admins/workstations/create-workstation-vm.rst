@@ -436,7 +436,7 @@ for accessing shared directories on the host system.
 This step requires you to click "Devices > Insert Guest Additions CD
 Image" in the device window.
 
-If you get an error while trying to mount the Guest Additions CD see [this link](https://askubuntu.com/questions/573596/unable-to-install-guest-additions-cd-image-on-virtual-box/960324#960324).
+If you get an error while trying to mount the Guest Additions CD see https://askubuntu.com/questions/573596/unable-to-install-guest-additions-cd-image-on-virtual-box/960324#960324.
 
 
 Configuration
