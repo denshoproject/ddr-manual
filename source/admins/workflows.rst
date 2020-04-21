@@ -161,7 +161,7 @@ To support searching and filtering by organization ("partner") in `ddr-public`, 
 
 #. Index the organization record into the production ElasticSearch index.::
 
-    ddrindex org -i [DOCSTORE_INDEX] -h [DOCSTORE_HOSTS] /path/to/[ORG_REPO]/organization.json
+    ddrindex org -h [DOCSTORE_HOSTS] /path/to/[ORG_REPO]/organization.json
 
 #. Add a subdir containing the organization's icon image binary to production nginx media server store. (e.g., `tulie:/var/www/media/base/`)
 
@@ -425,24 +425,26 @@ Upon receipt of USB hdd at Densho (and after making a local backup of usb data):
 Preparing `ddr-public` Elasticsearch cluster
 --------------------
 
-These steps outline the process for using `ddrindex` tools to prepare an Elasticsearch cluster to hold `ddr-public` data. They are only necessary if the `ddr-public` index does not already exist, and require that the `ddr-cmdln`, `ddr-local` and `ddr-defs` repos are present, and running on the `master` branch. This procedure assumes that the `ddr-public`-compatible version of Elasticsearch is installed (currently 2.4.4), and that the cluster is already up and running.
+These steps outline the process for using `ddrindex` tools to prepare an Elasticsearch cluster to hold `ddr-public` data. They are only necessary if the `ddr-public` indices do not already exist, and require that the `ddr-cmdln`, `ddr-local` and `ddr-defs` repos are present, and running on the `master` branch. This procedure assumes that the `ddr-public`-compatible version of Elasticsearch is installed (currently 7.3.1), and that the cluster is already up and running.
 
-#. Create the DDR index.  This step initializes the index and uploads mappings and facet information. Note that the ESHOST_IP and index name, `ddrpublic-production` in this case, must match the `docstore_host` and `docstore_index` vars in both the `[local]` and `[public]` sections of `/etc/ddr/ddrlocal.cfg` or the overrides in `/etc/ddr/ddrlocal-local.cfg`::
+#. Create the DDR indices.  This step initializes the indices and uploads controlled vocabularies and narrator information. Note that the ESHOST_IP must match the `docstore_host` var in both the `[local]` and `[public]` sections of `/etc/ddr/ddrlocal.cfg` or the overrides in `/etc/ddr/ddrlocal-local.cfg`::
       
-    $ ddrindex create --hosts http://ESHOST_IP:9200 --index ddrpublic-production
+    $ ddrindex create -h HOST:PORT
+    $ ddrindex vocabs -h HOST:PORT /opt/ddr-local/ddr-vocab/api/0.2/
+    $ ddrindex narrators -h HOST:PORT /opt/ddr-cmdln/densho-vocab/api/0.2/narrators.json
 
 You can check if the DDR index already exists with the following command::
 
-    $ ddrindex status --hosts http://ESHOST_IP:9200 --index ddrpublic-production
+    $ ddrindex status -h HOST:PORT
 
-You can also delete the existing index, if you need to completely re-initialize the ES cluster for `ddr-public`::
+You can also delete the existing indices, if you need to completely re-initialize the ES cluster for `ddr-public`.::
   
-    $ ddrindex destroy --hosts http://ESHOST_IP:9200 --index ddrpublic-production
+    $ ddrindex destroy -h HOST:PORT
     
-#. Set up repository and organization documents. Before indexing any collection content, the ES index must contain 'repository' and 'organization' metadata. The 'repository' data is basic information about the `ddr-public` instance, and the 'organization' json documents describe each individual DDR partner. Partner content cannot be indexed until the the corresponding 'organization' json document is indexed. The 'organization' files can be found in the organizations' inventory repositories; the master 'repository' json is in the 'ddr' repo::
+#. Set up repository and organization documents. The 'repository' data is basic information about the `ddr-public` instance, and the 'organization' json documents describe each individual DDR partner. Partner content will not be displayed by the site until the the corresponding 'organization' json document is indexed. The 'organization' files can be found in the organizations' inventory repositories; the master 'repository' json is in the 'ddr' repo::
     
-    $ ddrindex repo -h http://ESHOST_IP:9200 -i ddrpublic-production /PATH/TO/ddr/repository.json
-    $ ddrindex org -h http://ESHOST_IP:9200 -i ddrpublic-production organization /PATH/TO/REPO-ORG/organization.json
+    $ ddrindex repo -h HOST:PORT /PATH/TO/ddr/repository.json
+    $ ddrindex org -h HOST:PORT /PATH/TO/REPO-ORG/organization.json
 
 The ES cluster is now ready to accept DDR collection data. 
 
@@ -497,11 +499,11 @@ At Densho HQ, using `ddr-testing-1` example collection repo:
 
     su ddr
     cd /usr/local/src/ddr-cmdln/ddr
-    ./bin/ddrindex publish -h PUBLIC_ES_SERVER:9200 --recursive -i ddrpublic-production \
+    ./bin/ddrindex publish -h PUBLIC_HOST:9200 --recurse \
       /densho/kinkura/public/ddr-testing-1 | \ 
     tee -a /densho/kinkura/working/logs/ddrindex_ddr-testing-1.log
    
-   ddrindex can be run against an entire directory with `--recursive` mode selected. 
+   ddrindex can be run against an entire directory with `--recurse` mode selected. 
    (NOTE: The index name for ddrstage is 'stage'.)
 
 

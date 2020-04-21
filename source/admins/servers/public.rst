@@ -438,15 +438,15 @@ The following steps should be run on a machine with `ddr-local` that has local a
 
 Upload repository-wide data::
 
-    $ ddrindex index -H HOST:PORT -i INDEX --create
-    $ ddrindex mappings -H HOST:PORT -i INDEX -p /var/www/media/base/ddr/docstore/mappings.json
-    $ ddrindex facets -H HOST:PORT -i INDEX -p /var/www/media/base/ddr/vocab/
-    $ ddrindex repo -H HOST:PORT -i INDEX -p /var/www/media/base/ddr/repository.json
+    $ ddrindex create -h HOST:PORT
+    $ ddrindex vocabs -h HOST:PORT /opt/ddr-local/ddr-vocab/api/0.2/
+    $ ddrindex narrators -h HOST:PORT /opt/ddr-cmdln/densho-vocab/api/0.2/narrators.json
+    $ ddrindex repo -h HOST:PORT /var/www/media/ddr/ddr/repository.json
 
 Upload data for each organization::
 
-    $ ddrindex org -H HOST:PORT -i INDEX -p /var/www/media/base/REPO-ORG/organization.json
+    $ ddrindex org -h HOST:PORT /var/www/media/ddr/REPO-ORG/organization.json
 
 Upload data for individual collections::
 
-    $ ddrindex index -H HOST:PORT -i INDEX -p /var/www/media/base/REPO-ORG-ID --recursive --newstyle
+    $ ddrindex publish -h HOST:PORT --recurse /var/www/media/ddr/REPO-ORG-ID
