@@ -345,6 +345,10 @@ For Debian 9 (Stretch):
 ::
     $ echo "deb https://packages.densho.org/debian/ stretch main" | sudo tee /etc/apt/sources.list.d/densho.list
 
+For Debian 10 (Buster):
+::
+    $ echo "deb https://packages.densho.org/debian/ buster main" | sudo tee /etc/apt/sources.list.d/densho.list
+
 **Installing the Package**
 
 You can now install the DDR Editor with the following commands (substitute 'master' with a branch name if you are installing a branch, e.g. 'develop'):
