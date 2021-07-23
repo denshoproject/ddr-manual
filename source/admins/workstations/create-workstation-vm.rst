@@ -54,7 +54,7 @@ Download VirtualBox from the official web site and install it.
 - When all files are downloaded, launch the installer and install on your host machine.
 
 .. note::
-    During the installation process on Windows, you may encounter warning messages from Windows Firewall and/or AV security software. You should choose "Allow" or "OK" for all of these dialogs. 
+    During the installation process on Windows, you may encounter warning messages from Windows Firewall and/or AV security software. You should choose "Allow" or "OK" for all of these dialogs.
 
 Install the VirtualBox Extension Pack.
 
@@ -70,7 +70,7 @@ Host-only Network
 
 By default, VMs can only connect to the outside Internet.  VirtualBox's host-only network is used for communications between VMs and with your host OS.
 
-- In the "VirtualBox Manager" window, click "File > Preferences", then select the "Network" tab.
+- In the "VirtualBox Manager" window, click "File > Host Network Manager".
 - There should be a host-only network already created. Select it and click the screwdriver icon.
 - Note details of Host-Only Network for later::
 
@@ -174,7 +174,7 @@ Download Debian Stable
 Install Debian on the VM
 ------------------------
 
-::
+With a few exceptions, just accept the default option for each step in the Debian installer.::
 
     Start the VM
     - Select VM from the list on the left.
@@ -272,6 +272,7 @@ Security Hardening
     # apt-get install ufw
     # ufw allow 22/tcp
     # ufw allow 80/tcp
+    # ufw allow 443/tcp
     # ufw allow 9001/tcp
     # ufw enable
     # ufw status
@@ -283,12 +284,14 @@ Security Hardening
     22/tcp                     ALLOW       Anywhere (v6)
     80/tcp                     ALLOW       Anywhere
     80/tcp                     ALLOW       Anywhere (v6)
+    443/tcp                    ALLOW       Anywhere
+    443/tcp                    ALLOW       Anywhere (v6)
     9001/tcp                   ALLOW       Anywhere
     9001/tcp                   ALLOW       Anywhere (v6)
 
 Install the SSH server and `fail2ban`, a daemon that shuts down some types of automated SSH hacking::
 
-    # apt-get install openssh-server fail2ban
+    # apt install openssh-server fail2ban
 
 Disable login for `root`.  Find the line containing `PermitRootLogin` and change the setting from `yes` to `no`.::
 
@@ -296,16 +299,16 @@ Disable login for `root`.  Find the line containing `PermitRootLogin` and change
 
 Restart SSH::
 
-    # /etc/init.d/ssh restart
+    # service ssh restart
 
 
 
-Adding other appliances 
+Adding other appliances
 -----------------
 
 These are appliances that are highly useful in day-to-day troubleshooting and monitering
 
-    # apt-get update && apt-get install sudo byobu glances nfs-common
+    # apt update && apt install sudo byobu glances nfs-common
 
 
 Snapshot
@@ -332,7 +335,7 @@ It is recommended to install `ddr-local` from a package repository, since your i
 
 Add the packaging signing key using the `apt-key` tool and then add the repository itself to your list of APT sources.  Commands for accomplishing this are listed below (for completeness we include commands to install curl and the apt tools - you may already have these installed).
 ::
-    $ sudo apt-get update && sudo apt-get install curl apt-transport-https gnupg
+    $ sudo apt update && sudo apt install curl apt-transport-https gnupg
     $ curl -s https://packages.densho.org/debian/keys/archive.asc | sudo apt-key add -
 
 Next add the appopriate entry to `/etc/apt/sources.list.d`.
@@ -353,14 +356,14 @@ For Debian 10 (Buster):
 
 You can now install the DDR Editor with the following commands (substitute 'master' with a branch name if you are installing a branch, e.g. 'develop'):
 ::
-    $ sudo apt-get update
-    $ sudo apt-get install ddrlocal-master
+    $ sudo apt update
+    $ sudo apt install ddrlocal-master
 
 *Updating the Editor*
 
 Once the package is installed you can get updates as part of the normal system update/upgrade process:
 ::
-    $ sudo apt-get update && sudo apt-get upgrade
+    $ sudo apt update && sudo apt upgrade
 
 
 The DDR user
@@ -392,9 +395,9 @@ Use the Makefile to install a networking config file to set the VM to a standard
 
 Log in and confirm that you have IP addresses for both network interfaces (`eth0` and `eth1`)
 ::
-    # on Debian 8 / jessie
+    # on Debian 8/jessie
     $ sudo ifconfig
-    # on Debian 9 / stretch
+    # on Debian 9/stretch or Debian 10/buster
     $ sudo ip address
 
 Either of these commands should return something like the following
@@ -414,11 +417,11 @@ Either of these commands should return something like the following
 Ping a common domain name and confirm that you get a response::
 
     $ ping google.com
-    PING google.com (74.125.224.168) 56(84) bytes of data.
-    64 bytes from lax02s01-in-f8.1e100.net (74.125.224.168): icmp_req=1 ttl=51 time=10.6 ms
-    64 bytes from lax02s01-in-f8.1e100.net (74.125.224.168): icmp_req=2 ttl=51 time=9.80 ms
-    64 bytes from lax02s01-in-f8.1e100.net (74.125.224.168): icmp_req=3 ttl=51 time=10.6 ms
-
+    PING google.com (142.251.33.78): 48 data bytes
+    64 bytes from 142.251.33.78: icmp_seq=0 ttl=120 time=1.211 ms
+    64 bytes from 142.251.33.78: icmp_seq=1 ttl=120 time=1.402 ms
+    64 bytes from 142.251.33.78: icmp_seq=2 ttl=120 time=0.644 ms
+    ...
 
 
 Install VirtualBox Guest Additions
@@ -428,17 +431,20 @@ source: http://virtualboxes.org/doc/installing-guest-additions-on-debian/
 
 Install VirtualBox Guest Additions, which is required
 for accessing shared directories on the host system.
+Before running these steps, highlight the VM window and click "Devices > Insert Guest Additions CD Image", then log in as root.
 ::
-    Login as root;
-    Update your APT database with apt-get update;
-    Install the latest security updates with apt-get upgrade;
-    Install required packages with apt-get install build-essential module-assistant;
-    Configure your system for building kernel modules by running m-a prepare;
-    Click on Install Guest Additions… from the Devices menu, then run mount /media/cdrom.
-    Run sh /media/cdrom/VBoxLinuxAdditions.run, and follow the instructions on screen.
-
-This step requires you to click "Devices > Insert Guest Additions CD
-Image" in the device window.
+    # Update your APT database
+    apt update
+    # Install the latest security updates
+    apt upgrade
+    # Install required packages
+    apt install build-essential module-assistant
+    # Configure your system for building kernel modules
+    m-a prepare
+    # Mount the CD-ROM
+    mount /media/cdrom.
+    # Install the guest additions
+    sh /media/cdrom/VBoxLinuxAdditions.run
 
 If you get an error while trying to mount the Guest Additions CD see https://askubuntu.com/questions/573596/unable-to-install-guest-additions-cd-image-on-virtual-box/960324#960324.
 
@@ -448,9 +454,9 @@ Configuration
 
 Repository-wide specifications and configurations are stored in a `ddr` repo that will be installed below.
 
-Most settings are in `/etc/ddr/ddr.cfg`.  Settings in `/etc/ddr/local.cfg` will override settings in `/etc/ddr/ddr.cfg`, so `local.cfg` may be used to customize your setup.  These files are shared by `ddr-local`, `ddr-cmdln`, and `ddr-public`.
+Most settings are in `/etc/ddr/ddrlocal.cfg`.  Settings in `/etc/ddr/ddrlocal-local.cfg` will override settings in `/etc/ddr/ddrlocal.cfg`, so `ddrlocal-local.cfg` may be used to customize your setup.  These files are shared by `ddr-local` and `ddr-cmdln`.
 
-Settings specific to Django are in `/usr/local/src/ddr-public/ddrpublic/ddrpublic/settings.py`.
+Settings specific to Django are in `/opt/ddr-local/ddrlocal/ddrlocal/settings.py`.
 
 If this will be a stand-alone workstation or if you are using a Qumulo-style NFS and this machine will be the one to run the background indexing processes, run the following to set up and start the background process.::
 
