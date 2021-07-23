@@ -366,6 +366,15 @@ Once the package is installed you can get updates as part of the normal system u
     $ sudo apt update && sudo apt upgrade
 
 
+Git-annex version
+-----------------
+
+Install `git-annex` from backports to use the same repository version as Ubuntu.
+::
+   $ cd /opt/ddr-local
+   $ sudo make install-git
+
+
 The DDR user
 ------------
 
