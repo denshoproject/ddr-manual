@@ -848,3 +848,31 @@ Repository-wide specifications and configurations are stored in a `ddr` repo.  C
     # git clone USER@HOST:PATH/ddr.git /media/DISKNAME/ddr/ddr
 
 Note that if you are testing code you may need to switch branches in the `ddr` repo.  Please see the "Switching branches" section.
+
+
+
+**Setting up Pagekite (optional, advanced)**
+
+
+
+Pagekite
+=============================
+
+Pagekite is a app used for remoting into the VM from a different machine over the internet via SSH. Pagekite is useful for allowing Geoff Jost to SSH into the local VM for debugging. This should only be setup and enabled if specifically instructed to by Geoff Jost. To setup, log into the VM as densho.
+
+    # sudo apt install pagekite
+    # sudo nano /etc/pagekite.d/10_account.rc
+
+For the `kitename` and `kitesecret` contact Geoff Jost. 
+
+Delete the line `abort_not_configured`
+
+    # sudo cp /etc/pagekite.d/80_sshd.rc.sample /etc/pagekite.d/80_sshd.rc
+    # sudo cp /etc/pagekite.d/80_httpd.rc.sample /etc/pagekite.d/80_httpd.rc
+
+Pagekite is now installed. Run the following to double-check that Pagekite is running properly:
+
+    # sudo service pagekite start
+    # sudo service pagekite status
+
+Once you are done using Pagekite, uninstall by running `sudo apt remove pagekite`
