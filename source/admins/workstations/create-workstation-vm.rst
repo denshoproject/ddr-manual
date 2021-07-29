@@ -839,6 +839,34 @@ Finally, prep for use with ddr-local.  Make a `ddr` folder at the root of the dr
 **Configuring the VM to use the Disk Image**
 
 
+Remote Debugger (Pagekite)
+==========================
+
+Sometimes debugging cannot be performed by a person physically sitting in front of a machine running the Editor VM.  In these cases `Pagekite <http://pagekite.net/>`_ is often easier than using a remote desktop solution.  Pagekite makes it possible to SSH to a VM and view web pages over an SSH tunnel through a relay server.  A Pagekite account must be present and paid up, Pagekite must be installed and configured on the target machine, and the client machine may need some special configuration.
+
+First go to `Pagekite <http://pagekite.net/>`_, create an account, pay for service, and create one or more kites by specifying a subdomain and entering some random text as a secret.
+
+To set up Pagekite on a target machine, first install the `pagekite` app and copy config files to enable SSH and HTTPS connections.  Then edit the Pagekite account info file, enter the `kitename` and `kitesecret` from the Pagekite account page, and delete the line containing `abort_not_configured`.  Finally ensure that the `pagekite` service does not run automatically on restart, and then start it.
+::
+    sudo apt install pagekite
+    sudo cp /etc/pagekite.d/80_sshd.rc.sample /etc/pagekite.d/80_sshd.rc
+    sudo cp /etc/pagekite.d/80_httpd.rc.sample /etc/pagekite.d/80_httpd.rc
+    sudo nano /etc/pagekite.d/10_account.rc
+    sudo systemctl disable pagekite   # it's ok if you see an error after this
+    sudo service pagekite start
+
+When debugging is complete, deactivate the service.  Then edit the Pagekite account info file and **remove** the values for `kitename` and `kitesecret`.  This ensures that `pagekite` cannot restart adn give access to the VM.
+::
+    sudo service pagekite stop
+    sudo nano /etc/pagekite.d/10_account.rc
+
+On client machines you may have to tweak your SSH config before you can connect to a pagekite server.  Information can be found on the Pagekite support page (https://pagekite.net/support/) and in the wiki (https://pagekite.net/wiki/).
+
+On Debian and Ubuntu machines I have needed to install `corkscrew <https://github.com/bryanpkc/corkscrew/>`_ (`sudo apt install corkscrew`) and add the following to my `~/.ssh/config`::
+    Host *.pagekite.me
+      CheckHostIP no
+      ProxyCommand corkscrew %h 443 %h %p
+
 
 Repository-wide configuration
 =============================
