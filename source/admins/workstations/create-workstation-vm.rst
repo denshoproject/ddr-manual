@@ -862,7 +862,8 @@ When debugging is complete, deactivate the service.  Then edit the Pagekite acco
 
 On client machines you may have to tweak your SSH config before you can connect to a pagekite server.  Information can be found on the Pagekite support page (https://pagekite.net/support/) and in the wiki (https://pagekite.net/wiki/).
 
-On Debian and Ubuntu machines I have needed to install `corkscrew <https://github.com/bryanpkc/corkscrew/>`_ (`sudo apt install corkscrew`) and add the following to my `~/.ssh/config`::
+On Debian and Ubuntu machines I have needed to install `corkscrew <https://github.com/bryanpkc/corkscrew/>`_ (`sudo apt install corkscrew`) and add the following to my `~/.ssh/config`:
+::
     Host *.pagekite.me
       CheckHostIP no
       ProxyCommand corkscrew %h 443 %h %p
