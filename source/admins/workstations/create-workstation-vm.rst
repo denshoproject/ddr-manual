@@ -308,7 +308,7 @@ Adding other appliances
 
 These are appliances that are highly useful in day-to-day troubleshooting and monitering
 
-    # apt update && apt install sudo byobu glances nfs-common
+    # apt update && apt install sudo byobu htop nfs-common
 
 
 Snapshot
