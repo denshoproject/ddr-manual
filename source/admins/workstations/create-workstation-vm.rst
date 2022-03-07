@@ -156,11 +156,10 @@ In order for `ddr-local` to be able to ingest documents, you must designate a di
 - Click "Add shared folder" icon on right side.
 - Folder Path: Browse and select folder.
 - Folder Name: "ddrshared"
-  
-  - Read-only: NO
-  - Auto-mount: YES
-  - Make Permanent: YES
-
+- Read-only: NO
+- Auto-mount: YES
+- Mount point: /media/sf_ddrshared
+- Make Permanent: YES (this option may not appear until VM has been rebooted)
 
 
 Download Debian Stable
