@@ -303,6 +303,15 @@ Restart SSH::
 
 
 
+Useful tools
+-----------------
+
+These are tools that are highly useful during the install and in day-to-day troubleshooting and monitoring.
+
+    # apt update && apt install sudo byobu htop nfs-common
+
+
+
 Install VirtualBox Guest Additions
 ----------------------------------
 
@@ -327,15 +336,6 @@ Before running these steps, highlight the VM window and click "Devices > Insert 
 
 If you get an error while trying to mount the Guest Additions CD see https://askubuntu.com/questions/573596/unable-to-install-guest-additions-cd-image-on-virtual-box/960324#960324.
 
-
-
-
-Adding other appliances
------------------
-
-These are appliances that are highly useful in day-to-day troubleshooting and monitering
-
-    # apt update && apt install sudo byobu htop nfs-common
 
 
 Snapshot
