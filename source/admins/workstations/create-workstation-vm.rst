@@ -303,6 +303,33 @@ Restart SSH::
 
 
 
+Install VirtualBox Guest Additions
+----------------------------------
+
+source: http://virtualboxes.org/doc/installing-guest-additions-on-debian/
+
+Install VirtualBox Guest Additions, which is required
+for accessing shared directories on the host system.
+Before running these steps, highlight the VM window and click "Devices > Insert Guest Additions CD Image", then log in as root.
+::
+    # Update your APT database
+    apt update
+    # Install the latest security updates
+    apt upgrade
+    # Install required packages
+    apt install build-essential module-assistant
+    # Configure your system for building kernel modules
+    m-a prepare
+    # Mount the CD-ROM
+    mount /media/cdrom.
+    # Install the guest additions
+    sh /media/cdrom/VBoxLinuxAdditions.run
+
+If you get an error while trying to mount the Guest Additions CD see https://askubuntu.com/questions/573596/unable-to-install-guest-additions-cd-image-on-virtual-box/960324#960324.
+
+
+
+
 Adding other appliances
 -----------------
 
@@ -435,31 +462,6 @@ Ping a common domain name and confirm that you get a response::
     64 bytes from 142.251.33.78: icmp_seq=1 ttl=120 time=1.402 ms
     64 bytes from 142.251.33.78: icmp_seq=2 ttl=120 time=0.644 ms
     ...
-
-
-Install VirtualBox Guest Additions
-----------------------------------
-
-source: http://virtualboxes.org/doc/installing-guest-additions-on-debian/
-
-Install VirtualBox Guest Additions, which is required
-for accessing shared directories on the host system.
-Before running these steps, highlight the VM window and click "Devices > Insert Guest Additions CD Image", then log in as root.
-::
-    # Update your APT database
-    apt update
-    # Install the latest security updates
-    apt upgrade
-    # Install required packages
-    apt install build-essential module-assistant
-    # Configure your system for building kernel modules
-    m-a prepare
-    # Mount the CD-ROM
-    mount /media/cdrom.
-    # Install the guest additions
-    sh /media/cdrom/VBoxLinuxAdditions.run
-
-If you get an error while trying to mount the Guest Additions CD see https://askubuntu.com/questions/573596/unable-to-install-guest-additions-cd-image-on-virtual-box/960324#960324.
 
 
 Configuration
