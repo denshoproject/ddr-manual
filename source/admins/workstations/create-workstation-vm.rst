@@ -58,6 +58,7 @@ Download VirtualBox from the official web site and install it.
 
 Install the VirtualBox Extension Pack.
 
+- [VirtualBox may do the following steps for you automatically.]
 - Run VirtualBox.
 - In the "VirtualBox Manager" window, click "File > Preferences" and select the "Extensions" tab.
 - Click the "Add package" icon on the right side of the window.
@@ -71,7 +72,7 @@ Host-only Network
 By default, VMs can only connect to the outside Internet.  VirtualBox's host-only network is used for communications between VMs and with your host OS.
 
 - In the "VirtualBox Manager" window, click "File > Host Network Manager".
-- There should be a host-only network already created. Select it and click the screwdriver icon.
+- There should be a host-only network already created. Select it and click the Properties tab.
 - Note details of Host-Only Network for later::
 
     Adapter
@@ -153,7 +154,7 @@ In order for `ddr-local` to be able to ingest documents, you must designate a di
 
 - Right-click on the VM, select Settings, then choose "Shared Folders" in the window.
 - Click "Add shared folder" icon on right side.
-- Browse and select folder.
+- Folder Path: Browse and select folder.
 - Folder Name: "ddrshared"
   
   - Read-only: NO
@@ -195,8 +196,8 @@ With a few exceptions, just accept the default option for each step in the Debia
     - American English
     
     Configure the network: Primary network interface
-    - eth0 or enp0s3
-    
+    - enp0s3
+
     Configure the network: Hostname
     - Enter your VM name
     
@@ -243,8 +244,8 @@ With a few exceptions, just accept the default option for each step in the Debia
     - United States
     
     Configure the package manager: Debian archive mirror
-    - ftp.us.debian.org
-    
+    - deb.debian.org
+
     Configure the package manager: HTTP proxy information
     - [leave blank]
     
@@ -260,7 +261,7 @@ With a few exceptions, just accept the default option for each step in the Debia
     Device for boot loader installation:
     - Select `ata-VBOX_HARDDISK_*` or similar.
 
-Reboot the VM and log in.
+Reboot the VM and log in as `root`.
 
 
 
@@ -293,7 +294,7 @@ Install the SSH server and `fail2ban`, a daemon that shuts down some types of au
 
     # apt install openssh-server fail2ban
 
-Disable login for `root`.  Find the line containing `PermitRootLogin` and change the setting from `yes` to `no`.::
+Disable login for `root`.  Find the line containing `PermitRootLogin` and change the setting from `prohibitpassword` to `no`.::
 
     # nano /etc/ssh/sshd_config
 
@@ -340,17 +341,21 @@ Add the packaging signing key using the `apt-key` tool and then add the reposito
 
 Next add the appopriate entry to `/etc/apt/sources.list.d`.
 
-For Debian 8 (Jessie):
+[Obsolete] For Debian 8 (Jessie):
 ::
     $ echo "deb https://packages.densho.org/debian/ jessie main" | sudo tee /etc/apt/sources.list.d/densho.list
 
-For Debian 9 (Stretch):
+[Obsolete] For Debian 9 (Stretch):
 ::
     $ echo "deb https://packages.densho.org/debian/ stretch main" | sudo tee /etc/apt/sources.list.d/densho.list
 
-For Debian 10 (Buster):
+[Obsolete] For Debian 10 (Buster):
 ::
     $ echo "deb https://packages.densho.org/debian/ buster main" | sudo tee /etc/apt/sources.list.d/densho.list
+
+For Debian 11 (Bullseye):
+::
+    $ echo "deb https://packages.densho.org/debian/ bullseye main" | sudo tee /etc/apt/sources.list.d/densho.list
 
 **Installing the Package**
 
