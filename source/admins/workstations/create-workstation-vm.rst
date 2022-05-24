@@ -845,6 +845,25 @@ Finally, prep for use with ddr-local.  Make a `ddr` folder at the root of the dr
 **Configuring the VM to use the Disk Image**
 
 
+Bypass Cloudflare And Connect Directly To mits3
+===============================================
+
+Cloudflare offers various protections from DDoSers and other miscreants.  We would like to take advantage of those protections for `mits.densho.org`, but they get in the way of our use of that site.  The solution(?) is to bypass DNS and point `mits.densho.org` directly at the server's internal IP address.
+
+Add the internal IP address for `mits.densho.org` to `/etc/hosts` on the VM thusly::
+    sudo vi /etc/hosts
+    # Add this line to the end of the file:
+    192.168.0.8     mits.densho.org
+
+Test the configuration::
+    $ ping mits.densho.org
+    PING mits.densho.org (192.168.0.8) 56(84) bytes of data.
+    64 bytes from mits3 (192.168.0.8): icmp_seq=1 ttl=64 time=0.408 ms
+    64 bytes from mits3 (192.168.0.8): icmp_seq=2 ttl=64 time=0.336 ms
+    64 bytes from mits3 (192.168.0.8): icmp_seq=3 ttl=64 time=0.359 ms
+    ...
+
+
 Remote Debugger (Pagekite)
 ==========================
 
