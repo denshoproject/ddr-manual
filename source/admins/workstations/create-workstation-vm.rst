@@ -483,6 +483,11 @@ If this will be a stand-alone workstation or if you are using a Qumulo-style NFS
     $ cd /opt/ddr-local/
     $ sudo make migrate
 
+As a security precaution, Git will refuse to execute commands in repositories owned by other users unless repository directories are listed as safe in a `.gitconfig` file.  Run this command to mark `ddr-local` source code directories as safe::
+
+    $ cd /opt/ddr-local
+    $ sudo make git-safe-dir
+
 
 
 Elasticsearch
