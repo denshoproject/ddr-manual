@@ -363,25 +363,21 @@ It is recommended to install `ddr-local` from a package repository, since your i
 Add the packaging signing key using the `apt-key` tool and then add the repository itself to your list of APT sources.  Commands for accomplishing this are listed below (for completeness we include commands to install curl and the apt tools - you may already have these installed).
 ::
     $ sudo apt update && sudo apt install curl apt-transport-https gnupg
-    $ curl -s https://packages.densho.org/debian/keys/archive.asc | sudo apt-key add -
+    $ curl -s http://packages.densho.org/debian/keys/archive.asc | sudo apt-key add -
 
 Next add the appopriate entry to `/etc/apt/sources.list.d`.
 
-[Obsolete] For Debian 8 (Jessie):
-::
-    $ echo "deb https://packages.densho.org/debian/ jessie main" | sudo tee /etc/apt/sources.list.d/densho.list
-
-[Obsolete] For Debian 9 (Stretch):
-::
-    $ echo "deb https://packages.densho.org/debian/ stretch main" | sudo tee /etc/apt/sources.list.d/densho.list
-
-[Obsolete] For Debian 10 (Buster):
-::
-    $ echo "deb https://packages.densho.org/debian/ buster main" | sudo tee /etc/apt/sources.list.d/densho.list
-
-For Debian 11 (Bullseye):
+[Obsolete] For Debian 11 (Bullseye):
 ::
     $ echo "deb https://packages.densho.org/debian/ bullseye main" | sudo tee /etc/apt/sources.list.d/densho.list
+
+For Debian 12 (Bookworm):
+::
+    $ echo "deb http://packages.densho.org/debian/ bookworm main" | sudo tee /etc/apt/sources.list.d/densho.list
+
+For Debian 13 (Trixie):
+::
+    $ echo "deb http://packages.densho.org/debian/ trixie main" | sudo tee /etc/apt/sources.list.d/densho.list
 
 **Installing the Package**
 
