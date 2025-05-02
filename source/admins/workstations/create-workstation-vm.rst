@@ -423,9 +423,6 @@ Use the Makefile to install a networking config file to set the VM to a standard
 
 Log in and confirm that you have IP addresses for both network interfaces (`eth0` and `eth1`)
 ::
-    # on Debian 8/jessie
-    $ sudo ifconfig
-    # on Debian 9/stretch or Debian 10/buster
     $ sudo ip address
 
 Either of these commands should return something like the following
