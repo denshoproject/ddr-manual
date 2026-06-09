@@ -360,9 +360,16 @@ It is recommended to install `ddr-local` from a package repository, since your i
 
 **Adding the Repository**
 
-Download the GPG key for the repository and then add the repository listing. Run the following commands as `root`. Replace `REDACTED` with the master key signature.
+Densho packages are signed with a GPG key that is changed every year. It is recorded in at least two places:
+- Password vault in "reprepro / packages.densho.org GPG signing key" as as `reprepro_master_key`.
+- `ansible-colo` secrets as `reprepro_master_key`.
+
+Run the following commands as `root`. Replace `REDACTED` with the master key signature.
 ::
     # export MASTER=REDACTED
+
+Download the GPG key for the repository and then add the repository listing.
+::
     # mkdir /etc/apt/keyrings/
     # curl https://keys.openpgp.org/vks/v1/by-fingerprint/$MASTER > /etc/apt/keyrings/densho.asc
 
