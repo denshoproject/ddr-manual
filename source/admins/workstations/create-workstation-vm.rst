@@ -361,6 +361,7 @@ It is recommended to install `ddr-local` from a package repository, since your i
 **Adding the Repository**
 
 Densho packages are signed with a GPG key that is changed every year. It is recorded in at least two places:
+
 - Password vault in "reprepro / packages.densho.org GPG signing key" as as `reprepro_master_key`.
 - `ansible-colo` secrets as `reprepro_master_key`.
 
