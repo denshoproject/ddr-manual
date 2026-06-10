@@ -365,7 +365,7 @@ Densho packages are signed with a GPG key that is changed every year. It is reco
 - Password vault in "reprepro / packages.densho.org GPG signing key" as as `reprepro_master_key`.
 - `ansible-colo` secrets as `reprepro_master_key`.
 
-Run the following commands as `root`. Replace `REDACTED` with the master key signature.
+Run the following commands as `root`. Replace `REDACTED` with the value of `reprepro_master_key`.
 ::
     # export MASTER=REDACTED
 
