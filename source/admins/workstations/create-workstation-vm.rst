@@ -369,6 +369,10 @@ Run the following commands as `root`. Replace `REDACTED` with the value of `repr
 ::
     # export MASTER=REDACTED
 
+If you're using the Virtualbox console and you can't cut-and-paste, the workaround would be to write `reprepro_master_key` to a file in `/media/sf_ddrshared/` and set the environment variable thusly:
+::
+    # MASTER=$(< /media/sf_ddrshared/FILENAME_GOES_HERE)
+
 Download the GPG key for the repository and then add the repository listing.
 ::
     # mkdir /etc/apt/keyrings/
