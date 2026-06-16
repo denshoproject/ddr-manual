@@ -524,7 +524,7 @@ Follow `ddrindex` instructions to set up an Elasticsearch index for local search
 ::
     $ cd /opt/ddr-local
     $ sudo su ddr
-    ddr$ source /opt/ddr-local/venv/ddrlocal/bin/activate
+    ddr$ source /opt/ddr-local/.venv/bin/activate
     ddr$ ddrindex
     ddr$ ddrindex conf
     ddr$ ddrindex status
